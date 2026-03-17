@@ -43,12 +43,10 @@ const About = () => {
               AI/ML Enthusiast
             </h3>
             <p className="text-lg text-gray-400 leading-relaxed mb-6">
-              I am an AI/ML enthusiast with experience in deep learning, computer vision, and real-time AI systems. 
-              My passion lies in building intelligent systems and solving real-world problems using cutting-edge machine learning technologies.
+              I am an AI/ML enthusiast with intermediate-level Python expertise and experience in deep learning, computer vision, and real-time AI systems. My recent internships at Google AI-ML and Edunet Foundation have solidified my passion for building intelligent, real-world solutions.
             </p>
             <p className="text-lg text-gray-400 leading-relaxed mb-8">
-              Currently pursuing a B.Tech in Computer Science Engineering, I'm constantly exploring new architectures, 
-              optimizing models, and bridging the gap between theoretical AI and practical, deployable solutions.
+              Currently pursuing my B.Tech in Computer Science Engineering (AIML) at KIET, I enjoy leveraging tools like OpenCV, MediaPipe, and Generative AI patterns to bridge the gap between theoretical concepts and practical applications.
             </p>
             
             <div className="grid grid-cols-2 gap-6">
@@ -63,6 +61,21 @@ const About = () => {
                   4+
                 </div>
                 <div className="text-sm text-gray-400 font-medium">Frameworks</div>
+              </div>
+            </div>
+
+            <div className="mt-8 space-y-4">
+              <div className="flex gap-4 items-start">
+                <span className="text-purple-400 font-medium min-w-28 text-sm">Languages</span>
+                <span className="text-gray-300 text-sm">English, Telugu, Hindi</span>
+              </div>
+              <div className="flex gap-4 items-start">
+                <span className="text-blue-400 font-medium min-w-28 text-sm">Certifications</span>
+                <span className="text-gray-300 text-sm">Edunet Foundation, AICTE, Google AIML, Prompt Engineering, Python Full Stack, Basics of Generative AI, Basics of DevOps, Basics of Python</span>
+              </div>
+              <div className="flex gap-4 items-start">
+                <span className="text-green-400 font-medium min-w-28 text-sm">Awards</span>
+                <span className="text-gray-300 text-sm">Selected for Regional Round at Edunet – Sign Speak: The Silent Communicator</span>
               </div>
             </div>
           </motion.div>

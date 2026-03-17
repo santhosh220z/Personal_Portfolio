@@ -6,34 +6,28 @@ import { Code2, Cpu, Database, Layout, Terminal } from 'lucide-react';
 const Skills = () => {
   const skillCategories = [
     {
-      title: "Machine Learning",
+      title: "AI & Machine Learning",
       icon: <Cpu className="text-purple-400" size={24} />,
-      skills: ["TensorFlow", "Keras", "Scikit-learn", "Deep Learning", "Reinforcement Learning", "Computer Vision"],
+      skills: ["Python", "Machine Learning", "Generative AI", "Prompt Engineering", "Deep Learning", "Predictive Analytics"],
       color: "purple"
     },
     {
-      title: "Programming",
-      icon: <Terminal className="text-blue-400" size={24} />,
-      skills: ["Python", "Java", "C++"],
+      title: "Computer Vision",
+      icon: <Layout className="text-blue-400" size={24} />,
+      skills: ["OpenCV", "MediaPipe", "YOLO", "SSD", "Video Analysis", "Gesture Recognition"],
       color: "blue"
     },
     {
-      title: "Libraries & Tools",
-      icon: <Database className="text-indigo-400" size={24} />,
-      skills: ["OpenCV", "MediaPipe", "NumPy", "Pandas", "Matplotlib"],
-      color: "indigo"
+      title: "Tools & Automation",
+      icon: <Code2 className="text-green-400" size={24} />,
+      skills: ["n8n Workflow Automation", "Git", "GitHub", "VS Code", "Jupyter Notebook"],
+      color: "green"
     },
     {
       title: "Web Development",
-      icon: <Layout className="text-pink-400" size={24} />,
-      skills: ["HTML", "CSS", "React"],
+      icon: <Database className="text-pink-400" size={24} />,
+      skills: ["HTML", "CSS", "Frontend (Intermediate)", "React"],
       color: "pink"
-    },
-    {
-      title: "Dev Tools",
-      icon: <Code2 className="text-green-400" size={24} />,
-      skills: ["Git", "GitHub", "VS Code", "Jupyter Notebook"],
-      color: "green"
     }
   ];
 

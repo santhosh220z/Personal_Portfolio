@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Download, Mail } from 'lucide-react';
+import profileImg from '../assets/profile2.jpeg';
 
 const Hero = () => {
   return (
@@ -40,9 +41,8 @@ const Hero = () => {
           </h2>
           
           <p className="text-lg text-gray-400 mb-10 leading-relaxed max-w-xl">
-            Computer Science student passionate about Artificial Intelligence, Machine Learning, and Computer Vision. 
-            Experienced in building deep learning models and AI-powered applications including gesture recognition, 
-            deepfake detection, and predictive analytics systems.
+            B.Tech student specializing in Computer Science Engineering (AI & ML) at Kakinada Institute of Engineering and Technology. 
+            Python enthusiast at an intermediate level with a strong interest in Machine Learning, Generative AI, and building real-world AI applications.
           </p>
 
           <div className="flex flex-wrap items-center gap-4">
@@ -79,31 +79,13 @@ const Hero = () => {
           <div className="relative w-72 h-72 md:w-96 md:h-96">
             <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-purple-500/20 to-indigo-500/20 border border-white/10 backdrop-blur-3xl transform rotate-6 transition-transform hover:rotate-12 duration-500"></div>
             <div className="absolute inset-0 rounded-3xl bg-gray-900 border border-gray-800 flex items-center justify-center overflow-hidden shadow-2xl z-10">
-              {/* Image Placeholder - since we don't have an actual image yet, we use a nice tech visualization */}
-              <div className="flex flex-col items-center justify-center text-gray-500">
-                <motion.div
-                  animate={{ 
-                    rotate: [0, 360],
-                    scale: [1, 1.1, 1] 
-                  }}
-                  transition={{ 
-                    duration: 20, 
-                    repeat: Infinity,
-                    ease: "linear" 
-                  }}
-                  className="w-48 h-48 border-[2px] border-dashed border-purple-500/30 rounded-full flex items-center justify-center relative"
-                >
-                  <motion.div
-                    animate={{ rotate: [-360, 0] }}
-                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                    className="w-32 h-32 border-[2px] border-indigo-500/40 rounded-full flex flex-col items-center justify-center"
-                  >
-                    <span className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-br from-purple-400 to-indigo-500">
-                      AI
-                    </span>
-                    <span className="text-xs text-center mt-1 text-gray-400 font-mono">Profile Image</span>
-                  </motion.div>
-                </motion.div>
+              {/* Profile Image */}
+              <div className="w-full h-full p-2">
+                <img 
+                  src={profileImg} 
+                  alt="Santhosh Sunkara - Profile" 
+                  className="w-full h-full object-cover rounded-2xl"
+                />
               </div>
             </div>
             
