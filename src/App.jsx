@@ -10,13 +10,14 @@ import Skills from './components/Skills';
 
 import Projects from './components/Projects';
 import Education from './components/Education';
+import Certifications from './components/Certifications';
 import Contact from './components/Contact';
 function App() {
   return (
-    <div className="bg-gray-950 min-h-screen text-white">
-      <div className="fixed inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none z-50 mix-blend-overlay"></div>
+    <div className="min-h-screen font-body text-chlorophyll-on-surface">
+      <div className="fixed inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 pointer-events-none z-50 mix-blend-overlay"></div>
       <div className="fixed inset-0 bg-grid-white/[0.02] bg-[size:40px_40px] pointer-events-none"></div>
-      <div className="fixed inset-0 bg-gradient-to-br from-gray-900/10 via-transparent to-gray-950/50 pointer-events-none"></div>
+      <div className="fixed inset-0 bg-gradient-to-br from-chlorophyll-primary-container/5 via-transparent to-chlorophyll-surface pointer-events-none"></div>
       
       <div className="relative z-10 w-full overflow-hidden">
         <Navbar />
@@ -28,6 +29,7 @@ function App() {
           <Skills />
           <Projects />
           <Education />
+          <Certifications />
           <Contact />
         </main>
         

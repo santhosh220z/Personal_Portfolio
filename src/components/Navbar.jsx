@@ -20,6 +20,7 @@ const Navbar = () => {
     { name: 'Skills', href: '#skills' },
     { name: 'Projects', href: '#projects' },
     { name: 'Education', href: '#education' },
+    { name: 'Certifications', href: '#certifications' },
     { name: 'Contact', href: '#contact' },
   ];
 
@@ -27,19 +28,19 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-gray-950/80 backdrop-blur-md border-b border-gray-800/50 py-3 shadow-lg shadow-black/20'
+          ? 'bg-chlorophyll-surface-highest/60 backdrop-blur-[16px] border-b border-chlorophyll-tertiary/5 py-3'
           : 'bg-transparent py-5'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-        <a href="#" className="text-xl font-bold tracking-tighter text-white flex items-center gap-2">
+        <a href="#" className="font-display text-xl font-bold tracking-tighter text-chlorophyll-on-surface flex items-center gap-2">
           <motion.div
             initial={{ rotate: -10 }}
             animate={{ rotate: 10 }}
             transition={{ repeat: Infinity, repeatType: "reverse", duration: 2 }}
-            className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-purple-500/30"
+            className="w-8 h-8 rounded-lg bg-gradient-to-br from-chlorophyll-primary to-chlorophyll-primary-container flex items-center justify-center shadow-[0_0_40px_rgba(175,209,136,0.3)]"
           >
-            <span className="text-slate-50 font-black text-sm">AI</span>
+            <span className="text-chlorophyll-on-primary font-black text-sm">AI</span>
           </motion.div>
           Santhosh
         </a>
@@ -51,7 +52,7 @@ const Navbar = () => {
               <li key={link.name}>
                 <a
                   href={link.href}
-                  className="text-sm font-medium text-gray-400 hover:text-white transition-colors duration-200"
+                  className="font-body text-sm font-medium text-chlorophyll-on-surface-variant hover:text-chlorophyll-primary transition-colors duration-200"
                 >
                   {link.name}
                 </a>
@@ -59,11 +60,11 @@ const Navbar = () => {
             ))}
           </ul>
           
-          <div className="flex items-center gap-4 pl-6 border-l border-gray-800">
-            <a href="https://github.com" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
+          <div className="flex items-center gap-4 pl-6 border-l border-chlorophyll-outline-variant/30">
+            <a href="https://github.com/santhosh220z" target="_blank" rel="noreferrer" className="text-chlorophyll-on-surface-variant hover:text-chlorophyll-primary transition-colors">
               <Github size={20} />
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
+            <a href="https://www.linkedin.com/in/siva-sambhavi-santhosh-sunkara-588a24265/" target="_blank" rel="noreferrer" className="text-chlorophyll-on-surface-variant hover:text-chlorophyll-primary transition-colors">
               <Linkedin size={20} />
             </a>
           </div>
@@ -71,7 +72,7 @@ const Navbar = () => {
 
         {/* Mobile Nav Toggle */}
         <button
-          className="md:hidden text-gray-300 focus:outline-none"
+          className="md:hidden text-chlorophyll-on-surface-variant focus:outline-none"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -85,7 +86,7 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-gray-950 border-b border-gray-800 overflow-hidden"
+            className="md:hidden bg-chlorophyll-surface-low border-b border-chlorophyll-outline-variant/30 overflow-hidden"
           >
             <div className="px-6 py-4 flex flex-col gap-4">
               {navLinks.map((link) => (
@@ -93,19 +94,19 @@ const Navbar = () => {
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-base font-medium text-gray-300 hover:text-white py-2"
+                  className="font-body text-base font-medium text-chlorophyll-on-surface-variant hover:text-chlorophyll-primary py-2"
                 >
                   {link.name}
                 </a>
               ))}
-              <div className="flex items-center gap-4 pt-4 border-t border-gray-800">
-                <a href="https://github.com" className="text-gray-400 hover:text-white">
+              <div className="flex items-center gap-4 pt-4 border-t border-chlorophyll-outline-variant/30">
+                <a href="https://github.com/santhosh220z" className="text-chlorophyll-on-surface-variant hover:text-chlorophyll-primary">
                   <Github size={20} />
                 </a>
-                <a href="https://linkedin.com" className="text-gray-400 hover:text-white">
+                <a href="https://www.linkedin.com/in/siva-sambhavi-santhosh-sunkara-588a24265/" className="text-chlorophyll-on-surface-variant hover:text-chlorophyll-primary">
                   <Linkedin size={20} />
                 </a>
-                <a href="mailto:contact@example.com" className="text-gray-400 hover:text-white">
+                <a href="mailto:santhoshsunkarasbe@gmail.com" className="text-chlorophyll-on-surface-variant hover:text-chlorophyll-primary">
                   <Mail size={20} />
                 </a>
               </div>

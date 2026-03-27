@@ -6,68 +6,52 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        display: ['Space Grotesk', 'sans-serif'],
+        body: ['Manrope', 'sans-serif'],
+      },
       colors: {
-        // EXACT USER MAPPING:
-        // #1B211A: Replaced the deep backgrounds and dark gradients.
-        // #628141: Replaced the vibrant accent colors (purples, blues, emeralds) for glowing orbs, icons, and highlights.
-        // #8BAE66: Replaced the secondary text and structural borders.
-        // #EBD5AB: Replaced the bright white text for a softer, perfectly matched primary contrast.
+        // Stitch UI Generated Chlorophyll Carbon Palette
+        chlorophyll: {
+          surface: '#0f150e',
+          'surface-low': '#171d16',
+          'surface-high': '#252c24',
+          'surface-highest': '#30362f',
+          primary: '#afd188',
+          'on-primary': '#1d3700',
+          'primary-container': '#7a9b57',
+          secondary: '#add286',
+          'secondary-container': '#314f12',
+          tertiary: '#d9c49b',
+          'outline-variant': '#44483d',
+          'on-surface': '#dee4d9',
+          'on-surface-variant': '#c4c8b9',
+        },
+        // Legacy fallbacks mapped closer to new palette
         gray: {
           50: '#FFFFFF',
-          100: '#EBD5AB', 
-          200: '#EBD5AB', 
-          300: '#8BAE66', // Secondary Text/Borders
-          400: '#8BAE66', // Secondary Text/Borders
-          500: '#8BAE66', 
-          600: '#8BAE66', 
-          700: '#8BAE66', 
-          800: '#8BAE66', // Structural borders
-          900: '#1B211A', // Deep Background / Dark Gradient Map
-          950: '#1B211A', // Deep Background / Dark Gradient Map
+          100: '#dee4d9', 
+          200: '#c4c8b9', 
+          300: '#8e9284', 
+          400: '#44483d', 
+          500: '#30362f', 
+          600: '#252c24', 
+          700: '#1b211a', 
+          800: '#171d16', 
+          900: '#0f150e', 
+          950: '#0a1009', 
         },
-        white: '#EBD5AB', // Primary contrast text
+        white: '#dee4d9',
         black: '#000000', 
-
-        // Map accents
-        purple: {
-          300: '#628141', 
-          400: '#628141',
-          500: '#628141', // Glowing Orbs, Icons
-          600: '#628141',
-        },
-        indigo: {
-          300: '#628141',
-          400: '#628141', 
-          500: '#628141', 
-          600: '#628141',
-          900: '#1B211A', // Gradient Background component map
-        },
-        blue: {
-          300: '#628141',
-          400: '#628141',
-          500: '#628141',
-          600: '#628141',
-        },
-        cyan: {
-          400: '#628141',
-          500: '#628141',
-        },
-        green: {
-          400: '#628141',
-        },
-        pink: {
-          400: '#628141',
-          500: '#628141',
-        },
-        rose: {
-          500: '#628141',
-        },
-        emerald: {
-          500: '#628141',
-        },
-        teal: {
-          500: '#628141',
-        }
+        purple: { 500: '#afd188', 600: '#7a9b57' },
+        indigo: { 500: '#afd188', 600: '#7a9b57', 900: '#171d16' },
+        blue: { 400: '#add286', 500: '#afd188' },
+        cyan: { 500: '#add286' },
+        green: { 400: '#afd188' },
+        pink: { 500: '#d9c49b' },
+        rose: { 500: '#d9c49b' },
+        emerald: { 500: '#add286' },
+        teal: { 500: '#add286' }
       }
     },
   },

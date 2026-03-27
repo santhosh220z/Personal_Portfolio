@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Linkedin, Mail, Heart } from 'lucide-react';
+import { Github, Linkedin, Mail } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -18,13 +18,13 @@ const Footer = () => {
           </div>
 
           <div className="flex items-center gap-6">
-            <a href="https://github.com" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-800 rounded-full">
+            <a href="https://github.com/santhosh220z" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-800 rounded-full">
               <Github size={20} />
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-800 rounded-full">
+            <a href="https://www.linkedin.com/in/siva-sambhavi-santhosh-sunkara-588a24265/" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-800 rounded-full">
               <Linkedin size={20} />
             </a>
-            <a href="mailto:contact@example.com" className="text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-800 rounded-full">
+            <a href="mailto:santhoshsunkarasbe@gmail.com" className="text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-800 rounded-full">
               <Mail size={20} />
             </a>
           </div>
@@ -32,9 +32,6 @@ const Footer = () => {
 
         <div className="mt-12 pt-8 border-t border-gray-800/60 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
           <p>© {currentYear} Santhosh Sunkara. All rights reserved.</p>
-          <p className="flex items-center gap-1">
-            Built with <Heart size={14} className="text-red-500" /> and React
-          </p>
         </div>
       </div>
     </footer>
