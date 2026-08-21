@@ -4,58 +4,73 @@ import { Mail, Github, Linkedin } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 
 const Contact = () => {
+  const contactItems = [
+    {
+      label: 'Email',
+      value: 'santhoshsunkarasbe@gmail.com',
+      href: 'mailto:santhoshsunkarasbe@gmail.com',
+      Icon: Mail,
+      iconColor: 'text-electric-violet',
+      iconBg: 'bg-primary-container/20 border-primary-container/30',
+    },
+    {
+      label: 'LinkedIn',
+      value: 'santhosh sunkara',
+      href: 'https://www.linkedin.com/in/siva-sambhavi-santhosh-sunkara-588a24265/',
+      Icon: Linkedin,
+      iconColor: 'text-tertiary',
+      iconBg: 'bg-tertiary-container/20 border-tertiary/30',
+    },
+    {
+      label: 'GitHub',
+      value: '@santhosh220z',
+      href: 'https://github.com/santhosh220z',
+      Icon: Github,
+      iconColor: 'text-electric-violet',
+      iconBg: 'bg-primary-container/20 border-primary-container/30',
+    }
+  ];
+
   return (
-    <section id="contact" className="py-24 relative z-10">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 w-full flex flex-col items-center">
+    <section id="contact" className="relative section-spacing">
+      <div className="relative z-10 section-container">
         <SectionHeading title="Get In Touch" subtitle="Contact Me" />
-        
-        <div className="w-full max-w-4xl mt-8 mx-auto">
+
+        <div className="mx-auto mt-8 w-full max-w-5xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="flex flex-col gap-10 items-center text-center"
+            className="flex flex-col items-center gap-10 text-center"
           >
-            <div>
-              <h3 className="text-2xl font-bold text-white mb-4">Let's connect</h3>
-              <p className="text-gray-400 leading-relaxed max-w-2xl mx-auto">
+            <div className="glass-card text-center">
+              <h3 className="mb-4 font-display headline-md text-ethereal-on-surface">Let's build something meaningful</h3>
+              <p className="mx-auto max-w-2xl body-lg text-ethereal-on-surface-variant leading-relaxed">
                 I'm currently looking for new opportunities in AI/ML engineering, research roles, 
                 and software development. Whether you have a question or just want to say hi, 
                 I'll try my best to get back to you!
               </p>
             </div>
-            
-            <div className="flex flex-wrap justify-center gap-6 w-full">
-              <a href="mailto:santhoshsunkarasbe@gmail.com" className="flex flex-col items-center gap-4 group p-8 bg-gray-900/50 rounded-3xl border border-gray-800 hover:border-purple-500/50 hover:bg-gray-800/80 transition-all flex-1 min-w-[200px] shadow-lg">
-                <div className="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20 group-hover:bg-purple-500/20 transition-colors">
-                  <Mail className="text-purple-400" size={28} />
-                </div>
-                <div>
-                  <div className="text-sm text-gray-400 font-medium mb-1">Email</div>
-                  <div className="text-white font-medium group-hover:text-purple-300 transition-colors">santhoshsunkarasbe@gmail.com</div>
-                </div>
-              </a>
-              
-              <a href="https://www.linkedin.com/in/siva-sambhavi-santhosh-sunkara-588a24265/" target="_blank" rel="noreferrer" className="flex flex-col items-center gap-4 group p-8 bg-gray-900/50 rounded-3xl border border-gray-800 hover:border-blue-500/50 hover:bg-gray-800/80 transition-all flex-1 min-w-[200px] shadow-lg">
-                <div className="w-14 h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20 group-hover:bg-blue-500/20 transition-colors">
-                  <Linkedin className="text-blue-400" size={28} />
-                </div>
-                <div>
-                  <div className="text-sm text-gray-400 font-medium mb-1">LinkedIn</div>
-                  <div className="text-white font-medium group-hover:text-blue-300 transition-colors">santhosh sunkara</div>
-                </div>
-              </a>
-              
-              <a href="https://github.com/santhosh220z" target="_blank" rel="noreferrer" className="flex flex-col items-center gap-4 group p-8 bg-gray-900/50 rounded-3xl border border-gray-800 hover:border-gray-500/50 hover:bg-gray-800/80 transition-all flex-1 min-w-[200px] shadow-lg">
-                <div className="w-14 h-14 rounded-2xl bg-gray-600/10 flex items-center justify-center border border-gray-600/20 group-hover:bg-gray-600/20 transition-colors">
-                  <Github className="text-gray-400" size={28} />
-                </div>
-                <div>
-                  <div className="text-sm text-gray-400 font-medium mb-1">GitHub</div>
-                  <div className="text-white font-medium group-hover:text-gray-300 transition-colors">@santhosh220z</div>
-                </div>
-              </a>
+
+            <div className="grid w-full gap-6 md:grid-cols-3">
+              {contactItems.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target={item.href.startsWith('http') ? '_blank' : undefined}
+                  rel={item.href.startsWith('http') ? 'noreferrer' : undefined}
+                  className="group flex flex-col items-center gap-4 glass-card-hover text-center"
+                >
+                  <div className={`flex h-14 w-14 items-center justify-center rounded-xl border transition-colors ${item.iconBg}`}>
+                    <item.Icon size={26} className={item.iconColor} />
+                  </div>
+                  <div>
+                    <div className="mb-1 font-mono label-sm text-ethereal-on-surface-variant">{item.label}</div>
+                    <div className="font-display text-lg font-medium text-ethereal-on-surface">{item.value}</div>
+                  </div>
+                </a>
+              ))}
             </div>
           </motion.div>
         </div>

@@ -1,0 +1,9 @@
+C:\Users\santh\OneDrive\Desktop\projects\Personal_Portifolio\index.html
+C:\Users\santh\OneDrive\Desktop\projects\Personal_Portifolio\IMAGE\google-cloud.png
+C:\Users\santh\OneDrive\Desktop\projects\Personal_Portifolio\IMAGE\wmremove-transformed.jpeg
+C:\Users\santh\OneDrive\Desktop\projects\Personal_Portifolio\public\favicon.svg
+C:\Users\santh\OneDrive\Desktop\projects\Personal_Portifolio\public\icons.svg
+C:\Users\santh\OneDrive\Desktop\projects\Personal_Portifolio\src\assets\hero.png
+C:\Users\santh\OneDrive\Desktop\projects\Personal_Portifolio\src\assets\profile2.jpeg
+C:\Users\santh\OneDrive\Desktop\projects\Personal_Portifolio\src\assets\react.svg
+C:\Users\santh\OneDrive\Desktop\projects\Personal_Portifolio\src\assets\vite.svg

@@ -1,121 +1,139 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Download, Mail } from 'lucide-react';
+import { ArrowRight, Download, Mail, Brain, Cpu } from 'lucide-react';
 import profileImg from '../assets/profile2.jpeg';
 
 const Hero = () => {
-  return (
-    <section id="hero" className="min-h-screen pt-20 flex items-center justify-center relative overflow-hidden">
-      {/* Background glowing orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-chlorophyll-primary/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] bg-chlorophyll-secondary/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen"></div>
+  const highlights = [
+    { label: 'AI Projects', value: '10+' },
+    { label: 'Certifications', value: '18+' },
+    { label: 'Core Stack', value: 'Python + CV' },
+  ];
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 w-full grid md:grid-cols-2 gap-12 items-center z-10">
-        
-        {/* Text Content */}
+  return (
+    <section id="hero" className="relative flex min-h-screen items-center overflow-hidden pt-36 pb-16 md:pt-40 md:pb-24">
+      <div className="pointer-events-none absolute left-[8%] top-1/4 h-80 w-80 rounded-full bg-electric-violet/10 blur-[120px] animate-float"></div>
+      <div className="pointer-events-none absolute bottom-[12%] right-[6%] h-[22rem] w-[22rem] rounded-full bg-tertiary/10 blur-[120px] animate-float-delayed"></div>
+      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[40rem] w-[40rem] rounded-full bg-electric-violet/5 blur-[200px] animate-pulse-glow"></div>
+
+      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-16 px-6 md:grid-cols-2 md:px-12">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="order-2 md:order-1 flex flex-col items-start"
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          className="order-2 flex flex-col items-start md:order-1"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="px-4 py-2 rounded-full border border-chlorophyll-tertiary/10 bg-chlorophyll-surface-variant/20 text-chlorophyll-primary text-sm font-medium mb-6 backdrop-blur-sm flex items-center gap-2"
+            className="mb-7 inline-flex items-center gap-2 rounded-full glass px-4 py-2"
           >
-            <span className="w-2 h-2 rounded-full bg-chlorophyll-primary animate-pulse shadow-[0_0_10px_#afd188]"></span>
-            Available for opportunities
+            <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-electric-violet shadow-[0_0_12px_rgba(139,92,246,0.8)]"></span>
+            <span className="font-mono label-sm text-ethereal-on-surface-variant">Open to opportunities</span>
           </motion.div>
 
-          <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4 text-chlorophyll-on-surface">
-            Hi, I'm <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-chlorophyll-primary to-chlorophyll-tertiary">
-              Santhosh Sunkara
-            </span>
+          <h1 className="mb-4 font-display display-lg text-ethereal-on-surface md:display-lg">
+            Building
+            <br />
+            <span className="text-gradient">intelligent systems</span>
           </h1>
-          
-          <h2 className="font-display text-2xl md:text-3xl font-medium text-chlorophyll-secondary mb-6">
-            AI / Machine Learning Developer
-          </h2>
-          
-          <p className="font-body text-lg text-chlorophyll-on-surface-variant mb-10 leading-relaxed max-w-xl">
-            B.Tech student specializing in Computer Science Engineering (AI & ML) at Kakinada Institute of Engineering and Technology. 
-            Python enthusiast at an intermediate level with a strong interest in Machine Learning, Generative AI, and building real-world AI applications.
+
+          <p className="mb-6 font-mono label-sm text-ethereal-on-surface-variant uppercase tracking-wider">
+            by Santhosh Sunkara
           </p>
 
-          <div className="flex flex-wrap items-center gap-4">
+          <h2 className="mb-6 max-w-xl font-display headline-md text-ethereal-on-surface-variant">
+            Full Stack Developer & Cloud Engineer focused on AI/ML, Computer Vision, and scalable cloud architectures
+          </h2>
+
+          <p className="mb-10 max-w-2xl body-lg text-ethereal-on-surface-variant leading-relaxed">
+            B.Tech student in Computer Science Engineering (AI and ML) at KIET. I design intelligent products with Python, OpenCV, and modern ML workflows, turning prototypes into usable experiences.
+          </p>
+
+          <div className="mb-10 flex flex-wrap items-center gap-4">
             <a
               href="#projects"
-              className="px-6 py-3 rounded-lg bg-chlorophyll-primary text-chlorophyll-on-primary font-medium hover:bg-chlorophyll-primary-container transition-all hover:shadow-[0_0_15px_rgba(175,209,136,0.3)] flex items-center gap-2"
+              className="btn-primary group inline-flex items-center gap-2"
             >
-              View Projects <ArrowRight size={18} />
+              Explore Projects
+              <ArrowRight size={18} className="transition-transform group-hover:translate-x-0.5" />
             </a>
             <a
               href="/resume.pdf"
-              target="_blank"
-              rel="noreferrer"
-              className="px-6 py-3 rounded-lg bg-chlorophyll-surface-variant/15 backdrop-blur-md border border-chlorophyll-tertiary/10 text-chlorophyll-primary-fixed font-medium hover:bg-chlorophyll-surface-variant/30 transition-all flex items-center gap-2"
+              download="Santhosh_Sunkara_Resume.pdf"
+              className="btn-secondary inline-flex items-center gap-2"
             >
-              <Download size={18} /> Resume
+              <Download size={18} />
+              Download Resume
             </a>
             <a
               href="#contact"
-              className="px-6 py-3 text-chlorophyll-tertiary font-medium hover:text-chlorophyll-tertiary-fixed transition-colors flex items-center gap-2 relative group"
+              className="btn-ghost group relative inline-flex items-center gap-2"
             >
-              <Mail size={18} /> Contact Me
-              <span className="absolute bottom-1 left-6 right-6 h-[2px] bg-chlorophyll-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+              <Mail size={18} />
+              Contact Me
+              <span className="absolute bottom-1 left-2 right-2 h-[2px] origin-left scale-x-0 bg-electric-violet transition-transform group-hover:scale-x-100"></span>
             </a>
+          </div>
+
+          <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-3">
+            {highlights.map((item) => (
+              <div
+                key={item.label}
+                className="glass-card text-center"
+              >
+                <p className="font-display text-3xl font-bold text-ethereal-on-surface">{item.value}</p>
+                <p className="font-mono label-sm text-ethereal-on-surface-variant uppercase">{item.label}</p>
+              </div>
+            ))}
           </div>
         </motion.div>
 
-        {/* Profile Image / Graphics */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="order-1 md:order-2 flex justify-center md:justify-end"
+          transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
+          className="order-1 flex justify-center md:order-2 md:justify-end"
         >
-          <div className="relative w-72 h-72 md:w-96 md:h-96">
-            <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-chlorophyll-primary/20 to-chlorophyll-secondary-container/20 border border-chlorophyll-tertiary/5 backdrop-blur-3xl transform rotate-6 transition-transform hover:rotate-12 duration-500"></div>
-            <div className="absolute inset-0 rounded-3xl bg-chlorophyll-surface-high border border-chlorophyll-outline-variant/30 flex items-center justify-center overflow-hidden shadow-[0_0_60px_rgba(175,209,136,0.1)] z-10">
-              {/* Profile Image */}
-              <div className="w-full h-full p-2">
-                <img 
-                  src={profileImg} 
-                  alt="Santhosh Sunkara - Profile" 
-                  className="w-full h-full object-cover rounded-2xl"
+          <div className="relative h-80 w-72 md:h-[30rem] md:w-[25rem]">
+            <div className="absolute inset-0 rotate-3 rounded-[2.2rem] border border-electric-violet/20 bg-gradient-to-br from-primary-container/20 to-secondary/10 blur-[1px]"></div>
+            <div className="absolute inset-0 z-10 overflow-hidden rounded-[2.2rem] border border-white/15 bg-ethereal-surface p-3 shadow-glass">
+              <div className="h-full w-full overflow-hidden rounded-[1.6rem]">
+                <img
+                  src={profileImg}
+                  alt="Santhosh Sunkara - Profile"
+                  className="h-full w-full object-cover"
                 />
               </div>
             </div>
-            
-            {/* Floating badges */}
+
             <motion.div
               animate={{ y: [-10, 10, -10] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -right-6 top-10 bg-chlorophyll-surface-highest/80 backdrop-blur-[16px] border border-chlorophyll-tertiary/5 p-3 rounded-2xl shadow-xl z-20 flex flex-col items-center"
+              className="absolute -right-8 top-10 z-20 flex items-center gap-3 rounded-2xl glass px-4 py-3"
             >
-              <div className="w-10 h-10 rounded-full bg-chlorophyll-primary-container/30 flex items-center justify-center text-chlorophyll-primary mb-1">
-                <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-container/30 text-electric-violet">
+                <Brain size={18} />
               </div>
-              <span className="font-display text-xs font-bold text-chlorophyll-on-surface">Deep Learning</span>
+              <div>
+                <p className="font-mono label-sm text-ethereal-on-surface-variant">Focus</p>
+                <p className="font-display text-sm font-semibold text-ethereal-on-surface">Deep Learning</p>
+              </div>
             </motion.div>
 
             <motion.div
               animate={{ y: [10, -10, 10] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute -left-8 bottom-20 bg-chlorophyll-surface-highest/80 backdrop-blur-[16px] border border-chlorophyll-tertiary/5 p-3 rounded-2xl shadow-xl z-20 flex flex-col items-center"
+              className="absolute -left-10 bottom-24 z-20 flex items-center gap-3 rounded-2xl glass px-4 py-3"
             >
-              <div className="w-10 h-10 rounded-full bg-chlorophyll-secondary-container/40 flex items-center justify-center text-chlorophyll-secondary mb-1">
-                <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                </svg>
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-secondary-container/30 text-tertiary">
+                <Cpu size={18} />
               </div>
-              <span className="font-display text-xs font-bold text-chlorophyll-on-surface">Computer Vision</span>
+              <div>
+                <p className="font-mono label-sm text-ethereal-on-surface-variant">Specialty</p>
+                <p className="font-display text-sm font-semibold text-ethereal-on-surface">Computer Vision</p>
+              </div>
             </motion.div>
           </div>
         </motion.div>
