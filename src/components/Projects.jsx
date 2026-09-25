@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { Github, ExternalLink, Code2 } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 import { makeReveal, revealViewport } from '../lib/motion';
+import TiltCard from './TiltCard';
 
 const Projects = () => {
   const reduceMotion = useReducedMotion();
@@ -42,25 +43,26 @@ const Projects = () => {
   return (
     <section id="projects" className="relative section-spacing">
       <div className="relative z-10 section-container">
-        <SectionHeading title="Featured Projects" subtitle="My Work" />
+        <SectionHeading title="Selected work" />
 
         <motion.div
           variants={container}
           initial="hidden"
           whileInView="visible"
           viewport={revealViewport}
-          className="grid gap-8 pt-8 md:grid-cols-2 md:gap-10"
+          className="scene-3d grid gap-8 pt-8 md:grid-cols-2 md:gap-10"
         >
           {projects.map((project, idx) => (
             <motion.div
               key={project.title}
               variants={item}
-              className={`group relative flex flex-col overflow-hidden rounded-2xl surface surface-card-hover ${idx % 2 !== 0 ? 'md:mt-14' : ''}`}
+              className={`${idx % 2 !== 0 ? 'md:mt-14' : ''}`}
             >
-              <div className="h-1.5 w-full bg-gradient-to-r from-electric-violet via-tertiary to-secondary"></div>
+              <TiltCard lift className="group flex h-full flex-col overflow-hidden rounded-2xl surface surface-card-hover">
+              <div className="h-1.5 w-full bg-gradient-to-r from-electric-violet via-accent to-accent"></div>
               <div className="flex flex-1 flex-col p-8">
                 <div className="mb-8 flex items-start justify-between">
-                  <div className="rounded-xl border border-electric-violet/30 bg-primary-container/20 p-3 text-electric-violet transition-colors group-hover:bg-primary-container/30">
+                  <div className="rounded-xl border border-accent-line bg-accent-soft p-3 text-electric-violet transition-colors group-hover:bg-accent-soft">
                     <Code2 size={24} />
                   </div>
 
@@ -72,18 +74,19 @@ const Projects = () => {
                       href={project.github}
                       target="_blank"
                       rel="noreferrer"
-                      className="rounded-lg surface p-2 transition-colors hover:text-electric-violet"
+                      className="icon-btn"
+                      aria-label={`${project.title} source on GitHub`}
                     >
-                      <Github size={22} />
+                      <Github size={18} aria-hidden="true" />
                     </a>
                   </div>
                 </div>
 
-                <h3 className="mb-4 font-display headline-sm text-ethereal-on-surface transition-colors group-hover:text-gradient md:headline-md">
+                <h3 className="mb-4 font-display text-lg text-ethereal-on-surface transition-colors group-hover:text-gradient md:text-2xl">
                   {project.title}
                 </h3>
 
-                <p className="mb-10 flex-1 body-lg text-ethereal-on-surface-variant leading-relaxed">
+                <p className="mb-10 flex-1 text-lg text-ethereal-on-surface-variant leading-relaxed">
                   {project.description}
                 </p>
 
@@ -98,11 +101,12 @@ const Projects = () => {
                       </span>
                     ))}
                   </div>
-                  <div className="flex items-center text-ethereal-on-surface-variant/50 transition-colors group-hover:text-electric-violet group-hover:opacity-100">
+                  <div className="flex items-center text-ethereal-on-surface-variant transition-colors group-hover:text-electric-violet group-hover:opacity-100">
                     <ExternalLink size={24} />
                   </div>
                 </div>
               </div>
+              </TiltCard>
             </motion.div>
           ))}
         </motion.div>
@@ -114,7 +118,7 @@ const Projects = () => {
             rel="noreferrer"
             className="btn-secondary inline-flex items-center gap-2"
           >
-            View more on GitHub <Github size={18} />
+            All projects on GitHub <Github size={16} aria-hidden="true" />
           </a>
         </div>
       </div>
