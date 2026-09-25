@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ExternalLink, Calendar } from 'lucide-react';
+import { useState } from 'react';
+import { ExternalLink, ChevronDown } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 import { makeReveal, revealViewport } from '../lib/motion';
 import GoogleCloudLogo from '../../IMAGE/google-cloud.png';
@@ -116,62 +117,102 @@ const certificationsData = [
   }
 ];
 
+const FEATURED_COUNT = 5;
+
 const Certifications = () => {
   const reduceMotion = useReducedMotion();
   const { container, item } = makeReveal(reduceMotion);
+  const [showAll, setShowAll] = useState(false);
+  const featured = certificationsData.slice(0, FEATURED_COUNT);
+  const rest = certificationsData.slice(FEATURED_COUNT);
   return (
     <section id="certifications" className="relative overflow-hidden section-spacing">
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[780px] w-[780px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-electric-violet/5 blur-[140px]"></div>
 
       <div className="relative z-10 section-container">
-        <SectionHeading title="Certifications" subtitle="My Google Skill Build Badges" />
+        <SectionHeading title="Certifications" />
 
-        <motion.div
+        {/* 18 badges as an 18-cell grid was a data dump with no hierarchy. The
+            first five are presented as depth-stacked cards; the rest sit behind
+            a disclosure, so the section reads as "here is the evidence" instead
+            of a wall. */}
+        <div className="mt-10 flex items-center gap-4">
+          <p className="text-sm text-ethereal-on-surface-variant">
+            18 Google Cloud Skill Build badges
+          </p>
+          <span className="h-px flex-1 bg-hairline"></span>
+        </div>
+
+        <motion.ul
           variants={container}
           initial="hidden"
           whileInView="visible"
           viewport={revealViewport}
-          className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          className="scene-3d stack-3d mt-8 grid list-none grid-cols-1 gap-5 p-0 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {certificationsData.map((cert, index) => (
-            <motion.div
-              key={cert.title ?? cert.name ?? index}
+          {featured.map((cert, index) => (
+            <motion.li
+              key={cert.name}
               variants={item}
-              className="group relative flex flex-col surface surface-card-hover"
+              className="group surface surface-card-hover flex flex-col"
+              style={{ transform: `translateZ(${(FEATURED_COUNT - index) * 8}px)` }}
             >
-              <div className="mb-6 flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl surface p-2 transition-transform duration-300 group-hover:scale-105">
-                <img src={GoogleCloudLogo} alt="Google Cloud" className="w-full h-full object-contain" />
-              </div>
-
-              <div className="flex-1 flex flex-col">
-                <h3 className="mb-2 font-display headline-sm text-ethereal-on-surface leading-tight transition-colors group-hover:text-electric-violet">
-                  {cert.name}
-                </h3>
-
-                <div className="mb-4 flex items-center gap-2 font-mono label-sm text-ethereal-on-surface-variant">
-                  <span className="text-tertiary">{cert.issuer}</span>
-                  <span className="h-1 w-1 rounded-full bg-white/15"></span>
-                  <span className="flex items-center gap-1">
-                    <Calendar size={14} />
+              <div className="mb-5 flex items-center gap-3.5">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg surface-2 p-1.5">
+                  <img src={GoogleCloudLogo} alt="" className="h-full w-full object-contain" />
+                </div>
+                <div>
+                  <h3 className="text-sm leading-snug font-medium text-ethereal-on-surface">
+                    {cert.name}
+                  </h3>
+                  <p className="mt-1 font-mono text-xs text-ethereal-on-surface-variant">
                     {cert.date}
-                  </span>
+                  </p>
                 </div>
               </div>
-
-              <div className="mt-auto border-t border-white/10 pt-4">
-                <a
-                  href={cert.verifyLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-ghost inline-flex items-center gap-2"
-                >
-                  Verify Credential
-                  <ExternalLink size={16} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                </a>
-              </div>
-            </motion.div>
+              <a
+                href={cert.verifyLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm text-electric-violet transition-colors hover:text-electric-violet-hover"
+              >
+                Verify
+                <ExternalLink size={14} aria-hidden="true" />
+              </a>
+            </motion.li>
           ))}
-        </motion.div>
+        </motion.ul>
+
+        <div className="mt-8">
+          <button
+            type="button"
+            onClick={() => setShowAll((v) => !v)}
+            aria-expanded={showAll}
+            className="btn-secondary inline-flex items-center gap-2"
+          >
+            {showAll ? 'Show fewer' : `Show all ${certificationsData.length} badges`}
+            <ChevronDown
+              size={16}
+              aria-hidden="true"
+              className={`transition-transform duration-200 ${showAll ? 'rotate-180' : ''}`}
+            />
+          </button>
+
+          {showAll ? (
+            <ul className="mt-6 grid list-none grid-cols-1 gap-2 p-0 sm:grid-cols-2 lg:grid-cols-3">
+              {rest.map((cert) => (
+                <li
+                  key={cert.name}
+                  className="flex items-baseline justify-between gap-3 border-b border-hairline py-2.5"
+                >
+                  <span className="text-sm text-ethereal-on-surface-variant">{cert.name}</span>
+                  <span className="shrink-0 font-mono text-xs text-ethereal-on-surface-variant">
+                    {cert.date}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
       </div>
     </section>
   );
