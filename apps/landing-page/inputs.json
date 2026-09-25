@@ -1,0 +1,305 @@
+{
+  "$schema": "https://atelier-zero.dev/inputs.schema.json",
+  "edition": "Vol. 01 — 2026",
+  "movements": 9,
+  "person": {
+    "name": "Santhosh Sunkara",
+    "initials": "SS",
+    "role": "Machine Learning Engineer & Applied AI Developer",
+    "disciplines": "Machine vision · Language systems · Cloud engineering",
+    "residence": "Kakinada, Andhra Pradesh, India",
+    "email": "santhoshsunkarasbe@gmail.com",
+    "github": "https://github.com/santhosh220z",
+    "githubHandle": "@santhosh220z",
+    "linkedin": "https://www.linkedin.com/in/siva-sambhavi-santhosh-sunkara-588a24265/",
+    "status": "Available — internships, research & collaborations, 2026",
+    "portrait": { "src": "src/assets/profile2.jpeg", "caption": "Portrait for the office wall, taken on a phone, unused." },
+    "indexLine": "An index of selected work in machine vision, language systems and the quiet craft of making intelligence useful."
+  },
+  "hero": {
+    "lines": ["Teach a machine", "to read", "hands, faces, bodies in motion."],
+    "subline": "An applied portfolio in computer vision, generative systems and cloud-scale machine learning — set in ink, composed in Kakinada.",
+    "marginalia": [
+      { "label": "Discipline", "value": "Applied AI & ML" },
+      { "label": "Studio", "value": "Kakinada — IN" },
+      { "label": "Status", "value": "Open to one project at a time" }
+    ]
+  },
+  "manifesto": {
+    "kicker": "Statement of intent",
+    "title": "Intelligence is a craft, not a trick.",
+    "lede": "Deep learning is cheap to imitate and expensive to mean. My practice sits at the transfer point: the nervous boundary between a model that classifies and a system that actually helps.",
+    "paragraphs": [
+      "I started with pixels. When I first watched a convolutional network learn to tell one face from the next, I stopped seeing vision as perception and started seeing it as a discipline — annotation, pre-processing, augmentation, patience. Everything I build now begins there.",
+      "The second lesson came from a hand. Building a real-time sign-language translator meant confronting the difference between a notebook accuracy of 92% and a classroom where the lighting is wrong, the hands are fast, and the frame rate fights you. Accuracy is necessary. Robustness is required.",
+      "I am drawn to work that sits just beyond the demo: deepfake detection that can be scrutinised, stroke risk models that clinicians could trust, assistants that remember context. I do not chase benchmarks for their own sake. I chase systems that survive contact with the real world.",
+      "This portfolio is arranged as a small magazine rather than a list — an index of work, a few convictions, and the record of a studio still learning. I am finishing a B.Tech in Computer Science (AI & ML), and I am, as the marginalia say, open to one project at a time."
+    ],
+    "pullquote": "A notebook accuracy of 92% is the beginning, never the verdict."
+  },
+  "projects": [
+    {
+      "index": "01",
+      "title": "The Counterfeit Face",
+      "kind": "Deepfake Detection Model",
+      "discipline": "Computer vision · Anomaly detection",
+      "year": "2024",
+      "role": "Model designer & researcher",
+      "client": "Independent research",
+      "meta": [
+        { "label": "Discipline", "value": "Computer vision" },
+        { "label": "Model", "value": "CNN — classification pipeline" },
+        { "label": "Year", "value": "2024" },
+        { "label": "Role", "value": "Design & research" }
+      ],
+      "statement": "Manipulated video is the cheapest lie on the internet. This study builds a deep-learning detector for image and video manipulation — a convolutional pipeline with deliberate pre-processing stages, trained to spot the counterfeit face rather than merely the visible artefact.",
+      "outcomes": [
+        "End-to-end CNN pipeline with structured pre-processing",
+        "Evaluated on manipulated image & video sets",
+        "Architecture open on GitHub for reproduction"
+      ],
+      "stack": ["Python", "TensorFlow", "OpenCV"],
+      "links": { "code": "https://github.com/santhosh220z/Deepfake-Detection", "demo": null },
+      "figure": {
+        "src": null,
+        "caption": "Architecture study — the counterfeit face is caught in the pipeline, not the frame.",
+        "plate": "network"
+      }
+    },
+    {
+      "index": "02",
+      "title": "Sign Speak",
+      "kind": "Real-time Gesture Recognition",
+      "discipline": "Assistive AI · Human gesture",
+      "year": "2024 — 2025",
+      "role": "Research intern, Edunet Foundation",
+      "client": "Edunet Foundation",
+      "meta": [
+        { "label": "Discipline", "value": "Assistive AI" },
+        { "label": "Model", "value": "MediaPipe + TensorFlow CNN" },
+        { "label": "Accuracy", "value": "92% on custom set" },
+        { "label": "Recognition", "value": "Regional round, Edunet showcase" }
+      ],
+      "statement": "A real-time hand-sign recognition system that turns annotated gestures into spoken meaning — built with OpenCV and MediaPipe for tracking and a TensorFlow CNN for classification. Selected from the cohort for the Edunet regional round, the project exists to make communication accessible where it is often assumed.",
+      "outcomes": [
+        "Live gesture-to-text classification from camera input",
+        "92% trained accuracy on a custom annotated dataset",
+        "Selected for regional round at Edunet Foundation showcase"
+      ],
+      "stack": ["Python", "OpenCV", "MediaPipe", "TensorFlow", "CNN"],
+      "links": { "code": "https://github.com/santhosh220z", "demo": null },
+      "figure": {
+        "src": null,
+        "caption": "Fig. 02 — a frame from the field diary: thirty annotated hand classes, one stubborn framerate.",
+        "plate": "hand"
+      }
+    },
+    {
+      "index": "03",
+      "title": "Designing a Conversationalist",
+      "kind": "Chat Agent — DeepSeek-R1",
+      "discipline": "Language systems · Generative AI",
+      "year": "2025",
+      "role": "Builder & fine-tuner",
+      "client": "Independent study",
+      "meta": [
+        { "label": "Discipline", "value": "Generative AI" },
+        { "label": "Model", "value": "DeepSeek-R1 via Hugging Face" },
+        { "label": "Interface", "value": "Web UI with dialogue memory" },
+        { "label": "Role", "value": "Build & orchestration" }
+      ],
+      "statement": "Reasoning models are as good as the context you give them. This assistant wraps the DeepSeek-R1 model from Hugging Face in a web interface with conversation history — exploring what it takes to turn a heavy open-weight model into something that remembers, continues, and holds a thread.",
+      "outcomes": [
+        "Open-weight LLM behind a working web interface",
+        "Conversation-history memory across turns",
+        "Study of orchestration & prompt shaping"
+      ],
+      "stack": ["Python", "Hugging Face", "DeepSeek-R1", "HTML", "CSS"],
+      "links": { "code": "https://github.com/santhosh220z", "demo": null },
+      "figure": {
+        "src": null,
+        "caption": "Fig. 03 — thread study: how much memory does a conversation deserve?",
+        "plate": "spectrum"
+      }
+    },
+    {
+      "index": "04",
+      "title": "The Quiet Warning",
+      "kind": "Stroke Risk Prediction",
+      "discipline": "Healthcare ML · Classification",
+      "year": "2024",
+      "role": "ML researcher",
+      "client": "Independent study",
+      "meta": [
+        { "label": "Discipline", "value": "Healthcare ML" },
+        { "label": "Models", "value": "Scikit-learn classifiers" },
+        { "label": "Data", "value": "Medical risk features" },
+        { "label": "Role", "value": "Research & modelling" }
+      ],
+      "statement": "Some predictions matter more than others. Stroke risk is one of them: a classification study over clinical features, comparing classical machine-learning models on a medical dataset — a reminder that the highest-impact models are often the most legible ones.",
+      "outcomes": [
+        "Comparative evaluation of classical classifiers",
+        "Feature-driven risk scoring on medical data",
+        "Used as a teaching exercise for my ML assist class"
+      ],
+      "stack": ["Python", "Scikit-learn", "Pandas", "NumPy"],
+      "links": { "code": "https://github.com/santhosh220z", "demo": null },
+      "figure": {
+        "src": null,
+        "caption": "Fig. 04 — an ROC study in warm ink; the quiet warning, drawn out.",
+        "plate": "bars"
+      }
+    }
+  ],
+  "about": {
+    "kicker": "Brief biography",
+    "title": "Signed, sealed, still learning.",
+    "heading": "An engineer who treats model-building as a discipline of annotation, patience and honest evaluation.",
+    "paragraphs": [
+      "I am an applied AI developer with a product instinct and an engineer's patience. My work lives in computer vision and language systems — real-time gesture recognition, deepfake detection, predictive health models — built to survive real environments rather than demos.",
+      "I interned with Google's AI-ML virtual programme and researched at the Edunet Foundation, where Sign Speak — my hand-sign system — was selected for the regional round. Between internships I served as an ML teaching assistant at KIET, guided two dozen students through regression to neural networks, and discovered that teaching is the fastest way to find the holes in what you know.",
+      "I hold B.Tech in Computer Science (AI & ML), write in English, Telugu and Hindi, and keep eighteen Google Cloud badges as a quiet shelf of evidence. I am, at heart, someone who believes the model is finished only when it works in the world."
+    ],
+    "facts": [
+      { "label": "Education", "value": "B.Tech CSE — AI & ML, KIET-II Kakinada, 2022–26" },
+      { "label": "Command of", "value": "English · Telugu · Hindi" },
+      { "label": "Cloud shelf", "value": "18 × Google Cloud skill badges" },
+      { "label": "One stubborn belief", "value": "Robustness over accuracy" }
+    ],
+    "recognition": [
+      { "label": "Edunet Foundation", "value": "Regional round selection — Sign Speak, 2024–25" },
+      { "label": "Google", "value": "AI-ML virtual internship completion, 2024–25" },
+      { "label": "Teaching", "value": "ML assist, KIET — 30+ students guided through ML" }
+    ]
+  },
+  "experience": [
+    {
+      "role": "Machine Learning Engineer",
+      "organization": "Google — AI/ML Virtual Internship",
+      "place": "Remote",
+      "period": "2024 — 2025",
+      "stack": ["TensorFlow", "PyTorch", "Google Cloud AI", "MLOps", "Model deployment"],
+      "description": "An immersive programme in applied AI/ML — algorithms, real-world applications, and the discipline of deployment. Built scalable models on Google Cloud infrastructure and shipped three production-ready predictors for real-time services.",
+      "note": "Three models shipped, two invitations to keep building."
+    },
+    {
+      "role": "Research Intern",
+      "organization": "Edunet Foundation",
+      "place": "Kakinada, IN",
+      "period": "2024 — 2025",
+      "stack": ["Python", "OpenCV", "MediaPipe", "TensorFlow", "CNN", "Annotation"],
+      "description": "Designed and built Sign Speak, a real-time hand-sign recognition system for communication accessibility — tracking with MediaPipe, classification with a TensorFlow CNN, and a custom annotated dataset trained to 92% accuracy. Selected for the regional showcase round.",
+      "note": "The project that taught me framing, patience and framerates."
+    },
+    {
+      "role": "Machine Learning — Teaching Assistant",
+      "organization": "KIET College of Engineering",
+      "place": "Kakinada, IN",
+      "period": "2023 — 2024",
+      "stack": ["Scikit-learn", "Matplotlib", "Mentoring", "ML workflow design"],
+      "description": "Assisted faculty across the ML curriculum — grading, review sessions and guiding 30+ students through regression, decision trees and neural-network projects. Ran industry-style workflow clinics; 85% of the cohort cleared the final assessment.",
+      "note": "Teaching is the fastest route to your own ignorance."
+    }
+  ],
+  "capabilities": {
+    "kicker": "The studio, four rooms",
+    "title": "Capabilities of the practice.",
+    "intro": "Not a list of tools — a description of how the work is made. Each room below is a way of thinking before it is a stack.",
+    "rooms": [
+      {
+        "numeral": "I",
+        "title": "Applied machine learning",
+        "note": "Model design, training and honest evaluation — from classical classifiers to convolutional networks.",
+        "items": ["Python", "TensorFlow", "Scikit-learn", "Deep learning", "Transfer learning", "Ensemble methods"]
+      },
+      {
+        "numeral": "II",
+        "title": "Computer vision",
+        "note": "Looking is a discipline. Detection, segmentation, gesture and video — built on OpenCV, MediaPipe and modern detection heads.",
+        "items": ["OpenCV", "MediaPipe", "YOLO", "Faster R-CNN", "Mask R-CNN", "Gesture recognition"]
+      },
+      {
+        "numeral": "III",
+        "title": "Language systems",
+        "note": "Open-weight models shaped into useful things — orchestration, memory, and prompt discipline over pure prompt luck.",
+        "items": ["DeepSeek-R1", "Hugging Face", "Generative AI", "Prompt engineering", "LLM orchestration"]
+      },
+      {
+        "numeral": "IV",
+        "title": "Engineering & deployment",
+        "note": "A model is an opinion until it is deployed. Containers, pipelines and cloud paths from notebook to service.",
+        "items": ["Docker", "GitHub Actions", "Vertex AI", "Google Cloud", "n8n automation", "API design"]
+      }
+    ]
+  },
+  "credentials": {
+    "kicker": "Credentials",
+    "title": "A small library of evidence.",
+    "count": "18",
+    "countNote": "Google Cloud skill badges — verified, 2024",
+    "intro": "A shelf of completed study rather than decoration. The full ledger lives on Google's public profile; a curated spine is reprinted here.",
+    "profileUrl": "https://www.skills.google/public_profiles/b97527e0-fd88-4299-896f-66fa6547079c",
+    "items": [
+      { "name": "MLOps for Generative AI", "issuer": "Google Cloud", "year": "Sep 2024", "verify": "https://www.skills.google/public_profiles/b97527e0-fd88-4299-896f-66fa6547079c/badges/11270258" },
+      { "name": "Introduction to Vertex AI Studio", "issuer": "Google Cloud", "year": "Sep 2024", "verify": "https://www.skills.google/public_profiles/b97527e0-fd88-4299-896f-66fa6547079c/badges/11269094" },
+      { "name": "Create Image Captioning Models", "issuer": "Google Cloud", "year": "Sep 2024", "verify": "https://www.skills.google/public_profiles/b97527e0-fd88-4299-896f-66fa6547079c/badges/11267817" },
+      { "name": "Transformer Models and BERT", "issuer": "Google Cloud", "year": "Sep 2024", "verify": "https://www.skills.google/public_profiles/b97527e0-fd88-4299-896f-66fa6547079c/badges/11264871" },
+      { "name": "Encoder–Decoder Architecture", "issuer": "Google Cloud", "year": "Sep 2024", "verify": "https://www.skills.google/public_profiles/b97527e0-fd88-4299-896f-66fa6547079c/badges/11264103" },
+      { "name": "Attention Mechanism", "issuer": "Google Cloud", "year": "Sep 2024", "verify": "https://www.skills.google/public_profiles/b97527e0-fd88-4299-896f-66fa6547079c/badges/11263590" },
+      { "name": "Gemini for Cloud Architects", "issuer": "Google Cloud", "year": "Sep 2024", "verify": "https://www.skills.google/public_profiles/b97527e0-fd88-4299-896f-66fa6547079c/badges/11202445" },
+      { "name": "Responsible AI — Principles with Google Cloud", "issuer": "Google Cloud", "year": "Aug 2024", "verify": "https://www.skills.google/public_profiles/b97527e0-fd88-4299-896f-66fa6547079c/badges/10686803" },
+      { "name": "Prompt Design in Vertex AI", "issuer": "Google Cloud", "year": "Aug 2024", "verify": "https://www.skills.google/public_profiles/b97527e0-fd88-4299-896f-66fa6547079c/badges/10600787" },
+      { "name": "Introduction to Generative AI", "issuer": "Google Cloud", "year": "Aug 2024", "verify": "https://www.skills.google/public_profiles/b97527e0-fd88-4299-896f-66fa6547079c/badges/10329047" }
+    ]
+  },
+  "journal": {
+    "kicker": "Field notes",
+    "title": "Marginalia from the studio.",
+    "intro": "A living page — reading, experiments and small essays. The archive opens on request.",
+    "entries": [
+      {
+        "kind": "Reading",
+        "title": "On the shelf this month",
+        "date": "Q1 2026",
+        "body": "Sequences of transformers on three-line postcards — attention papers, the DeepSeek spec, a monograph on object detection history. Reading papers is annotating them; the margin is where the real work happens.",
+        "tags": ["Attention", "DeepSeek-R1", "Detection"]
+      },
+      {
+        "kind": "Experiment",
+        "title": "YOLO vs. Faster R-CNN: an annotation diary",
+        "date": "Late 2025",
+        "body": "A head-to-head on the same video set — not about the mAP, but about how much manual annotation each head actually demands. Conclusion so far: the framerate always wins the argument.",
+        "tags": ["YOLO", "R-CNN", "Annotation"]
+      },
+      {
+        "kind": "Essay",
+        "title": "Minimum viable intelligence",
+        "date": "2025",
+        "body": "A short essay on the gap between a model that classifies and a system that helps. The prosthetic is not the brain; it is the pipeline around it. Occasionally I rewrite a paragraph.",
+        "tags": ["Essays", "Practice"]
+      },
+      {
+        "kind": "Notebook",
+        "title": "The 92% problem",
+        "date": "2024 — ongoing",
+        "body": "A standing note on the difference between notebook accuracy and classroom reality — bad light, fast hands, marginal framerates. Every project gets a footnote against this page.",
+        "tags": ["Robustness", "Field work"]
+      }
+    ]
+  },
+  "contact": {
+    "kicker": "Correspondence",
+    "title": "One project at a time.",
+    "note": "Currently mid-final-year of a B.Tech in CSE (AI & ML), expecting completion in 2026. I take on internships, research roles, collaborations and the occasional honest question. If you have a project that needs to survive contact with the real world, the mailbox is open.",
+    "actions": [
+      { "label": "Write", "value": "santhoshsunkarasbe@gmail.com", "href": "mailto:santhoshsunkarasbe@gmail.com", "note": "mailtalk" },
+      { "label": "Code", "value": "@santhosh220z", "href": "https://github.com/santhosh220z", "note": "GitHub" },
+      { "label": "Thread", "value": "Santhosh Sunkara", "href": "https://www.linkedin.com/in/siva-sambhavi-santhosh-sunkara-588a24265/", "note": "LinkedIn" }
+    ]
+  },
+  "colophon": {
+    "line": "Composed in Atelier Zero — set in Fraunces, Archivo and Space Mono, printed on warm stock.",
+    "note": "This page is a document: inputs.json → compose.js → a single self-contained HTML file.",
+    "year": 2026
+  }
+}
