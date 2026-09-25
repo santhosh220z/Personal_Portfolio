@@ -16,10 +16,11 @@ import Contact from './components/Contact';
 function App() {
   return (
     <div className="relative min-h-screen overflow-x-clip font-body text-ethereal-on-background">
+      <a href="#main-content" className="skip-link">Skip to content</a>
       <div className="relative z-10 w-full overflow-hidden">
         <Navbar />
 
-        <main className="relative">
+        <main id="main-content" className="relative" tabIndex={-1}>
           <Hero />
           <About />
           <Experience />
