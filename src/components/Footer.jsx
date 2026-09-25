@@ -18,13 +18,13 @@ const Footer = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <a href="https://github.com/santhosh220z" target="_blank" rel="noreferrer" aria-label="GitHub" className="rounded-full surface p-2 text-ethereal-on-surface-variant transition-colors hover:text-electric-violet">
+            <a href="https://github.com/santhosh220z" target="_blank" rel="noreferrer" aria-label="GitHub" className="icon-btn">
               <Github size={20} aria-hidden="true" />
             </a>
-            <a href="https://www.linkedin.com/in/siva-sambhavi-santhosh-sunkara-588a24265/" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="rounded-full surface p-2 text-ethereal-on-surface-variant transition-colors hover:text-electric-violet">
+            <a href="https://www.linkedin.com/in/siva-sambhavi-santhosh-sunkara-588a24265/" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="icon-btn">
               <Linkedin size={20} aria-hidden="true" />
             </a>
-            <a href="mailto:santhoshsunkarasbe@gmail.com" aria-label="Email" className="rounded-full surface p-2 text-ethereal-on-surface-variant transition-colors hover:text-electric-violet">
+            <a href="mailto:santhoshsunkarasbe@gmail.com" aria-label="Email" className="icon-btn">
               <Mail size={20} aria-hidden="true" />
             </a>
           </div>
