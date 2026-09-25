@@ -29,7 +29,7 @@ const ThemeToggle = () => {
       type="button"
       onClick={toggle}
       aria-label={`Switch to ${mode === 'dark' ? 'light' : 'dark'} mode`}
-      className="rounded-lg border border-hairline bg-ethereal-surface p-2 text-ethereal-on-surface-variant transition-colors hover:border-electric-violet/50 hover:text-electric-violet"
+      className="icon-btn"
     >
       {mode === 'dark' ? (
         <Sun size={18} aria-hidden="true" />

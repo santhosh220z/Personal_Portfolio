@@ -14,15 +14,15 @@ const Contact = () => {
       href: 'mailto:santhoshsunkarasbe@gmail.com',
       Icon: Mail,
       iconColor: 'text-electric-violet',
-      iconBg: 'bg-primary-container/20 border-primary-container/30',
+      iconBg: 'bg-accent-soft border-primary-container/30',
     },
     {
       label: 'LinkedIn',
       value: 'santhosh sunkara',
       href: 'https://www.linkedin.com/in/siva-sambhavi-santhosh-sunkara-588a24265/',
       Icon: Linkedin,
-      iconColor: 'text-tertiary',
-      iconBg: 'bg-tertiary-container/20 border-tertiary/30',
+      iconColor: 'text-electric-violet',
+      iconBg: 'bg-accent-soft border-accent-line',
     },
     {
       label: 'GitHub',
@@ -30,14 +30,14 @@ const Contact = () => {
       href: 'https://github.com/santhosh220z',
       Icon: Github,
       iconColor: 'text-electric-violet',
-      iconBg: 'bg-primary-container/20 border-primary-container/30',
+      iconBg: 'bg-accent-soft border-primary-container/30',
     }
   ];
 
   return (
     <section id="contact" className="relative section-spacing">
       <div className="relative z-10 section-container">
-        <SectionHeading title="Get In Touch" subtitle="Contact Me" />
+        <SectionHeading title="Get in touch" />
 
         <div className="mx-auto mt-8 w-full max-w-5xl">
           <motion.div
@@ -48,8 +48,8 @@ const Contact = () => {
             className="flex flex-col items-center gap-10 text-center"
           >
             <div className="surface surface-card text-center">
-              <h3 className="mb-4 font-display headline-md text-ethereal-on-surface">Let's build something meaningful</h3>
-              <p className="mx-auto max-w-2xl body-lg text-ethereal-on-surface-variant leading-relaxed">
+              <h3 className="mb-4 font-display text-2xl text-ethereal-on-surface">Open to an ML engineering role</h3>
+              <p className="mx-auto max-w-2xl text-lg text-ethereal-on-surface-variant leading-relaxed">
                 I'm currently looking for new opportunities in AI/ML engineering, research roles, 
                 and software development. Whether you have a question or just want to say hi, 
                 I'll try my best to get back to you!
@@ -69,7 +69,7 @@ const Contact = () => {
                     <item.Icon size={26} className={item.iconColor} />
                   </div>
                   <div>
-                    <div className="mb-1 font-mono label-sm text-ethereal-on-surface-variant">{item.label}</div>
+                    <div className="mb-1 font-mono text-xs text-ethereal-on-surface-variant">{item.label}</div>
                     <div className="font-display text-lg font-medium text-ethereal-on-surface">{item.value}</div>
                   </div>
                 </a>

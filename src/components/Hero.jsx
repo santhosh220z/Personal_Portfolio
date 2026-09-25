@@ -39,7 +39,7 @@ const Hero = () => {
         aria-hidden="true"
         className="pointer-events-none absolute -right-24 top-1/2 hidden -translate-y-1/2 opacity-[0.07] lg:block lg:w-[46rem]"
       >
-        <img src={heroArt} alt="" className="w-full" />
+        <img src={heroArt} alt="" width={343} height={361} className="h-auto w-full" />
       </motion.div>
 
       <motion.div
@@ -92,8 +92,8 @@ const Hero = () => {
                 src={profileImg}
                 alt="Santhosh Sunkara"
                 className="aspect-[4/5] w-full object-cover"
-                width={640}
-                height={800}
+                width={1024}
+                height={1023}
               />
             </div>
             <div className="depth-3 absolute -bottom-5 -left-4 flex items-center gap-2.5 rounded-xl border border-hairline bg-ethereal-surface px-3.5 py-2.5 shadow-md">
