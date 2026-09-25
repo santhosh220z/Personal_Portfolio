@@ -1,9 +1,11 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+﻿import React from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Download, Mail, Brain, Cpu } from 'lucide-react';
 import profileImg from '../assets/profile2.jpeg';
 
 const Hero = () => {
+  const reduceMotion = useReducedMotion();
+
   const highlights = [
     { label: 'AI Projects', value: '10+' },
     { label: 'Certifications', value: '18+' },
@@ -12,10 +14,6 @@ const Hero = () => {
 
   return (
     <section id="hero" className="relative flex min-h-screen items-center overflow-hidden pt-36 pb-16 md:pt-40 md:pb-24">
-      <div className="pointer-events-none absolute left-[8%] top-1/4 h-80 w-80 rounded-full bg-electric-violet/10 blur-[120px] animate-float"></div>
-      <div className="pointer-events-none absolute bottom-[12%] right-[6%] h-[22rem] w-[22rem] rounded-full bg-tertiary/10 blur-[120px] animate-float-delayed"></div>
-      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[40rem] w-[40rem] rounded-full bg-electric-violet/5 blur-[200px] animate-pulse-glow"></div>
-
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-16 px-6 md:grid-cols-2 md:px-12">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
@@ -27,9 +25,9 @@ const Hero = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="mb-7 inline-flex items-center gap-2 rounded-full glass px-4 py-2"
+            className="mb-7 inline-flex items-center gap-2 rounded-full surface px-4 py-2"
           >
-            <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-electric-violet shadow-[0_0_12px_rgba(139,92,246,0.8)]"></span>
+            <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-electric-violet shadow-[0_0_12px_rgba(167,139,250,0.8)]"></span>
             <span className="font-mono label-sm text-ethereal-on-surface-variant">Open to opportunities</span>
           </motion.div>
 
@@ -81,7 +79,7 @@ const Hero = () => {
             {highlights.map((item) => (
               <div
                 key={item.label}
-                className="glass-card text-center"
+                className="surface surface-card text-center"
               >
                 <p className="font-display text-3xl font-bold text-ethereal-on-surface">{item.value}</p>
                 <p className="font-mono label-sm text-ethereal-on-surface-variant uppercase">{item.label}</p>
@@ -98,7 +96,7 @@ const Hero = () => {
         >
           <div className="relative h-80 w-72 md:h-[30rem] md:w-[25rem]">
             <div className="absolute inset-0 rotate-3 rounded-[2.2rem] border border-electric-violet/20 bg-gradient-to-br from-primary-container/20 to-secondary/10 blur-[1px]"></div>
-            <div className="absolute inset-0 z-10 overflow-hidden rounded-[2.2rem] border border-white/15 bg-ethereal-surface p-3 shadow-glass">
+            <div className="absolute inset-0 z-10 overflow-hidden rounded-[2.2rem] border border-white/15 bg-ethereal-surface p-3">
               <div className="h-full w-full overflow-hidden rounded-[1.6rem]">
                 <img
                   src={profileImg}
@@ -109,9 +107,9 @@ const Hero = () => {
             </div>
 
             <motion.div
-              animate={{ y: [-10, 10, -10] }}
+              animate={reduceMotion ? {} : { y: [-10, 10, -10] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -right-8 top-10 z-20 flex items-center gap-3 rounded-2xl glass px-4 py-3"
+              className="absolute -right-8 top-10 z-20 flex items-center gap-3 rounded-2xl surface px-4 py-3"
             >
               <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-container/30 text-electric-violet">
                 <Brain size={18} />
@@ -123,9 +121,9 @@ const Hero = () => {
             </motion.div>
 
             <motion.div
-              animate={{ y: [10, -10, 10] }}
+              animate={reduceMotion ? {} : { y: [10, -10, 10] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute -left-10 bottom-24 z-20 flex items-center gap-3 rounded-2xl glass px-4 py-3"
+              className="absolute -left-10 bottom-24 z-20 flex items-center gap-3 rounded-2xl surface px-4 py-3"
             >
               <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-secondary-container/30 text-tertiary">
                 <Cpu size={18} />

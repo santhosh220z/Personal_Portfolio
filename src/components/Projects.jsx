@@ -1,9 +1,13 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+﻿import React from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Github, ExternalLink, Code2 } from 'lucide-react';
 import SectionHeading from './SectionHeading';
+import { makeReveal, revealViewport } from '../lib/motion';
 
 const Projects = () => {
+  const reduceMotion = useReducedMotion();
+  const { container, item } = makeReveal(reduceMotion);
+
   const projects = [
     {
       title: "Deepfake Detection Model",
@@ -40,15 +44,18 @@ const Projects = () => {
       <div className="relative z-10 section-container">
         <SectionHeading title="Featured Projects" subtitle="My Work" />
 
-        <div className="grid gap-8 pt-8 md:grid-cols-2 md:gap-10">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="visible"
+          viewport={revealViewport}
+          className="grid gap-8 pt-8 md:grid-cols-2 md:gap-10"
+        >
           {projects.map((project, idx) => (
             <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: idx * 0.15, ease: "easeOut" }}
-              className={`group relative flex flex-col overflow-hidden rounded-2xl glass-card-hover ${idx % 2 !== 0 ? 'md:mt-14' : ''}`}
+              key={project.title}
+              variants={item}
+              className={`group relative flex flex-col overflow-hidden rounded-2xl surface surface-card-hover ${idx % 2 !== 0 ? 'md:mt-14' : ''}`}
             >
               <div className="h-1.5 w-full bg-gradient-to-r from-electric-violet via-tertiary to-secondary"></div>
               <div className="flex flex-1 flex-col p-8">
@@ -65,14 +72,14 @@ const Projects = () => {
                       href={project.github}
                       target="_blank"
                       rel="noreferrer"
-                      className="rounded-lg glass p-2 transition-colors hover:text-electric-violet"
+                      className="rounded-lg surface p-2 transition-colors hover:text-electric-violet"
                     >
                       <Github size={22} />
                     </a>
                   </div>
                 </div>
 
-                <h3 className="mb-4 font-display headline-sm text-ethereal-on-surface transition-all group-hover:text-gradient md:headline-md">
+                <h3 className="mb-4 font-display headline-sm text-ethereal-on-surface transition-colors group-hover:text-gradient md:headline-md">
                   {project.title}
                 </h3>
 
@@ -98,7 +105,7 @@ const Projects = () => {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         <div className="text-center mt-20">
           <a

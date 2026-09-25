@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+﻿import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Menu, X, Github, Linkedin, Mail } from 'lucide-react';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -27,17 +28,17 @@ const Navbar = () => {
   return (
     <nav className="fixed inset-x-0 top-4 z-50 px-3 md:top-6 md:px-8">
       <div
-        className={`mx-auto flex w-full max-w-7xl items-center justify-between rounded-2xl border px-4 py-3 transition-all duration-300 md:px-6 ${
+        className={`mx-auto flex w-full max-w-7xl items-center justify-between rounded-2xl border px-4 py-3 transition-colors duration-300 md:px-6 ${
           isScrolled
-            ? 'glass-hover'
-            : 'glass'
+            ? 'surface-blur-hover'
+            : 'surface-blur'
         }`}
       >
         <a href="#hero" className="group flex items-center gap-3">
           <motion.div
-            initial={{ rotate: -6 }}
+            initial={reduceMotion ? { rotate: 0 } : { rotate: -6 }}
             animate={{ rotate: 6 }}
-            transition={{ repeat: Infinity, repeatType: 'reverse', duration: 2.6 }}
+            transition={reduceMotion ? { duration: 0 } : { repeat: Infinity, repeatType: 'reverse', duration: 2.6 }}
             className="flex h-9 w-9 items-center justify-center rounded-xl border border-electric-violet/30 bg-gradient-to-br from-electric-violet/20 via-primary-container/20 to-secondary/20"
           >
             <span className="font-display text-xs font-extrabold tracking-wide text-ethereal-on-surface">SS</span>
@@ -54,7 +55,7 @@ const Navbar = () => {
               <li key={link.name}>
                 <a
                   href={link.href}
-                  className="rounded-full px-3 py-2 text-sm font-medium text-ethereal-on-surface-variant transition-all duration-200 hover:bg-white/10 hover:text-ethereal-on-surface font-mono label-sm"
+                  className="rounded-full px-3 py-2 text-sm font-medium text-ethereal-on-surface-variant transition-colors duration-200 hover:bg-white/10 hover:text-ethereal-on-surface font-mono label-sm"
                 >
                   {link.name}
                 </a>
@@ -88,6 +89,8 @@ const Navbar = () => {
           className="rounded-xl border border-white/15 bg-white/5 p-2 text-ethereal-on-surface-variant transition-colors hover:text-electric-violet lg:hidden"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle navigation"
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-menu"
         >
           {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -96,10 +99,12 @@ const Navbar = () => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
+            id="mobile-menu"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="mx-auto mt-2 w-full max-w-7xl overflow-hidden rounded-2xl glass p-5 lg:hidden"
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.2, ease: 'easeOut' }}
+            className="mx-auto mt-2 w-full max-w-7xl overflow-hidden rounded-2xl surface-blur p-5 lg:hidden"
           >
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => (
@@ -107,7 +112,7 @@ const Navbar = () => {
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="rounded-xl px-4 py-3 text-sm font-medium text-ethereal-on-surface-variant transition-all hover:bg-white/10 hover:text-ethereal-on-surface font-mono label-sm"
+                  className="rounded-xl px-4 py-3 text-sm font-medium text-ethereal-on-surface-variant transition-colors hover:bg-white/10 hover:text-ethereal-on-surface font-mono label-sm"
                 >
                   {link.name}
                 </a>
@@ -119,23 +124,26 @@ const Navbar = () => {
                 href="https://github.com/santhosh220z"
                 target="_blank"
                 rel="noreferrer"
+                aria-label="GitHub"
                 className="rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-ethereal-on-surface-variant transition-colors hover:text-electric-violet"
               >
-                <Github size={18} />
+                <Github size={18} aria-hidden="true" />
               </a>
               <a
                 href="https://www.linkedin.com/in/siva-sambhavi-santhosh-sunkara-588a24265/"
                 target="_blank"
                 rel="noreferrer"
+                aria-label="LinkedIn"
                 className="rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-ethereal-on-surface-variant transition-colors hover:text-electric-violet"
               >
-                <Linkedin size={18} />
+                <Linkedin size={18} aria-hidden="true" />
               </a>
               <a
                 href="mailto:santhoshsunkarasbe@gmail.com"
+                aria-label="Email"
                 className="rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-ethereal-on-surface-variant transition-colors hover:text-electric-violet"
               >
-                <Mail size={18} />
+                <Mail size={18} aria-hidden="true" />
               </a>
             </div>
           </motion.div>

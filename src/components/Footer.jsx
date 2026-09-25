@@ -1,11 +1,11 @@
-import React from 'react';
+﻿import React from 'react';
 import { Github, Linkedin, Mail } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-white/10 bg-ethereal-surface/40 pt-16 pb-8 backdrop-blur-glass">
+    <footer className="border-t border-white/10 bg-ethereal-surface/60 pt-16 pb-8">
       <div className="section-container">
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
           <div className="flex items-center gap-3">
@@ -18,14 +18,14 @@ const Footer = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <a href="https://github.com/santhosh220z" target="_blank" rel="noreferrer" className="rounded-full glass p-2 text-ethereal-on-surface-variant transition-all hover:text-electric-violet">
-              <Github size={20} />
+            <a href="https://github.com/santhosh220z" target="_blank" rel="noreferrer" aria-label="GitHub" className="rounded-full surface p-2 text-ethereal-on-surface-variant transition-colors hover:text-electric-violet">
+              <Github size={20} aria-hidden="true" />
             </a>
-            <a href="https://www.linkedin.com/in/siva-sambhavi-santhosh-sunkara-588a24265/" target="_blank" rel="noreferrer" className="rounded-full glass p-2 text-ethereal-on-surface-variant transition-all hover:text-electric-violet">
-              <Linkedin size={20} />
+            <a href="https://www.linkedin.com/in/siva-sambhavi-santhosh-sunkara-588a24265/" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="rounded-full surface p-2 text-ethereal-on-surface-variant transition-colors hover:text-electric-violet">
+              <Linkedin size={20} aria-hidden="true" />
             </a>
-            <a href="mailto:santhoshsunkarasbe@gmail.com" className="rounded-full glass p-2 text-ethereal-on-surface-variant transition-all hover:text-electric-violet">
-              <Mail size={20} />
+            <a href="mailto:santhoshsunkarasbe@gmail.com" aria-label="Email" className="rounded-full surface p-2 text-ethereal-on-surface-variant transition-colors hover:text-electric-violet">
+              <Mail size={20} aria-hidden="true" />
             </a>
           </div>
         </div>

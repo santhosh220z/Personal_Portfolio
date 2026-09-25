@@ -1,9 +1,12 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+﻿import React from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Mail, Github, Linkedin } from 'lucide-react';
 import SectionHeading from './SectionHeading';
+import { makeReveal, revealViewport } from '../lib/motion';
 
 const Contact = () => {
+  const reduceMotion = useReducedMotion();
+  const { item } = makeReveal(reduceMotion);
   const contactItems = [
     {
       label: 'Email',
@@ -38,13 +41,13 @@ const Contact = () => {
 
         <div className="mx-auto mt-8 w-full max-w-5xl">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            variants={item}
+            initial="hidden"
+            whileInView="visible"
+            viewport={revealViewport}
             className="flex flex-col items-center gap-10 text-center"
           >
-            <div className="glass-card text-center">
+            <div className="surface surface-card text-center">
               <h3 className="mb-4 font-display headline-md text-ethereal-on-surface">Let's build something meaningful</h3>
               <p className="mx-auto max-w-2xl body-lg text-ethereal-on-surface-variant leading-relaxed">
                 I'm currently looking for new opportunities in AI/ML engineering, research roles, 
@@ -60,7 +63,7 @@ const Contact = () => {
                   href={item.href}
                   target={item.href.startsWith('http') ? '_blank' : undefined}
                   rel={item.href.startsWith('http') ? 'noreferrer' : undefined}
-                  className="group flex flex-col items-center gap-4 glass-card-hover text-center"
+                  className="group flex flex-col items-center gap-4 surface surface-card-hover text-center"
                 >
                   <div className={`flex h-14 w-14 items-center justify-center rounded-xl border transition-colors ${item.iconBg}`}>
                     <item.Icon size={26} className={item.iconColor} />
