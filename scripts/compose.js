@@ -1,7 +1,11 @@
 // Atelier Zero — portfolio composer CLI.
 // Pure `compose(inputs, ctx)` lives in scripts/lib/sections.js.
 // This script handles I/O: reads inputs, resolves assets, calls compose,
-// writes dist/index.html, and mirrors to apps/landing-page/.
+// writes build/index.html, and mirrors to apps/landing-page/.
+//
+// build/ rather than dist/: dist/ belongs to the Vite build, which empties it
+// on every run, so the two pipelines used to overwrite each other. The
+// deployable artifact is the mirror at apps/landing-page/index.html either way.
 
 import { readFile, writeFile, mkdir, access, cp } from "node:fs/promises";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -11,7 +15,7 @@ import { compose } from "./lib/sections.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
 const INPUTS_PATH = resolve(ROOT, "inputs.json");
-const DIST_DIR = resolve(ROOT, "dist");
+const DIST_DIR = resolve(ROOT, "build");
 const OUTPUT_PATH = resolve(DIST_DIR, "index.html");
 const MIRROR_DIR = resolve(ROOT, "apps", "landing-page");
 const MIRROR_OUTPUT = resolve(MIRROR_DIR, "index.html");
