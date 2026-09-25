@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Stale mirror copies: compose.js writes only apps/landing-page/index.html.
+# Never re-commit a second copy of the brief or the design doc.
+apps/landing-page/inputs.json
+apps/landing-page/DESIGN.md
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
