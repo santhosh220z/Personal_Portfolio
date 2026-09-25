@@ -1,7 +1,8 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+﻿import React from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ExternalLink, Calendar } from 'lucide-react';
 import SectionHeading from './SectionHeading';
+import { makeReveal, revealViewport } from '../lib/motion';
 import GoogleCloudLogo from '../../IMAGE/google-cloud.png';
 
 const certificationsData = [
@@ -116,6 +117,8 @@ const certificationsData = [
 ];
 
 const Certifications = () => {
+  const reduceMotion = useReducedMotion();
+  const { container, item } = makeReveal(reduceMotion);
   return (
     <section id="certifications" className="relative overflow-hidden section-spacing">
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[780px] w-[780px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-electric-violet/5 blur-[140px]"></div>
@@ -123,17 +126,20 @@ const Certifications = () => {
       <div className="relative z-10 section-container">
         <SectionHeading title="Certifications" subtitle="My Google Skill Build Badges" />
 
-        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="visible"
+          viewport={revealViewport}
+          className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        >
           {certificationsData.map((cert, index) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: (index % 4) * 0.1 }}
-              className="group relative flex flex-col glass-card-hover"
+              key={cert.title ?? cert.name ?? index}
+              variants={item}
+              className="group relative flex flex-col surface surface-card-hover"
             >
-              <div className="mb-6 flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl glass p-2 transition-transform duration-300 group-hover:scale-105">
+              <div className="mb-6 flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl surface p-2 transition-transform duration-300 group-hover:scale-105">
                 <img src={GoogleCloudLogo} alt="Google Cloud" className="w-full h-full object-contain" />
               </div>
 
@@ -165,7 +171,7 @@ const Certifications = () => {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
