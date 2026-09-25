@@ -158,7 +158,7 @@ const Certifications = () => {
             >
               <div className="mb-5 flex items-center gap-3.5">
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg surface-2 p-1.5">
-                  <img src={GoogleCloudLogo} alt="" className="h-full w-full object-contain" />
+                  <img src={GoogleCloudLogo} alt="" width={687} height={687} className="h-full w-full object-contain" />
                 </div>
                 <div>
                   <h3 className="text-sm leading-snug font-medium text-ethereal-on-surface">
@@ -173,7 +173,7 @@ const Certifications = () => {
                 href={cert.verifyLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm text-electric-violet transition-colors hover:text-electric-violet-hover"
+                className="mt-auto inline-flex min-h-[2.75rem] items-center gap-1.5 text-sm text-electric-violet transition-colors hover:text-electric-violet-hover"
               >
                 Verify
                 <ExternalLink size={14} aria-hidden="true" />
