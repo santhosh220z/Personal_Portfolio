@@ -37,61 +37,58 @@ const Education = () => {
   return (
     <section id="education" className="relative section-spacing">
       <div className="relative z-10 section-container">
-        <SectionHeading title="Education" subtitle="Academic Background" />
+        <SectionHeading title="Education" />
 
+        {/* Deliberately a different layout family from Experience: Experience is a
+            vertical timeline stack, Education is a 2-column card grid. Two
+            consecutive sections must not share a family. */}
         <motion.div
           variants={container}
           initial="hidden"
           whileInView="visible"
           viewport={revealViewport}
-          className="flex w-full max-w-4xl flex-col gap-8"
+          className="grid grid-cols-1 gap-6 lg:grid-cols-2"
         >
           {educationData.map((edu, index) => (
-            <motion.div
+            <motion.article
               key={edu.institution ?? edu.degree ?? index}
               variants={item}
-              className="group relative overflow-hidden rounded-2xl surface surface-card-hover p-8 md:p-10"
+              className="flex flex-col rounded-2xl surface surface-card-hover p-7"
             >
-              <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-tertiary/10 blur-[80px] transition-transform duration-700 group-hover:scale-110"></div>
-
-              <div className="relative z-10 flex flex-col items-start gap-8 md:flex-row">
-                <div className="flex-shrink-0 rounded-xl border border-tertiary/30 bg-tertiary-container/20 p-4">
-                  {index === 0 ? <GraduationCap size={34} className="text-tertiary" /> : <BookOpen size={34} className="text-tertiary" />}
-                </div>
-
-                <div className="flex-1 w-full">
-                  <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                    <div>
-                      <h3 className="mb-2 font-display headline-sm text-ethereal-on-surface">{edu.degree}</h3>
-                      <h4 className="mb-1 font-display text-lg font-medium text-tertiary">{edu.major}</h4>
-                      <p className="body-md text-ethereal-on-surface-variant">{edu.institution}</p>
-                    </div>
-
-                    <div className="inline-flex w-fit items-center gap-2 whitespace-nowrap rounded-xl surface px-3 py-1.5">
-                      <Calendar size={16} className="text-tertiary" />
-                      <span className="font-mono label-sm text-ethereal-on-surface-variant">{edu.period}</span>
-                    </div>
-                  </div>
-
-                  <p className="mb-6 max-w-2xl body-lg text-ethereal-on-surface-variant leading-relaxed">
-                    {edu.details}
-                  </p>
-
-                  {edu.courses.length > 0 && (
-                    <div className="flex flex-wrap gap-3">
-                      {edu.courses.map((course, idx) => (
-                        <span
-                          key={idx}
-                          className="chip"
-                        >
-                          {course}
-                        </span>
-                      ))}
-                    </div>
+              <div className="mb-5 flex items-start justify-between gap-4">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-accent-line bg-accent-soft">
+                  {index === 0 ? (
+                    <GraduationCap size={19} className="text-electric-violet" aria-hidden="true" />
+                  ) : (
+                    <BookOpen size={19} className="text-electric-violet" aria-hidden="true" />
                   )}
                 </div>
+                <span className="inline-flex shrink-0 items-center gap-1.5 font-mono text-xs text-ethereal-on-surface-variant">
+                  <Calendar size={13} aria-hidden="true" />
+                  {edu.period}
+                </span>
               </div>
-            </motion.div>
+
+              <h3 className="text-xl font-semibold tracking-tight text-balance text-ethereal-on-surface">
+                {edu.degree}
+              </h3>
+              <p className="mt-1.5 text-sm text-electric-violet">{edu.major}</p>
+              <p className="mt-3 text-sm text-ethereal-on-surface-variant">{edu.institution}</p>
+
+              <p className="mt-4 text-sm leading-relaxed text-ethereal-on-surface-variant">
+                {edu.details}
+              </p>
+
+              {edu.courses.length > 0 ? (
+                <ul className="mt-5 flex list-none flex-wrap gap-2 p-0">
+                  {edu.courses.map((course) => (
+                    <li key={course} className="chip">
+                      {course}
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </motion.article>
           ))}
         </motion.div>
       </div>
