@@ -1,9 +1,12 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+﻿import React from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { GraduationCap, Calendar, BookOpen } from 'lucide-react';
 import SectionHeading from './SectionHeading';
+import { makeReveal, revealViewport } from '../lib/motion';
 
 const Education = () => {
+  const reduceMotion = useReducedMotion();
+  const { container, item } = makeReveal(reduceMotion);
   const educationData = [
     {
       degree: "Bachelor of Technology (B.Tech)",
@@ -36,15 +39,18 @@ const Education = () => {
       <div className="relative z-10 section-container">
         <SectionHeading title="Education" subtitle="Academic Background" />
 
-        <div className="flex w-full max-w-4xl flex-col gap-8">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="visible"
+          viewport={revealViewport}
+          className="flex w-full max-w-4xl flex-col gap-8"
+        >
           {educationData.map((edu, index) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative overflow-hidden rounded-2xl glass-card-hover p-8 md:p-10"
+              key={edu.institution ?? edu.degree ?? index}
+              variants={item}
+              className="group relative overflow-hidden rounded-2xl surface surface-card-hover p-8 md:p-10"
             >
               <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-tertiary/10 blur-[80px] transition-transform duration-700 group-hover:scale-110"></div>
 
@@ -61,7 +67,7 @@ const Education = () => {
                       <p className="body-md text-ethereal-on-surface-variant">{edu.institution}</p>
                     </div>
 
-                    <div className="inline-flex w-fit items-center gap-2 whitespace-nowrap rounded-xl glass px-3 py-1.5">
+                    <div className="inline-flex w-fit items-center gap-2 whitespace-nowrap rounded-xl surface px-3 py-1.5">
                       <Calendar size={16} className="text-tertiary" />
                       <span className="font-mono label-sm text-ethereal-on-surface-variant">{edu.period}</span>
                     </div>
@@ -87,7 +93,7 @@ const Education = () => {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
