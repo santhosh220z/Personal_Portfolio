@@ -5,11 +5,11 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-white/10 bg-ethereal-surface/60 pt-16 pb-8">
+    <footer className="border-t border-hairline bg-ethereal-surface/60 pt-16 pb-8">
       <div className="section-container">
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-electric-violet/30 bg-gradient-to-br from-primary-container/20 to-secondary/20">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-accent-line bg-gradient-to-br from-primary-container/20 to-accent/20">
               <span className="font-display text-xs font-black text-ethereal-on-surface">SS</span>
             </div>
             <span className="font-display text-xl font-bold tracking-tight text-ethereal-on-surface">
@@ -30,9 +30,9 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-sm text-ethereal-on-surface-variant md:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-hairline pt-8 text-sm text-ethereal-on-surface-variant md:flex-row">
           <p>© {currentYear} Santhosh Sunkara. All rights reserved.</p>
-          <p className="font-mono label-sm tracking-wider uppercase">Designed and built with React</p>
+          <p className="font-mono text-xs tracking-wider uppercase">Designed and built with React</p>
         </div>
       </div>
     </footer>
