@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;500&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -21,17 +21,24 @@
   --color-ethereal-on-tertiary: #003640;
   --color-ethereal-tertiary-container: #009eb9;
   --color-ethereal-outline: #958ea0;
-  --color-ethereal-outline-variant: #494454;
+  --color-ethereal-outline-variant: #7d7689;
   --color-ethereal-on-surface: #e0e3e4;
   --color-ethereal-on-surface-variant: #cbc3d7;
   --color-ethereal-on-background: #e0e3e4;
-  --color-electric-violet: #8b5cf6;
-  --color-electric-violet-hover: #7c3aed;
+  /* Violet is used as TEXT in 25 places, so it must clear 4.5:1 on every dark
+     surface: 6.81 on background, 6.04 on surface, 5.26 on surface-high.
+     Hover is lighter, not darker, so emphasis raises contrast. */
+  --color-electric-violet: #a78bfa;
+  --color-electric-violet-hover: #c4b5fd;
 
-  --shadow-glass: 0 4px 32px rgba(0, 0, 0, 0.4);
-  --shadow-ghost: 0 0 0 1px rgba(255, 255, 255, 0.15);
-  --shadow-ghost-hover: 0 0 0 1px rgba(255, 255, 255, 0.4), 0 0 64px -5px rgba(139, 92, 246, 0.1);
-
+  /* Elevation on a near-black canvas comes from surface lightness and a
+     hairline border, NOT from shadow: a 32px shadow on #101415 is invisible
+     because there is no lighter plane behind it to cast onto. Blur is reserved
+     for .surface-blur, used only where a surface overlaps moving content. */
+  --surface-raised: color-mix(in srgb, var(--color-ethereal-surface) 92%, transparent);
+  --surface-overlay: color-mix(in srgb, var(--color-ethereal-surface-high) 94%, transparent);
+  --hairline: rgba(255, 255, 255, 0.1);
+  --hairline-strong: rgba(255, 255, 255, 0.22);
   --blur-glass: 12px;
   --blur-glass-lg: 20px;
 
@@ -107,7 +114,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-image:
-      radial-gradient(ellipse at 50% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(167, 139, 250, 0.08) 0%, transparent 50%),
       radial-gradient(circle at 20% 20%, rgba(76, 215, 246, 0.05) 0%, transparent 40%),
       radial-gradient(circle at 80% 80%, rgba(204, 190, 255, 0.04) 0%, transparent 35%);
     min-height: 100vh;
@@ -142,36 +149,91 @@
     background-color: var(--color-electric-violet);
     color: var(--color-ethereal-on-primary);
   }
+
+  /* Safety net: any focusable element without a component class still gets a
+     visible ring. Never remove an outline without replacing it here. */
+  :where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-electric-violet);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  .skip-link {
+    position: absolute;
+    left: var(--spacing-stack-md);
+    top: var(--spacing-stack-md);
+    z-index: 100;
+    padding: var(--spacing-stack-sm) var(--spacing-stack-md);
+    background-color: var(--color-electric-violet);
+    color: var(--color-ethereal-on-primary);
+    font-family: var(--font-mono);
+    font-size: var(--text-label-sm);
+    letter-spacing: var(--text-label-sm-letter-spacing);
+    border-radius: var(--radius-md);
+    transform: translateY(-200%);
+    transition: transform 0.2s ease;
+  }
+
+  .skip-link:focus-visible {
+    transform: translateY(0);
+    outline: 2px solid var(--color-ethereal-on-surface);
+    outline-offset: 2px;
+  }
+}
+
+/* Honour the OS "reduce motion" setting: every perpetual animation in this
+   project (float, float-delayed, float-slow, pulse-glow) is decorative and
+   stops dead rather than slowing down. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-pulse-glow {
+    animation: none !important;
+  }
 }
 
 @layer components {
-  .glass {
-    background-color: color-mix(in srgb, var(--color-ethereal-surface) 40%, transparent);
-    backdrop-filter: blur(var(--blur-glass));
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: var(--shadow-glass);
+  /* One surface recipe. Cards, pills, chips and icon buttons all sit on a flat
+     background where backdrop-filter produces the same pixels as a solid fill
+     while costing a compositing layer and making text contrast depend on
+     whatever happens to be behind the card. */
+  .surface {
+    background-color: var(--surface-raised);
+    border: 1px solid var(--hairline);
   }
 
-  .glass-hover {
-    background-color: color-mix(in srgb, var(--color-ethereal-surface) 40%, transparent);
+  /* Navbar only: genuinely floats over hero content, so blur is load-bearing. */
+  .surface-blur {
+    background-color: color-mix(in srgb, var(--color-ethereal-surface) 72%, transparent);
     backdrop-filter: blur(var(--blur-glass));
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: var(--shadow-glass);
-    transition: all 0.3s ease;
+    border: 1px solid var(--hairline);
   }
 
-  .glass-hover:hover {
-    border-color: rgba(255, 255, 255, 0.4);
-    box-shadow: var(--shadow-ghost-hover);
+  .surface-blur-hover {
+    background-color: color-mix(in srgb, var(--color-ethereal-surface-high) 78%, transparent);
+    backdrop-filter: blur(var(--blur-glass-lg));
+    border: 1px solid var(--hairline-strong);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
   }
 
   .ghost-border {
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid var(--hairline);
   }
 
   .ghost-border-hover {
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    transition: all 0.3s ease;
+    border: 1px solid var(--hairline);
+    transition: border-color 0.3s ease;
   }
 
   .ghost-border-hover:hover {
@@ -188,25 +250,23 @@
     font-weight: var(--text-label-sm-font-weight);
     padding: 1rem 2rem;
     border-radius: var(--radius-lg);
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
   }
 
   .btn-primary:hover {
     background-color: var(--color-electric-violet-hover);
-    box-shadow: 0 0 32px -5px rgba(139, 92, 246, 0.3);
+    box-shadow: 0 0 32px -5px rgba(167, 139, 250, 0.3);
   }
 
-  .btn-primary:focus {
-    outline: none;
-    ring: 2px solid var(--color-electric-violet);
-    ring-offset: 2px;
-    ring-offset-color: var(--color-ethereal-background);
+  .btn-primary:focus-visible {
+    outline: 2px solid var(--color-electric-violet);
+    outline-offset: 2px;
   }
 
   .btn-secondary {
     background-color: color-mix(in srgb, var(--color-ethereal-surface) 40%, transparent);
-    backdrop-filter: blur(var(--blur-glass));
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background-color: var(--surface-raised);
+    border: 1px solid var(--hairline);
     color: var(--color-ethereal-on-surface);
     font-family: var(--font-mono);
     font-size: var(--text-label-sm);
@@ -215,19 +275,17 @@
     font-weight: var(--text-label-sm-font-weight);
     padding: 1rem 2rem;
     border-radius: var(--radius-lg);
-    transition: all 0.3s ease;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
   }
 
   .btn-secondary:hover {
-    border-color: rgba(255, 255, 255, 0.4);
-    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--hairline-strong);
+    background-color: var(--surface-overlay);
   }
 
-  .btn-secondary:focus {
-    outline: none;
-    ring: 2px solid var(--color-electric-violet);
-    ring-offset: 2px;
-    ring-offset-color: var(--color-ethereal-background);
+  .btn-secondary:focus-visible {
+    outline: 2px solid var(--color-electric-violet);
+    outline-offset: 2px;
   }
 
   .btn-ghost {
@@ -245,11 +303,9 @@
     color: var(--color-electric-violet);
   }
 
-  .btn-ghost:focus {
-    outline: none;
-    ring: 2px solid var(--color-electric-violet);
-    ring-offset: 2px;
-    ring-offset-color: var(--color-ethereal-background);
+  .btn-ghost:focus-visible {
+    outline: 2px solid var(--color-electric-violet);
+    outline-offset: 2px;
   }
 
   .section-container {
@@ -271,29 +327,20 @@
     padding-bottom: var(--spacing-section-desktop);
   }
 
-  .glass-card {
-    background-color: color-mix(in srgb, var(--color-ethereal-surface) 40%, transparent);
-    backdrop-filter: blur(var(--blur-glass));
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: var(--shadow-glass);
+  .surface-card {
     padding: var(--spacing-stack-lg);
     border-radius: var(--radius-2xl);
-    transition: all 0.3s ease;
   }
 
-  .glass-card-hover {
-    background-color: color-mix(in srgb, var(--color-ethereal-surface) 40%, transparent);
-    backdrop-filter: blur(var(--blur-glass));
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: var(--shadow-glass);
+  .surface-card-hover {
     padding: var(--spacing-stack-lg);
     border-radius: var(--radius-2xl);
-    transition: all 0.3s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
   }
 
-  .glass-card-hover:hover {
-    border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: var(--shadow-ghost-hover);
+  .surface-card-hover:hover {
+    background-color: var(--surface-overlay);
+    border-color: var(--hairline-strong);
   }
 
   .chip {
@@ -309,7 +356,7 @@
   }
 
   .chip-primary {
-    background-color: rgba(139, 92, 246, 0.2);
+    background-color: rgba(167, 139, 250, 0.2);
     color: var(--color-electric-violet);
     font-family: var(--font-mono);
     font-size: var(--text-label-sm);
@@ -334,23 +381,6 @@
 }
 
 @layer utilities {
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-
-  .animate-float-delayed {
-    animation: float 6s ease-in-out infinite 2s;
-  }
-
-  .animate-float-slow {
-    animation: float 8s ease-in-out infinite 1s;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(2deg); }
-  }
-
   .animate-pulse-glow {
     animation: pulseGlow 3s ease-in-out infinite;
   }
@@ -358,23 +388,5 @@
   @keyframes pulseGlow {
     0%, 100% { opacity: 0.3; }
     50% { opacity: 0.6; }
-  }
-
-  .animate-slide-up {
-    animation: slideUp 0.8s ease-out forwards;
-  }
-
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .animate-fade-in {
-    animation: fadeIn 0.6s ease-out forwards;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
   }
 }
