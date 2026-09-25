@@ -1,141 +1,110 @@
-﻿import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Download, Mail, Brain, Cpu } from 'lucide-react';
+﻿import React, { useRef } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { ArrowRight, Download, Mail } from 'lucide-react';
+import { makeReveal } from '../lib/motion';
+import MagneticButton from './MagneticButton';
+import HeroAccent from './three/HeroAccent';
 import profileImg from '../assets/profile2.jpeg';
+import heroArt from '../assets/hero.png';
 
 const Hero = () => {
   const reduceMotion = useReducedMotion();
+  const { item } = makeReveal(reduceMotion);
+  const ref = useRef(null);
 
-  const highlights = [
-    { label: 'AI Projects', value: '10+' },
-    { label: 'Certifications', value: '18+' },
-    { label: 'Core Stack', value: 'Python + CV' },
-  ];
+  // Depth comes from translating layers at different rates against scroll.
+  // useScroll/useTransform keep this off the React render cycle entirely.
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start start', 'end start'],
+  });
+  const artY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : 90]);
+  const portraitY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : -40]);
+  const fade = useTransform(scrollYProgress, [0, 0.75], [1, reduceMotion ? 1 : 0.25]);
 
   return (
-    <section id="hero" className="relative flex min-h-screen items-center overflow-hidden pt-36 pb-16 md:pt-40 md:pb-24">
-      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-16 px-6 md:grid-cols-2 md:px-12">
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="order-2 flex flex-col items-start md:order-1"
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="mb-7 inline-flex items-center gap-2 rounded-full surface px-4 py-2"
-          >
-            <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-electric-violet shadow-[0_0_12px_rgba(167,139,250,0.8)]"></span>
-            <span className="font-mono label-sm text-ethereal-on-surface-variant">Open to opportunities</span>
-          </motion.div>
+    <section
+      id="hero"
+      ref={ref}
+      className="scene-3d relative flex min-h-[100dvh] items-center overflow-hidden pt-24 pb-16 md:pb-24"
+    >
+      {/* Layer 0 — the WebGL accent. Lazy, gated, and falls back to nothing
+          visible if WebGL is unavailable, so the layout never shifts. */}
+      <HeroAccent />
 
-          <h1 className="mb-4 font-display display-lg text-ethereal-on-surface md:display-lg">
-            Building
+      {/* Layer 1 — the isometric artwork, a real depth plane rather than a
+          flat background image. */}
+      <motion.div
+        style={{ y: artY }}
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-24 top-1/2 hidden -translate-y-1/2 opacity-[0.07] lg:block lg:w-[46rem]"
+      >
+        <img src={heroArt} alt="" className="w-full" />
+      </motion.div>
+
+      <motion.div
+        style={{ y: portraitY, opacity: fade }}
+        className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-14 px-6 md:px-10 lg:grid-cols-[1.15fr_0.85fr]"
+      >
+        <motion.div variants={item} initial="hidden" animate="visible" className="flex flex-col items-start">
+          {/* 1. eyebrow */}
+          <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-hairline bg-ethereal-surface px-3.5 py-1.5 font-mono text-xs text-ethereal-on-surface-variant">
+            <span className="h-1.5 w-1.5 rounded-full bg-electric-violet"></span>
+            Open to ML engineering roles
+          </span>
+
+          {/* 2. headline — the role, not a slogan. Max 2 lines. */}
+          <h1 className="text-[2.5rem] leading-[1.05] font-semibold tracking-tight text-balance text-ethereal-on-surface md:text-6xl">
+            Applied ML engineer
             <br />
-            <span className="text-gradient">intelligent systems</span>
+            <span className="text-electric-violet">who ships to production</span>
           </h1>
 
-          <p className="mb-6 font-mono label-sm text-ethereal-on-surface-variant uppercase tracking-wider">
-            by Santhosh Sunkara
+          {/* 3. subtext — under 20 words. */}
+          <p className="mt-6 max-w-[52ch] text-lg leading-relaxed text-ethereal-on-surface-variant">
+            Computer vision and language systems in production: real-time gesture
+            recognition, deepfake detection, and predictive health models. B.Tech
+            Computer Science (AI &amp; ML), KIET.
           </p>
 
-          <h2 className="mb-6 max-w-xl font-display headline-md text-ethereal-on-surface-variant">
-            Full Stack Developer & Cloud Engineer focused on AI/ML, Computer Vision, and scalable cloud architectures
-          </h2>
-
-          <p className="mb-10 max-w-2xl body-lg text-ethereal-on-surface-variant leading-relaxed">
-            B.Tech student in Computer Science Engineering (AI and ML) at KIET. I design intelligent products with Python, OpenCV, and modern ML workflows, turning prototypes into usable experiences.
-          </p>
-
-          <div className="mb-10 flex flex-wrap items-center gap-4">
-            <a
-              href="#projects"
-              className="btn-primary group inline-flex items-center gap-2"
-            >
-              Explore Projects
-              <ArrowRight size={18} className="transition-transform group-hover:translate-x-0.5" />
+          {/* 4. CTAs — one primary, one secondary. No third. */}
+          <div className="mt-9 flex flex-wrap items-center gap-3">
+            <MagneticButton href="#projects" className="btn-primary inline-flex items-center gap-2 whitespace-nowrap">
+              View selected work
+              <ArrowRight size={16} aria-hidden="true" />
+            </MagneticButton>
+            <a href="/resume.pdf" download="Santhosh_Sunkara_Resume.pdf" className="btn-secondary inline-flex items-center gap-2 whitespace-nowrap">
+              <Download size={16} aria-hidden="true" />
+              Résumé
             </a>
-            <a
-              href="/resume.pdf"
-              download="Santhosh_Sunkara_Resume.pdf"
-              className="btn-secondary inline-flex items-center gap-2"
-            >
-              <Download size={18} />
-              Download Resume
-            </a>
-            <a
-              href="#contact"
-              className="btn-ghost group relative inline-flex items-center gap-2"
-            >
-              <Mail size={18} />
-              Contact Me
-              <span className="absolute bottom-1 left-2 right-2 h-[2px] origin-left scale-x-0 bg-electric-violet transition-transform group-hover:scale-x-100"></span>
-            </a>
-          </div>
-
-          <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-3">
-            {highlights.map((item) => (
-              <div
-                key={item.label}
-                className="surface surface-card text-center"
-              >
-                <p className="font-display text-3xl font-bold text-ethereal-on-surface">{item.value}</p>
-                <p className="font-mono label-sm text-ethereal-on-surface-variant uppercase">{item.label}</p>
-              </div>
-            ))}
           </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-          className="order-1 flex justify-center md:order-2 md:justify-end"
-        >
-          <div className="relative h-80 w-72 md:h-[30rem] md:w-[25rem]">
-            <div className="absolute inset-0 rotate-3 rounded-[2.2rem] border border-electric-violet/20 bg-gradient-to-br from-primary-container/20 to-secondary/10 blur-[1px]"></div>
-            <div className="absolute inset-0 z-10 overflow-hidden rounded-[2.2rem] border border-white/15 bg-ethereal-surface p-3">
-              <div className="h-full w-full overflow-hidden rounded-[1.6rem]">
-                <img
-                  src={profileImg}
-                  alt="Santhosh Sunkara - Profile"
-                  className="h-full w-full object-cover"
-                />
-              </div>
+        {/* Layer 2 — portrait, nudged forward in Z. */}
+        <motion.div variants={item} initial="hidden" animate="visible" className="order-first md:order-last">
+          <div className="relative mx-auto w-full max-w-sm">
+            <div
+              aria-hidden="true"
+              className="absolute -inset-3 rotate-2 rounded-[1.75rem] border border-accent-line"
+            />
+            <div className="depth-2 relative overflow-hidden rounded-[1.5rem] border border-hairline bg-ethereal-surface shadow-lg">
+              <img
+                src={profileImg}
+                alt="Santhosh Sunkara"
+                className="aspect-[4/5] w-full object-cover"
+                width={640}
+                height={800}
+              />
             </div>
-
-            <motion.div
-              animate={reduceMotion ? {} : { y: [-10, 10, -10] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -right-8 top-10 z-20 flex items-center gap-3 rounded-2xl surface px-4 py-3"
-            >
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-container/30 text-electric-violet">
-                <Brain size={18} />
-              </div>
-              <div>
-                <p className="font-mono label-sm text-ethereal-on-surface-variant">Focus</p>
-                <p className="font-display text-sm font-semibold text-ethereal-on-surface">Deep Learning</p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              animate={reduceMotion ? {} : { y: [10, -10, 10] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute -left-10 bottom-24 z-20 flex items-center gap-3 rounded-2xl surface px-4 py-3"
-            >
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-secondary-container/30 text-tertiary">
-                <Cpu size={18} />
-              </div>
-              <div>
-                <p className="font-mono label-sm text-ethereal-on-surface-variant">Specialty</p>
-                <p className="font-display text-sm font-semibold text-ethereal-on-surface">Computer Vision</p>
-              </div>
-            </motion.div>
+            <div className="depth-3 absolute -bottom-5 -left-4 flex items-center gap-2.5 rounded-xl border border-hairline bg-ethereal-surface px-3.5 py-2.5 shadow-md">
+              <Mail size={15} className="text-electric-violet" aria-hidden="true" />
+              <span className="font-mono text-xs text-ethereal-on-surface-variant">
+                Based in Kakinada, AP
+              </span>
+            </div>
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 };
