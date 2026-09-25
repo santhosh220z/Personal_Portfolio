@@ -1,9 +1,12 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+﻿import React from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Briefcase, Calendar } from 'lucide-react';
 import SectionHeading from './SectionHeading';
+import { makeReveal, revealViewport } from '../lib/motion';
 
 const Experience = () => {
+  const reduceMotion = useReducedMotion();
+  const { container, item } = makeReveal(reduceMotion);
   const experiences = [
     {
       role: "Machine Learning Engineer",
@@ -37,17 +40,20 @@ const Experience = () => {
       <div className="relative z-10 section-container">
         <SectionHeading title="Experience" subtitle="Machine Learning Engineering" />
 
-        <div className="relative flex w-full max-w-4xl flex-col gap-8">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="visible"
+          viewport={revealViewport}
+          className="relative flex w-full max-w-4xl flex-col gap-8"
+        >
           <div className="pointer-events-none absolute left-6 top-10 hidden h-[calc(100%-4.5rem)] w-[2px] bg-gradient-to-b from-electric-violet/50 via-tertiary/30 to-transparent md:block"></div>
 
           {experiences.map((exp, index) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative overflow-hidden rounded-2xl glass-card-hover p-7 md:p-9"
+              key={exp.company ?? exp.role ?? index}
+              variants={item}
+              className="group relative overflow-hidden rounded-2xl surface surface-card-hover p-7 md:p-9"
             >
               <div className="pointer-events-none absolute -left-16 -top-16 h-56 w-56 rounded-full bg-electric-violet/10 blur-[80px] transition-transform duration-700 group-hover:scale-110"></div>
 
@@ -64,7 +70,7 @@ const Experience = () => {
                       <p className="body-md text-ethereal-on-surface-variant small"> {exp.period}</p>
                     </div>
 
-                    <div className="inline-flex w-fit items-center gap-2 whitespace-nowrap rounded-xl glass px-3 py-1.5">
+                    <div className="inline-flex w-fit items-center gap-2 whitespace-nowrap rounded-xl surface px-3 py-1.5">
                       <Calendar size={16} className="text-electric-violet" />
                       <span className="font-mono label-sm text-ethereal-on-surface-variant">{exp.period}</span>
                     </div>
@@ -90,7 +96,7 @@ const Experience = () => {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
