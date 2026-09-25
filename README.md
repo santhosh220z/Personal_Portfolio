@@ -34,8 +34,8 @@ npm install
 # Build the portfolio
 node scripts/compose.js
 
-# Output: dist/index.html (canonical)
-# Mirror: apps/landing-page/index.html
+# Output: build/index.html
+# Deployable mirror: apps/landing-page/index.html
 ```
 
 ## Optional: Generate Bespoke Collage Assets
@@ -81,7 +81,7 @@ scripts/
 
 ## Deploy
 
-The `dist/index.html` (or `apps/landing-page/index.html`) is a static file — deploy to any static host (GitHub Pages, Netlify, Vercel, Cloudflare Pages).
+The `build/index.html` (or `apps/landing-page/index.html`) is a static file — deploy to any static host (GitHub Pages, Netlify, Vercel, Cloudflare Pages).
 
 Current deployment: `santhosh_sunkara_portfolio.com` (CNAME in repo root).
 

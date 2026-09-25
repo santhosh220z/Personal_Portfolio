@@ -93,4 +93,4 @@ compose in, print out.
 - `scripts/lib/sections.js` — pure section renderers.
 - `scripts/compose.js` — pure `compose(inputs) → html`, CLI at the bottom.
 - `scripts/generate-assets.js` — optional gpt-image-2 asset generation.
-- Output: `dist/index.html`, mirrored to `apps/landing-page/index.html`.
+- Output: `build/index.html`, mirrored to `apps/landing-page/index.html` (the deployable copy). `build/` is separate from `dist/`, which belongs to the Vite app.
