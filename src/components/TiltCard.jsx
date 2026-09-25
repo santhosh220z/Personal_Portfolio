@@ -47,7 +47,7 @@ const TiltCard = ({ children, className = '', lift = false }) => {
       onPointerMove={handleMove}
       onPointerLeave={handleLeave}
       style={reduceMotion ? undefined : { rotateX, rotateY }}
-      className={`${lift ? 'tilt-card-lift' : 'tilt-card'} ${className}`}
+      className={`tilt-3d ${lift ? 'tilt-lift' : ''} ${className}`}
     >
       {children}
     </motion.div>
