@@ -36,7 +36,7 @@ const Navbar = () => {
             : 'surface-blur'
         }`}
       >
-        <a href="#hero" className="group flex items-center gap-3">
+        <a href="#hero" className="group flex min-h-[2.75rem] items-center gap-3">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-accent-line bg-accent-soft">
             <span className="font-sans text-xs font-semibold tracking-tight text-ethereal-on-surface">SS</span>
           </div>
@@ -52,7 +52,7 @@ const Navbar = () => {
               <li key={link.name}>
                 <a
                   href={link.href}
-                  className="rounded-full px-3 py-2 text-sm font-medium text-ethereal-on-surface-variant transition-colors duration-200 hover:bg-ethereal-surface-high hover:text-ethereal-on-surface font-mono text-xs"
+                  className="inline-flex min-h-[2.75rem] items-center rounded-full px-3 text-sm font-medium text-ethereal-on-surface-variant transition-colors duration-200 hover:bg-ethereal-surface-high hover:text-ethereal-on-surface font-mono text-xs"
                 >
                   {link.name}
                 </a>
@@ -84,7 +84,7 @@ const Navbar = () => {
         </div>
 
         <button
-          className="rounded-xl border border-hairline bg-ethereal-surface p-2 text-ethereal-on-surface-variant transition-colors hover:text-electric-violet lg:hidden"
+          className="icon-btn lg:hidden"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle navigation"
           aria-expanded={mobileMenuOpen}
