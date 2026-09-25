@@ -18,6 +18,13 @@ dist-ssr
 apps/landing-page/inputs.json
 apps/landing-page/DESIGN.md
 
+# graphify machine-local state: these embed absolute paths (C:\Users\<name>\...)
+# and caches. The graph outputs themselves (graph.json, GRAPH_REPORT.md, graph.html,
+# manifest.json, cost.json, .graphify_labels.json) stay tracked.
+graphify-out/.graphify_python
+graphify-out/.graphify_root
+graphify-out/cache/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
