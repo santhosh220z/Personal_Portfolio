@@ -4,10 +4,21 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Santhosh Sunkara - Full Stack Developer & Cloud Engineer | AI/ML, Computer Vision, Google Cloud" />
+    <meta name="description" content="Santhosh Sunkara - Applied ML engineer working in computer vision and language systems: real-time gesture recognition, deepfake detection, and predictive health models." />
     <title>Santhosh Sunkara | Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script>
+      // Set the theme before first paint so there is no flash of the wrong
+      // colour scheme. Mirrors the resolution order in src/lib/theme.js.
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          var mode = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', mode);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
