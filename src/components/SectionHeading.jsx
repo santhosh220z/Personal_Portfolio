@@ -2,29 +2,34 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { makeReveal, revealViewport } from '../lib/motion';
 
-const SectionHeading = ({ title, subtitle }) => {
+/**
+ * `eyebrow` is opt-in and deliberately rare. Rendering it on every section
+ * produced the templated small-caps-above-every-headline rhythm that reads as
+ * machine-made; the rule is at most one eyebrow per three sections. The
+ * headline alone carries the meaning — the section's position on the page
+ * already categorises it.
+ */
+const SectionHeading = ({ title, eyebrow }) => {
   const reduceMotion = useReducedMotion();
   const { item } = makeReveal(reduceMotion);
 
   return (
-    <div className="mb-16 text-center md:mb-20">
-      <motion.div
+    <div className="max-w-2xl">
+      {eyebrow ? (
+        <span className="mb-4 inline-flex items-center gap-2 font-mono text-xs tracking-widest text-ethereal-on-surface-variant uppercase">
+          <span className="h-1 w-1 rounded-full bg-electric-violet"></span>
+          {eyebrow}
+        </span>
+      ) : null}
+      <motion.h2
         variants={item}
         initial="hidden"
         whileInView="visible"
         viewport={revealViewport}
+        className="font-sans text-3xl font-semibold tracking-tight text-balance text-ethereal-on-surface md:text-4xl"
       >
-        <span className="inline-flex items-center gap-2 rounded-full surface px-4 py-1.5 font-mono label-sm text-ethereal-on-surface-variant">
-          <span className="h-1.5 w-1.5 rounded-full bg-electric-violet"></span>
-          {subtitle}
-        </span>
-
-        <h2 className="mt-5 font-display headline-lg text-gradient">
-          {title}
-        </h2>
-
-        <div className="mx-auto mt-7 h-1.5 w-24 rounded-full bg-gradient-to-r from-electric-violet via-tertiary to-secondary animate-pulse-glow" />
-      </motion.div>
+        {title}
+      </motion.h2>
     </div>
   );
 };

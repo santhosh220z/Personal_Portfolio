@@ -1,19 +1,21 @@
-﻿import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+﻿import React, { useState } from 'react';
+import { motion, AnimatePresence, useReducedMotion, useMotionValueEvent, useScroll } from 'framer-motion';
 import { Menu, X, Github, Linkedin, Mail } from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const reduceMotion = useReducedMotion();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // useScroll + useMotionValueEvent replaces the old
+  // window.addEventListener('scroll') toggle: the browser batches the scroll
+  // and Motion keeps the value off the React render cycle, so a fast scroll
+  // does not re-render the tree on every frame.
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    setIsScrolled(latest > 50);
+  });
 
   const navLinks = [
     { name: 'About', href: '#about' },
@@ -35,27 +37,22 @@ const Navbar = () => {
         }`}
       >
         <a href="#hero" className="group flex items-center gap-3">
-          <motion.div
-            initial={reduceMotion ? { rotate: 0 } : { rotate: -6 }}
-            animate={{ rotate: 6 }}
-            transition={reduceMotion ? { duration: 0 } : { repeat: Infinity, repeatType: 'reverse', duration: 2.6 }}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-electric-violet/30 bg-gradient-to-br from-electric-violet/20 via-primary-container/20 to-secondary/20"
-          >
-            <span className="font-display text-xs font-extrabold tracking-wide text-ethereal-on-surface">SS</span>
-          </motion.div>
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-accent-line bg-accent-soft">
+            <span className="font-sans text-xs font-semibold tracking-tight text-ethereal-on-surface">SS</span>
+          </div>
           <div>
             <p className="font-display text-base font-semibold text-ethereal-on-surface">Santhosh Sunkara</p>
-            <p className="text-xs tracking-[0.18em] text-ethereal-on-surface-variant font-mono uppercase">Machine Learning</p>
+            <p className="text-xs tracking-[0.18em] text-ethereal-on-surface-variant font-mono uppercase">Applied ML Engineer</p>
           </div>
         </a>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <ul className="flex items-center gap-1 rounded-full border border-white/15 bg-white/5 p-1">
+          <ul className="flex items-center gap-1 rounded-full border border-hairline bg-ethereal-surface p-1">
             {navLinks.map((link) => (
               <li key={link.name}>
                 <a
                   href={link.href}
-                  className="rounded-full px-3 py-2 text-sm font-medium text-ethereal-on-surface-variant transition-colors duration-200 hover:bg-white/10 hover:text-ethereal-on-surface font-mono label-sm"
+                  className="rounded-full px-3 py-2 text-sm font-medium text-ethereal-on-surface-variant transition-colors duration-200 hover:bg-ethereal-surface-high hover:text-ethereal-on-surface font-mono text-xs"
                 >
                   {link.name}
                 </a>
@@ -64,29 +61,30 @@ const Navbar = () => {
           </ul>
 
           <div className="ml-1 flex items-center gap-2">
+            <ThemeToggle />
             <a
               href="https://github.com/santhosh220z"
               target="_blank"
               rel="noreferrer"
-              className="rounded-full border border-white/15 bg-white/5 p-2 text-ethereal-on-surface-variant transition-colors hover:text-electric-violet hover:border-white/30"
+              className="icon-btn"
               aria-label="GitHub"
             >
-              <Github size={18} />
+              <Github size={18} aria-hidden="true" />
             </a>
             <a
               href="https://www.linkedin.com/in/siva-sambhavi-santhosh-sunkara-588a24265/"
               target="_blank"
               rel="noreferrer"
-              className="rounded-full border border-white/15 bg-white/5 p-2 text-ethereal-on-surface-variant transition-colors hover:text-electric-violet hover:border-white/30"
+              className="icon-btn"
               aria-label="LinkedIn"
             >
-              <Linkedin size={18} />
+              <Linkedin size={18} aria-hidden="true" />
             </a>
           </div>
         </div>
 
         <button
-          className="rounded-xl border border-white/15 bg-white/5 p-2 text-ethereal-on-surface-variant transition-colors hover:text-electric-violet lg:hidden"
+          className="rounded-xl border border-hairline bg-ethereal-surface p-2 text-ethereal-on-surface-variant transition-colors hover:text-electric-violet lg:hidden"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle navigation"
           aria-expanded={mobileMenuOpen}
@@ -112,20 +110,20 @@ const Navbar = () => {
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="rounded-xl px-4 py-3 text-sm font-medium text-ethereal-on-surface-variant transition-colors hover:bg-white/10 hover:text-ethereal-on-surface font-mono label-sm"
+                  className="rounded-xl px-4 py-3 text-sm font-medium text-ethereal-on-surface-variant transition-colors hover:bg-ethereal-surface-high hover:text-ethereal-on-surface font-mono text-xs"
                 >
                   {link.name}
                 </a>
               ))}
             </div>
 
-            <div className="mt-4 flex items-center gap-2 border-t border-white/15 pt-4">
+            <div className="mt-4 flex items-center gap-2 border-t border-hairline pt-4">
               <a
                 href="https://github.com/santhosh220z"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="GitHub"
-                className="rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-ethereal-on-surface-variant transition-colors hover:text-electric-violet"
+                className="icon-btn"
               >
                 <Github size={18} aria-hidden="true" />
               </a>
@@ -134,14 +132,14 @@ const Navbar = () => {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="LinkedIn"
-                className="rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-ethereal-on-surface-variant transition-colors hover:text-electric-violet"
+                className="icon-btn"
               >
                 <Linkedin size={18} aria-hidden="true" />
               </a>
               <a
                 href="mailto:santhoshsunkarasbe@gmail.com"
                 aria-label="Email"
-                className="rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-ethereal-on-surface-variant transition-colors hover:text-electric-violet"
+                className="icon-btn"
               >
                 <Mail size={18} aria-hidden="true" />
               </a>
