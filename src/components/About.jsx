@@ -1,9 +1,12 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+﻿import React from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import SectionHeading from './SectionHeading';
+import { makeReveal, revealViewport } from '../lib/motion';
 import { Brain, Code, Cpu, LineChart } from 'lucide-react';
 
 const About = () => {
+  const reduceMotion = useReducedMotion();
+  const { container, item } = makeReveal(reduceMotion);
   const features = [
     {
       Icon: Brain,
@@ -40,13 +43,16 @@ const About = () => {
       <div className="relative z-10 section-container">
         <SectionHeading title="About Me" subtitle="Profile" />
 
-        <div className="grid items-start gap-10 lg:grid-cols-[1.15fr_1fr]">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="visible"
+          viewport={revealViewport}
+          className="grid items-start gap-10 lg:grid-cols-[1.15fr_1fr]"
+        >
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-            className="rounded-2xl glass-card p-8 md:p-10"
+            variants={item}
+            className="rounded-2xl surface surface-card p-8 md:p-10"
           >
             <h3 className="mb-4 font-display headline-md text-ethereal-on-surface">
               AI and ML enthusiast with a product mindset
@@ -59,11 +65,11 @@ const About = () => {
             </p>
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="glass-card text-center">
+              <div className="surface surface-card text-center">
                 <div className="mb-1 text-gradient text-3xl font-bold">10+</div>
                 <div className="font-mono label-sm text-ethereal-on-surface-variant">AI Projects</div>
               </div>
-              <div className="glass-card text-center">
+              <div className="surface surface-card text-center">
                 <div className="mb-1 text-gradient text-3xl font-bold">4+</div>
                 <div className="font-mono label-sm text-ethereal-on-surface-variant">Frameworks</div>
               </div>
@@ -86,17 +92,15 @@ const About = () => {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            variants={item}
             className="grid grid-cols-1 gap-4 sm:grid-cols-2"
           >
-            {features.map((feature, index) => (
+            {features.map((feature) => (
               <motion.div
-                key={index}
+                key={feature.title}
+                variants={item}
                 whileHover={{ y: -5 }}
-                className="group glass-card-hover"
+                className="group surface surface-card-hover"
               >
                 <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl border transition-transform group-hover:scale-110 ${feature.bg}`}>
                   <feature.Icon size={22} className={feature.color} />
@@ -106,7 +110,7 @@ const About = () => {
               </motion.div>
             ))}
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
