@@ -1,140 +1,175 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;500&display=swap');
+﻿@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------------------
+   SEMANTIC TOKENS — the single source of colour truth.
+   Raw values live in the :root / [data-theme] blocks below and SWAP with the
+   theme. The @theme inline mapping at the bottom republishes them as Tailwind
+   utilities, so `bg-ethereal-surface` etc. keep working in components while
+   following the active mode automatically.
+   Do not hardcode hex in components — add a token here instead.
+--------------------------------------------------------------------------- */
+
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #fcfcfd;
+  --bg-deep: #f4f4f7;
+  --surface-1: #ffffff;
+  --surface-2: #f7f7fa;
+  --surface-sunken: #eeeef2;
+
+  --text-primary: #14141a;
+  --text-muted: #54545f;
+  --text-faint: #74747f;
+
+  /* --border is DECORATIVE ONLY (dividers, card hairlines, table rows) and
+     sits well under 3:1 by design. Anything whose boundary is the sole thing
+     identifying a control must use --border-strong, which clears WCAG 1.4.11
+     at 4.84:1 on the page and 4.96:1 on a raised surface. */
+  --border: #e3e3ea;
+  --border-strong: #6f6f7a;
+
+  /* One accent. Purple is brand-justified (favicon.svg is #863BFF/#7E14FF),
+     so it stays; the cyan secondary and the outer glows are gone. */
+  --accent: #6d28d9;
+  --accent-hover: #5b21b6;
+  --accent-contrast: #ffffff;
+  --accent-soft: #f1ebfe;
+  --accent-line: #ddd0f8;
+
+  /* Shadows only read on a light canvas, so they are tinted to the page hue
+     rather than pure black, and are near-zero in dark mode. */
+  --shadow-sm: 0 1px 2px rgba(28, 22, 48, 0.06);
+  --shadow-md: 0 6px 20px -6px rgba(28, 22, 48, 0.14);
+  --shadow-lg: 0 18px 44px -14px rgba(28, 22, 48, 0.20);
+  --focus-ring: #6d28d9;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #0e0e12;
+  --bg-deep: #08080b;
+  --surface-1: #17171c;
+  --surface-2: #1f1f26;
+  --surface-sunken: #121216;
+
+  --text-primary: #eeeef2;
+  --text-muted: #a5a5b0;
+  --text-faint: #7c7c88;
+
+  --border: #2a2a33;
+  --border-strong: #6b6b7a;
+
+  --accent: #a78bfa;
+  --accent-hover: #c4b5fd;
+  --accent-contrast: #1c0d33;
+  --accent-soft: #1e1533;
+  --accent-line: #3b2d63;
+
+  /* A shadow on a near-black canvas is invisible — elevation comes from
+     surface lightness plus the hairline border instead. */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 6px 20px -6px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 18px 44px -14px rgba(0, 0, 0, 0.6);
+  --focus-ring: #a78bfa;
+}
+
 @theme {
-  --font-display: "Playfair Display", serif;
-  --font-body: "Inter", sans-serif;
-  --font-mono: "Space Mono", monospace;
+  --font-sans: "Geist Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, "SFMono-Regular", monospace;
+  /* Aliases: `font-display` (21 call sites) and `font-body` resolve here so
+     the Playfair -> Geist swap did not require rewriting 40 components.
+     Both are now the same family; only weight and tracking differentiate. */
+  --font-display: "Geist Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Geist Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  --color-ethereal-background: #101415;
-  --color-ethereal-surface: #1c2021;
-  --color-ethereal-surface-low: #181c1d;
-  --color-ethereal-surface-high: #272b2c;
-  --color-ethereal-surface-highest: #313536;
-  --color-ethereal-primary: #d0bcff;
-  --color-ethereal-on-primary: #3c0091;
-  --color-ethereal-primary-container: #a078ff;
-  --color-ethereal-secondary: #ccbeff;
-  --color-ethereal-on-secondary: #332664;
-  --color-ethereal-secondary-container: #4a3d7c;
-  --color-ethereal-tertiary: #4cd7f6;
-  --color-ethereal-on-tertiary: #003640;
-  --color-ethereal-tertiary-container: #009eb9;
-  --color-ethereal-outline: #958ea0;
-  --color-ethereal-outline-variant: #7d7689;
-  --color-ethereal-on-surface: #e0e3e4;
-  --color-ethereal-on-surface-variant: #cbc3d7;
-  --color-ethereal-on-background: #e0e3e4;
-  /* Violet is used as TEXT in 25 places, so it must clear 4.5:1 on every dark
-     surface: 6.81 on background, 6.04 on surface, 5.26 on surface-high.
-     Hover is lighter, not darker, so emphasis raises contrast. */
-  --color-electric-violet: #a78bfa;
-  --color-electric-violet-hover: #c4b5fd;
-
-  /* Elevation on a near-black canvas comes from surface lightness and a
-     hairline border, NOT from shadow: a 32px shadow on #101415 is invisible
-     because there is no lighter plane behind it to cast onto. Blur is reserved
-     for .surface-blur, used only where a surface overlaps moving content. */
-  --surface-raised: color-mix(in srgb, var(--color-ethereal-surface) 92%, transparent);
-  --surface-overlay: color-mix(in srgb, var(--color-ethereal-surface-high) 94%, transparent);
-  --hairline: rgba(255, 255, 255, 0.1);
-  --hairline-strong: rgba(255, 255, 255, 0.22);
-  --blur-glass: 12px;
-  --blur-glass-lg: 20px;
-
-  --radius-sm: 0.125rem;
-  --radius-md: 0.25rem;
-  --radius-lg: 0.375rem;
-  --radius-xl: 0.5rem;
-  --radius-2xl: 0.75rem;
+  /* Layout + type scale are mode-independent. */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
   --radius-full: 9999px;
 
-  --spacing-section-desktop: 160px;
-  --spacing-section-mobile: 80px;
-  --spacing-gutter: 24px;
-  --spacing-margin-desktop: 64px;
-  --spacing-margin-mobile: 20px;
-  --spacing-stack-sm: 8px;
-  --spacing-stack-md: 16px;
-  --spacing-stack-lg: 32px;
-  --spacing-stack-xl: 64px;
+  --spacing-section: 7rem;
+  --spacing-gutter: 1.5rem;
+  --spacing-margin: 4rem;
+  --spacing-stack-sm: 0.5rem;
+  --spacing-stack-md: 1rem;
+  --spacing-stack-lg: 2rem;
+  --spacing-stack-xl: 4rem;
 
-  --text-display-lg: 84px;
-  --text-display-lg-line-height: 92px;
-  --text-display-lg-letter-spacing: -0.04em;
-  --text-display-lg-font-weight: 700;
+  --text-display-lg: 3.5rem;
+  --text-display-lg-mobile: 2.5rem;
+  --text-headline-lg: 2.75rem;
+  --text-headline-md: 1.875rem;
+  --text-headline-sm: 1.375rem;
+  --text-body-lg: 1.125rem;
+  --text-body-md: 1rem;
+  --text-label-md: 0.875rem;
+  --text-label-sm: 0.75rem;
 
-  --text-display-lg-mobile: 48px;
-  --text-display-lg-mobile-line-height: 52px;
-  --text-display-lg-mobile-letter-spacing: -0.02em;
-  --text-display-lg-mobile-font-weight: 700;
+  /* 3D scene scales, shared by the CSS layers and the WebGL hero. */
+  --perspective: 1200px;
+  --depth-1: 40px;
+  --depth-2: 80px;
+  --depth-3: 140px;
+}
 
-  --text-headline-lg: 48px;
-  --text-headline-lg-line-height: 56px;
-  --text-headline-lg-letter-spacing: -0.02em;
-  --text-headline-lg-font-weight: 600;
+/* Republish the semantic tokens as Tailwind colour utilities. `inline` keeps
+   the var() reference live so utilities follow the active theme. */
+@theme inline {
+  --color-ethereal-background: var(--bg);
+  --color-ethereal-surface: var(--surface-1);
+  --color-ethereal-surface-low: var(--bg-deep);
+  --color-ethereal-surface-high: var(--surface-2);
+  --color-ethereal-surface-highest: var(--surface-2);
+  --color-ethereal-surface-sunken: var(--surface-sunken);
+  --color-ethereal-on-surface: var(--text-primary);
+  --color-ethereal-on-surface-variant: var(--text-muted);
+  --color-ethereal-on-background: var(--text-primary);
+  --color-ethereal-outline: var(--text-faint);
+  --color-ethereal-outline-variant: var(--border);
+  --color-ethereal-primary: var(--accent);
+  --color-ethereal-primary-container: var(--accent-soft);
+  --color-ethereal-on-primary: var(--accent-contrast);
+  --color-ethereal-secondary-container: var(--accent-soft);
+  --color-ethereal-secondary: var(--accent-soft);
+  --color-ethereal-on-secondary: var(--accent-contrast);
+  --color-electric-violet: var(--accent);
+  --color-electric-violet-hover: var(--accent-hover);
 
-  --text-headline-md: 32px;
-  --text-headline-md-line-height: 40px;
-  --text-headline-md-letter-spacing: -0.01em;
-  --text-headline-md-font-weight: 600;
+  --color-hairline: var(--border);
+  --color-hairline-strong: var(--border-strong);
+}
 
-  --text-headline-sm: 24px;
-  --text-headline-sm-line-height: 32px;
-  --text-headline-sm-font-weight: 500;
-
-  --text-body-lg: 18px;
-  --text-body-lg-line-height: 28px;
-  --text-body-lg-font-weight: 400;
-
-  --text-body-md: 16px;
-  --text-body-md-line-height: 24px;
-  --text-body-md-font-weight: 400;
-
-  --text-label-md: 14px;
-  --text-label-md-line-height: 20px;
-  --text-label-md-letter-spacing: 0.05em;
-  --text-label-md-font-weight: 400;
-
-  --text-label-sm: 12px;
-  --text-label-sm-line-height: 16px;
-  --text-label-sm-letter-spacing: 0.1em;
-  --text-label-sm-font-weight: 400;
+@theme {
+  /* Legacy aliases kept so existing component classes resolve. */
+  --color-ethereal-tertiary: var(--accent);
+  --color-ethereal-on-tertiary: var(--accent-contrast);
+  --color-ethereal-tertiary-container: var(--accent-soft);
 }
 
 @layer base {
-  :root {
-    color-scheme: dark;
-  }
-
   body {
-    font-family: var(--font-body);
-    background-color: var(--color-ethereal-background);
-    color: var(--color-ethereal-on-background);
+    font-family: var(--font-sans);
+    background-color: var(--bg);
+    color: var(--text-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-image:
-      radial-gradient(ellipse at 50% 50%, rgba(167, 139, 250, 0.08) 0%, transparent 50%),
-      radial-gradient(circle at 20% 20%, rgba(76, 215, 246, 0.05) 0%, transparent 40%),
-      radial-gradient(circle at 80% 80%, rgba(204, 190, 255, 0.04) 0%, transparent 35%);
-    min-height: 100vh;
-  }
-
-  .font-display {
-    font-family: var(--font-display);
-  }
-
-  .font-body {
-    font-family: var(--font-body);
-  }
-
-  .font-mono {
-    font-family: var(--font-mono);
+    min-height: 100dvh;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display);
-    color: var(--color-ethereal-on-surface);
+    font-family: var(--font-sans);
+    color: var(--text-primary);
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
 
   html {
@@ -166,9 +201,9 @@
     padding: var(--spacing-stack-sm) var(--spacing-stack-md);
     background-color: var(--color-electric-violet);
     color: var(--color-ethereal-on-primary);
-    font-family: var(--font-mono);
-    font-size: var(--text-label-sm);
-    letter-spacing: var(--text-label-sm-letter-spacing);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 500;
     border-radius: var(--radius-md);
     transform: translateY(-200%);
     transition: transform 0.2s ease;
@@ -198,118 +233,151 @@
     scroll-behavior: auto !important;
   }
 
-  .animate-pulse-glow {
-    animation: none !important;
-  }
 }
 
 @layer components {
-  /* One surface recipe. Cards, pills, chips and icon buttons all sit on a flat
-     background where backdrop-filter produces the same pixels as a solid fill
-     while costing a compositing layer and making text contrast depend on
-     whatever happens to be behind the card. */
+  /* One surface recipe, driven entirely by the semantic tokens so it inverts
+     with the theme. No backdrop-filter here: these sit on a flat canvas where
+     blur costs a compositing layer and makes text contrast depend on whatever
+     is behind the card. */
   .surface {
-    background-color: var(--surface-raised);
-    border: 1px solid var(--hairline);
+    background-color: var(--surface-1);
+    border: 1px solid var(--border);
+  }
+
+  .surface-2 {
+    background-color: var(--surface-2);
+    border: 1px solid var(--border);
   }
 
   /* Navbar only: genuinely floats over hero content, so blur is load-bearing. */
   .surface-blur {
-    background-color: color-mix(in srgb, var(--color-ethereal-surface) 72%, transparent);
-    backdrop-filter: blur(var(--blur-glass));
-    border: 1px solid var(--hairline);
+    background-color: color-mix(in srgb, var(--surface-1) 72%, transparent);
+    backdrop-filter: blur(12px) saturate(140%);
+    border: 1px solid var(--border);
   }
 
   .surface-blur-hover {
-    background-color: color-mix(in srgb, var(--color-ethereal-surface-high) 78%, transparent);
-    backdrop-filter: blur(var(--blur-glass-lg));
-    border: 1px solid var(--hairline-strong);
+    background-color: color-mix(in srgb, var(--surface-1) 88%, transparent);
+    backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid var(--border-strong);
+    box-shadow: var(--shadow-md);
     transition: background-color 0.2s ease, border-color 0.2s ease;
   }
 
   .ghost-border {
-    border: 1px solid var(--hairline);
+    border: 1px solid var(--border);
+  }
+
+  /* Replaces the old `border-white/15 bg-white/5` utility stack, which was
+     invisible against a light background. Icon-sized controls get a real
+     44x44px hit area rather than the 36px the old padding produced. */
+  .icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    background-color: var(--surface-1);
+    color: var(--text-muted);
+    transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+
+  .icon-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent-line);
+    background-color: var(--accent-soft);
   }
 
   .ghost-border-hover {
-    border: 1px solid var(--hairline);
-    transition: border-color 0.3s ease;
+    border: 1px solid var(--border);
+    transition: border-color 0.2s ease;
   }
 
+
   .ghost-border-hover:hover {
-    border-color: rgba(255, 255, 255, 0.4);
+    border-color: var(--border-strong);
   }
 
   .btn-primary {
-    background-color: var(--color-electric-violet);
-    color: var(--color-ethereal-on-primary);
-    font-family: var(--font-mono);
-    font-size: var(--text-label-sm);
-    line-height: var(--text-label-sm-line-height);
-    letter-spacing: var(--text-label-sm-letter-spacing);
-    font-weight: var(--text-label-sm-font-weight);
-    padding: 1rem 2rem;
-    border-radius: var(--radius-lg);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: var(--accent);
+    color: var(--accent-contrast);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    transition: background-color 0.2s ease, transform 0.2s ease;
   }
 
+
   .btn-primary:hover {
-    background-color: var(--color-electric-violet-hover);
-    box-shadow: 0 0 32px -5px rgba(167, 139, 250, 0.3);
+    background-color: var(--accent-hover);
+  }
+
+  .btn-primary:active {
+    transform: translateY(1px);
   }
 
   .btn-primary:focus-visible {
-    outline: 2px solid var(--color-electric-violet);
+    outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
   }
 
   .btn-secondary {
-    background-color: color-mix(in srgb, var(--color-ethereal-surface) 40%, transparent);
-    background-color: var(--surface-raised);
-    border: 1px solid var(--hairline);
-    color: var(--color-ethereal-on-surface);
-    font-family: var(--font-mono);
-    font-size: var(--text-label-sm);
-    line-height: var(--text-label-sm-line-height);
-    letter-spacing: var(--text-label-sm-letter-spacing);
-    font-weight: var(--text-label-sm-font-weight);
-    padding: 1rem 2rem;
-    border-radius: var(--radius-lg);
-    transition: border-color 0.2s ease, background-color 0.2s ease;
+    background-color: var(--surface-1);
+    border: 1px solid var(--border-strong);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
   }
 
+
   .btn-secondary:hover {
-    border-color: var(--hairline-strong);
-    background-color: var(--surface-overlay);
+    border-color: var(--accent);
+    background-color: var(--accent-soft);
+  }
+
+  .btn-secondary:active {
+    transform: translateY(1px);
   }
 
   .btn-secondary:focus-visible {
-    outline: 2px solid var(--color-electric-violet);
+    outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
   }
 
   .btn-ghost {
-    color: var(--color-ethereal-on-surface);
-    font-family: var(--font-mono);
-    font-size: var(--text-label-sm);
-    line-height: var(--text-label-sm-line-height);
-    letter-spacing: var(--text-label-sm-letter-spacing);
-    font-weight: var(--text-label-sm-font-weight);
-    padding: 1rem 1rem;
-    transition: color 0.3s ease;
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    transition: color 0.2s ease;
   }
 
+
   .btn-ghost:hover {
-    color: var(--color-electric-violet);
+    color: var(--accent);
   }
 
   .btn-ghost:focus-visible {
-    outline: 2px solid var(--color-electric-violet);
+    outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
   }
 
   .section-container {
-    max-width: 1440px;
+    max-width: 82.5rem;
     margin: 0 auto;
     padding-left: var(--spacing-gutter);
     padding-right: var(--spacing-gutter);
@@ -317,14 +385,21 @@
 
   @media (min-width: 768px) {
     .section-container {
-      padding-left: var(--spacing-margin-desktop);
-      padding-right: var(--spacing-margin-desktop);
+      padding-left: var(--spacing-margin);
+      padding-right: var(--spacing-margin);
     }
   }
 
   .section-spacing {
-    padding-top: var(--spacing-section-desktop);
-    padding-bottom: var(--spacing-section-desktop);
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-spacing {
+      padding-top: var(--spacing-section);
+      padding-bottom: var(--spacing-section);
+    }
   }
 
   .surface-card {
@@ -335,58 +410,124 @@
   .surface-card-hover {
     padding: var(--spacing-stack-lg);
     border-radius: var(--radius-2xl);
-    transition: background-color 0.2s ease, border-color 0.2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease,
+      transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
   }
 
+
   .surface-card-hover:hover {
-    background-color: var(--surface-overlay);
-    border-color: var(--hairline-strong);
+    background-color: var(--surface-2);
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-md);
   }
 
   .chip {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: var(--color-ethereal-on-surface-variant);
+    background-color: var(--surface-2);
+    color: var(--text-muted);
     font-family: var(--font-mono);
-    font-size: var(--text-label-sm);
-    line-height: var(--text-label-sm-line-height);
-    letter-spacing: var(--text-label-sm-letter-spacing);
-    font-weight: var(--text-label-sm-font-weight);
-    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 400;
+    padding: 0.25rem 0.625rem;
     border-radius: var(--radius-full);
+    border: 1px solid var(--border);
   }
 
   .chip-primary {
-    background-color: rgba(167, 139, 250, 0.2);
-    color: var(--color-electric-violet);
+    background-color: var(--accent-soft);
+    color: var(--accent);
+    border-color: var(--accent-line);
     font-family: var(--font-mono);
-    font-size: var(--text-label-sm);
-    line-height: var(--text-label-sm-line-height);
-    letter-spacing: var(--text-label-sm-letter-spacing);
-    font-weight: var(--text-label-sm-font-weight);
-    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 500;
+    padding: 0.25rem 0.625rem;
     border-radius: var(--radius-full);
   }
 
   .divider {
     height: 1px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--border);
   }
 
+  /* Gradient display type stays inside one hue family so it keeps a reliable
+     contrast floor at both ends; a violet->cyan ramp did not. */
   .text-gradient {
-    background: linear-gradient(to right, var(--color-electric-violet), var(--color-ethereal-tertiary));
+    background: linear-gradient(
+      100deg,
+      var(--text-primary) 0%,
+      var(--accent) 100%
+    );
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 }
 
-@layer utilities {
-  .animate-pulse-glow {
-    animation: pulseGlow 3s ease-in-out infinite;
+/* ---------------------------------------------------------------------------
+   3D / DEPTH LAYERS
+   Real perspective and transform-based depth. No WebGL required, so this
+   costs nothing in bundle size and degrades to flat instantly under
+   prefers-reduced-motion.
+--------------------------------------------------------------------------- */
+@layer components {
+  .scene-3d {
+    perspective: var(--perspective);
+    perspective-origin: 50% 40%;
   }
 
-  @keyframes pulseGlow {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.6; }
+  .depth-1 { transform: translateZ(var(--depth-1)); }
+  .depth-2 { transform: translateZ(var(--depth-2)); }
+  .depth-3 { transform: translateZ(var(--depth-3)); }
+
+  /* 3D tilt card. --rx / --ry are written by the TiltCard component from
+     Motion values; the perspective lives on the parent .scene-3d. */
+  .tilt-card {
+    transform-style: preserve-3d;
+    transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))
+      translateZ(0);
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .tilt-card-lift {
+transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Depth-stacked list: each row sits further back and recedes on hover.
+     Used by Certifications so 18 badges stop being a 4-column data dump. */
+  .stack-3d {
+    transform-style: preserve-3d;
+  }
+
+  .stack-3d > * {
+transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+/* Hover-driven motion is gated on a fine pointer: on touch, :hover sticks
+   after a tap and a card would stay lifted until you tapped elsewhere. */
+@media (hover: hover) and (pointer: fine) {
+  .icon-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent-line);
+    background-color: var(--accent-soft);
+  }
+  .ghost-border-hover:hover {
+    border-color: var(--border-strong);
+  }
+  .btn-primary:hover {
+    background-color: var(--accent-hover);
+  }
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    background-color: var(--accent-soft);
+  }
+  .btn-ghost:hover {
+    color: var(--accent);
+  }
+  .surface-card-hover:hover {
+    background-color: var(--surface-2);
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-md);
   }
 }
