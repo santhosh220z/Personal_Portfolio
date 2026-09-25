@@ -38,7 +38,7 @@ const Experience = () => {
   return (
     <section id="experience" className="relative section-spacing">
       <div className="relative z-10 section-container">
-        <SectionHeading title="Experience" subtitle="Machine Learning Engineering" />
+        <SectionHeading title="Experience" eyebrow="Applied ML roles" />
 
         <motion.div
           variants={container}
@@ -47,7 +47,7 @@ const Experience = () => {
           viewport={revealViewport}
           className="relative flex w-full max-w-4xl flex-col gap-8"
         >
-          <div className="pointer-events-none absolute left-6 top-10 hidden h-[calc(100%-4.5rem)] w-[2px] bg-gradient-to-b from-electric-violet/50 via-tertiary/30 to-transparent md:block"></div>
+          <div className="pointer-events-none absolute left-6 top-10 hidden h-[calc(100%-4.5rem)] w-[2px] bg-gradient-to-b from-electric-violet/50 via-accent/30 to-transparent md:block"></div>
 
           {experiences.map((exp, index) => (
             <motion.div
@@ -55,28 +55,27 @@ const Experience = () => {
               variants={item}
               className="group relative overflow-hidden rounded-2xl surface surface-card-hover p-7 md:p-9"
             >
-              <div className="pointer-events-none absolute -left-16 -top-16 h-56 w-56 rounded-full bg-electric-violet/10 blur-[80px] transition-transform duration-700 group-hover:scale-110"></div>
 
               <div className="relative z-10 flex flex-col items-start gap-6 md:flex-col">
-                <div className="flex-shrink-0 rounded-xl border border-electric-violet/30 bg-primary-container/20 p-4">
+                <div className="flex-shrink-0 rounded-xl border border-accent-line bg-accent-soft p-4">
                   <Briefcase size={34} className="text-electric-violet" />
                 </div>
 
                 <div className="flex-1 w-full">
                   <div className="mb-4 flex flex-col gap-4 md:flex-col md:items-start md:justify-between">
                     <div>
-                      <h3 className="mb-2 font-display headline-sm text-ethereal-on-surface">{exp.role}</h3>
-                      <h4 className="font-display text-lg font-medium text-tertiary">{exp.company}</h4>
-                      <p className="body-md text-ethereal-on-surface-variant small"> {exp.period}</p>
+                      <h3 className="mb-2 font-display text-lg text-ethereal-on-surface">{exp.role}</h3>
+                      <h4 className="font-display text-lg font-medium text-electric-violet">{exp.company}</h4>
+                      <p className="text-base text-ethereal-on-surface-variant small"> {exp.period}</p>
                     </div>
 
                     <div className="inline-flex w-fit items-center gap-2 whitespace-nowrap rounded-xl surface px-3 py-1.5">
                       <Calendar size={16} className="text-electric-violet" />
-                      <span className="font-mono label-sm text-ethereal-on-surface-variant">{exp.period}</span>
+                      <span className="font-mono text-xs text-ethereal-on-surface-variant">{exp.period}</span>
                     </div>
                   </div>
 
-                  <p className="mb-6 max-w-2xl body-lg text-ethereal-on-surface-variant leading-relaxed">
+                  <p className="mb-6 max-w-2xl text-lg text-ethereal-on-surface-variant leading-relaxed">
                     {exp.description}
                   </p>
 
