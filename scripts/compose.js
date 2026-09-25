@@ -3,7 +3,7 @@
 // This script handles I/O: reads inputs, resolves assets, calls compose,
 // writes dist/index.html, and mirrors to apps/landing-page/.
 
-import { readFile, writeFile, mkdir, access, copyFile, cp } from "node:fs/promises";
+import { readFile, writeFile, mkdir, access, cp } from "node:fs/promises";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { dirname, resolve, extname } from "node:path";
 import { compose } from "./lib/sections.js";
@@ -11,13 +11,10 @@ import { compose } from "./lib/sections.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
 const INPUTS_PATH = resolve(ROOT, "inputs.json");
-const DESIGN_PATH = resolve(ROOT, "DESIGN.md");
 const DIST_DIR = resolve(ROOT, "dist");
 const OUTPUT_PATH = resolve(DIST_DIR, "index.html");
 const MIRROR_DIR = resolve(ROOT, "apps", "landing-page");
 const MIRROR_OUTPUT = resolve(MIRROR_DIR, "index.html");
-const MIRROR_INPUTS = resolve(MIRROR_DIR, "inputs.json");
-const MIRROR_DESIGN = resolve(MIRROR_DIR, "DESIGN.md");
 const ASSET_DIR = resolve(ROOT, "scripts", "assets", "collage");
 
 // Read a file and return base64 data URI if it exists and is reasonably sized.
@@ -106,9 +103,6 @@ async function main() {
     console.log(`→ Mirroring to ${customMirror}`);
     await ensureDir(dirname(customMirror));
     await writeFile(customMirror, html, "utf8");
-    await copyFile(INPUTS_PATH, MIRROR_INPUTS);
-    await copyFile(DESIGN_PATH, MIRROR_DESIGN);
-    console.log(`  ✓ inputs.json, DESIGN.md mirrored`);
   }
 
   const kb = Math.round(Buffer.byteLength(html, "utf8") / 1024);
