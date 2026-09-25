@@ -1,9 +1,13 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+﻿import React from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import SectionHeading from './SectionHeading';
+import { makeReveal, revealViewport } from '../lib/motion';
 import { Code2, Cpu, Database, Layout } from 'lucide-react';
 
 const Skills = () => {
+  const reduceMotion = useReducedMotion();
+  const { container, item } = makeReveal(reduceMotion);
+
   const skillCategories = [
     {
       title: "Machine Learning & AI",
@@ -35,41 +39,24 @@ const Skills = () => {
     }
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
-  };
-
   return (
     <section id="skills" className="relative section-spacing">
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[640px] w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-electric-violet/5 blur-[120px]"></div>
-
       <div className="relative z-10 section-container">
         <SectionHeading title="Technical Skills" subtitle="My Toolkit" />
 
         <motion.div
-          variants={containerVariants}
+          variants={container}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={revealViewport}
           className="grid gap-6 md:grid-cols-2 lg:grid-cols-4"
         >
-          {skillCategories.map((category, idx) => (
+          {skillCategories.map((category) => (
             <motion.div
-              key={idx}
-              variants={itemVariants}
+              key={category.title}
+              variants={item}
               whileHover={{ y: -5 }}
-              className="glass-card-hover"
+              className="surface surface-card-hover"
             >
               <div className="flex items-center gap-4 mb-6">
                 <div className={`rounded-xl border p-3 ${category.iconBg}`}>
