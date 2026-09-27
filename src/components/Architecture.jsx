@@ -58,16 +58,25 @@ const Architecture = () => {
           ))}
         </div>
 
-        {/* Ledger */}
-        <div className="grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:gap-14">
-          <h3 className="meta md:pt-1">Capability ledger</h3>
+        {/* Ledger.
+            The label used to sit in its own 0.8fr column while the four groups
+            were squeezed into the remaining 1.2fr, which left roughly a third of
+            the shell empty and forced every group to wrap its tags onto three
+            lines. Promoting the label to a full-width rule and letting the four
+            groups run the full width gives each ~330px instead of two groups
+            sharing ~600px, and the tags stop wrapping. */}
+        <div>
+          <div className="mb-6 flex items-center gap-4">
+            <h3 className="meta">Capability ledger</h3>
+            <span className="h-px flex-1 bg-rule" aria-hidden="true" />
+          </div>
 
           <motion.div
             variants={container}
             initial="hidden"
             whileInView="visible"
             viewport={revealViewport}
-            className="grid gap-px overflow-hidden rounded-lg border border-rule bg-[var(--rule)] sm:grid-cols-2"
+            className="grid gap-px overflow-hidden rounded-lg border border-rule bg-[var(--rule)] sm:grid-cols-2 lg:grid-cols-4"
           >
             {SKILL_GROUPS.map((group) => (
               <motion.div key={group.id} variants={item} className="bg-canvas p-5 md:p-6">
