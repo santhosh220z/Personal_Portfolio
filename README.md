@@ -73,10 +73,16 @@ paper. Same hue family, lightness crushed.
 **Before publishing:** metrics flagged `placeholder: true` in `projects.js` are
 illustrative and render with a `SAMPLE` tag in the blueprint drawer. Replace them
 with measured figures. The gesture-recognition numbers (92% validation accuracy,
-50+ users) are real. `image` uses deterministic `picsum.photos` placeholders —
-swap in real case-study stills in `public/`. `demo` accepts a short looping
-video for the hover capsule and is off by default; see the note at the top of
-`projects.js`.
+50+ users) are real.
+
+The three `TODO` comments in the Hackathon Mentor entry in `resume.js` mark the
+only facts about that mentoring that were not supplied — dates, stack, and
+outcome. They are deliberately left visible rather than filled with plausible
+guesses.
+
+`CERTIFICATIONS` in `resume.js` holds all 18 Google Cloud badges; only the six
+flagged `featured` render, via `FEATURED_CERTIFICATIONS`. Adjust that set by
+editing the `FEATURED_BADGES` set rather than deleting rows.
 
 ---
 
