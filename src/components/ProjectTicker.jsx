@@ -204,7 +204,11 @@ const PreviewCapsule = ({ project }) => {
       ref={capsuleRef}
       aria-hidden="true"
       data-preview-capsule="true"
-      className="pointer-events-none fixed left-0 top-0 z-[110] overflow-hidden rounded-xl border border-white/20 shadow-2xl"
+      // will-change: the quickTo tweens rewrite `transform` on every pointer
+      // move, so the layer has to be promoted ahead of time or the first move
+      // of every hover pays for it. The capsule is visibility:hidden while
+      // idle, so the idle cost is a layer that is not being painted anyway.
+      className="pointer-events-none fixed left-0 top-0 z-[110] will-change-transform overflow-hidden rounded-xl border border-white/20 shadow-2xl"
       style={{
         width: CAPSULE.w,
         height: CAPSULE.h,
