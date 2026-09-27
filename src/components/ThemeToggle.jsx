@@ -1,22 +1,11 @@
-﻿import React, { useEffect, useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
-import { applyMode, readStored, resolveMode } from '../lib/theme';
+import { applyMode, resolveMode } from '../lib/theme';
 
 const ThemeToggle = () => {
+  // resolveMode() already layers the stored preference over DEFAULT_MODE, so
+  // there is nothing to reconcile on mount and no OS media query to follow.
   const [mode, setMode] = useState(resolveMode);
-
-  useEffect(() => {
-    // Keep following the OS until the visitor states a preference.
-    const mq = window.matchMedia('(prefers-color-scheme: dark)');
-    const onChange = (e) => {
-      if (readStored()) return;
-      const next = e.matches ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', next);
-      setMode(next);
-    };
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
-  }, []);
 
   const toggle = () => {
     const next = mode === 'dark' ? 'light' : 'dark';
@@ -28,6 +17,9 @@ const ThemeToggle = () => {
     <button
       type="button"
       onClick={toggle}
+      // aria-pressed, not just the label: the label says which mode is next,
+      // the pressed state says which mode is current.
+      aria-pressed={mode === 'dark'}
       aria-label={`Switch to ${mode === 'dark' ? 'light' : 'dark'} mode`}
       className="icon-btn"
     >
