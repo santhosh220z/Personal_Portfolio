@@ -1,38 +1,68 @@
 ﻿import React from 'react';
 import { Github, Linkedin, Mail } from 'lucide-react';
+import { SITE } from '../data/site';
+import Marquee from './Marquee';
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
+  const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-hairline bg-ethereal-surface/60 pt-16 pb-8">
-      <div className="section-container">
-        <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-accent-line bg-gradient-to-br from-primary-container/20 to-accent/20">
-              <span className="font-display text-xs font-black text-ethereal-on-surface">SS</span>
-            </div>
-            <span className="font-display text-xl font-bold tracking-tight text-ethereal-on-surface">
-              Santhosh Sunkara
+    <footer className="relative overflow-hidden border-t border-rule">
+      {/* A slow marquee of the site's own vocabulary. Closes the page on the
+          same rhythm it opened with. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none border-b border-rule py-6 opacity-[0.1] select-none"
+      >
+        <Marquee
+          items={['Engineering', 'Intelligence', 'Motion', 'Architecture']}
+          duration={40}
+          itemClassName="marquee-giant stroke-type stroke-type-thick px-[0.06em]"
+        />
+      </div>
+
+      <div className="shell py-12">
+        <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+          <div>
+            <span className="font-mono text-sm tracking-[0.22em] text-fg-1">
+              {SITE.brandmark}
+              <span className="text-accent">.</span>
             </span>
+            <p className="mt-3 max-w-[42ch] text-sm leading-relaxed text-fg-2">
+              {SITE.role} — {SITE.location}.
+            </p>
           </div>
 
-          <div className="flex items-center gap-3">
-            <a href="https://github.com/santhosh220z" target="_blank" rel="noreferrer" aria-label="GitHub" className="icon-btn">
-              <Github size={20} aria-hidden="true" />
+          <div className="flex items-center gap-2">
+            <a
+              href={SITE.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              className="icon-btn"
+            >
+              <Github size={18} aria-hidden="true" />
             </a>
-            <a href="https://www.linkedin.com/in/siva-sambhavi-santhosh-sunkara-588a24265/" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="icon-btn">
-              <Linkedin size={20} aria-hidden="true" />
+            <a
+              href={SITE.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="icon-btn"
+            >
+              <Linkedin size={18} aria-hidden="true" />
             </a>
-            <a href="mailto:santhoshsunkarasbe@gmail.com" aria-label="Email" className="icon-btn">
-              <Mail size={20} aria-hidden="true" />
+            <a href={`mailto:${SITE.email}`} aria-label="Email" className="icon-btn">
+              <Mail size={18} aria-hidden="true" />
             </a>
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-hairline pt-8 text-sm text-ethereal-on-surface-variant md:flex-row">
-          <p>© {currentYear} Santhosh Sunkara. All rights reserved.</p>
-          <p className="font-mono text-xs tracking-wider uppercase">Designed and built with React</p>
+        <div className="mt-10 flex flex-col items-start justify-between gap-3 border-t border-rule pt-6 md:flex-row md:items-center">
+          <p className="meta">© {year} {SITE.name}</p>
+          <p className="meta">
+            Built with React, GSAP &amp; Tailwind — type set in Syne
+          </p>
         </div>
       </div>
     </footer>

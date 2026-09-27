@@ -1,119 +1,92 @@
 ﻿import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
-import SectionHeading from './SectionHeading';
+import { motion } from 'framer-motion';
+import { Award, Languages } from 'lucide-react';
 import { makeReveal, revealViewport } from '../lib/motion';
-import { Brain, Code, Cpu, LineChart } from 'lucide-react';
+import { usePrefersReducedMotion } from '../lib/hooks';
+import { ABOUT } from '../data/resume';
+import SectionLabel from './SectionLabel';
 
 const About = () => {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
   const { container, item } = makeReveal(reduceMotion);
-  const features = [
-    {
-      Icon: Brain,
-      title: "Deep Learning",
-      description: "Building robust neural networks for practical pattern recognition.",
-      color: 'text-electric-violet',
-      bg: 'bg-accent-soft border-primary-container/30'
-    },
-    {
-      Icon: Cpu,
-      title: "Computer Vision",
-      description: "Designing image and video intelligence pipelines with measurable impact.",
-      color: 'text-electric-violet',
-      bg: 'bg-accent-soft border-accent-line'
-    },
-    {
-      Icon: LineChart,
-      title: "Predictive Analytics",
-      description: "Transforming datasets into forecasts and decision-ready insights.",
-      color: 'text-electric-violet',
-      bg: 'bg-secondary-container/20 border-secondary/30'
-    },
-    {
-      Icon: Code,
-      title: "AI Systems",
-      description: "Serving models behind an API with the frontend on top.",
-      color: 'text-electric-violet',
-      bg: 'bg-accent-soft border-accent-line'
-    }
-  ];
 
   return (
-    <section id="about" className="relative section-spacing">
-      <div className="relative z-10 section-container">
-        <SectionHeading title="About Me" eyebrow="Profile" />
+    <section id="about" className="section-block border-t border-rule">
+      <div className="shell">
+        <SectionLabel index="03" eyebrow="Profile" title="Who is doing this" />
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="visible"
-          viewport={revealViewport}
-          className="grid items-start gap-10 lg:grid-cols-[1.15fr_1fr]"
-        >
+        <div className="grid gap-12 md:gap-16 lg:grid-cols-[1.15fr_0.85fr]">
+          {/* Statement */}
           <motion.div
-            variants={item}
-            className="rounded-2xl surface surface-card p-8 md:p-10"
+            variants={container}
+            initial="hidden"
+            whileInView="visible"
+            viewport={revealViewport}
           >
-            <h3 className="mb-4 font-display text-2xl text-ethereal-on-surface">
-              Applied ML engineer, product-minded
+            <h3 className="text-[length:var(--text-headline)] uppercase">
+              {ABOUT.headline.map((line, index) => (
+                <span
+                  key={line}
+                  className={index % 2 === 1 ? 'stroke-type block' : 'block'}
+                >
+                  {line}
+                </span>
+              ))}
             </h3>
-            <p className="text-base text-ethereal-on-surface-variant leading-relaxed">
-              I build vision and language systems that hold up outside a notebook:
-              real-time gesture recognition, deepfake detection, and predictive
-              health models. My internships at Google's AI-ML programme and the
-              Edunet Foundation took me from model prototypes to deployed systems.
-            </p>
-            <p className="mb-8 text-lg text-ethereal-on-surface-variant leading-relaxed">
-              Currently pursuing my B.Tech in Computer Science Engineering (AIML) at KIET, I enjoy leveraging tools like OpenCV, MediaPipe, and Generative AI patterns to bridge the gap between theoretical concepts and practical applications.
-            </p>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="surface surface-card text-center">
-                <div className="mb-1 text-gradient text-3xl font-bold">10+</div>
-                <div className="font-mono text-xs text-ethereal-on-surface-variant">AI Projects</div>
-              </div>
-              <div className="surface surface-card text-center">
-                <div className="mb-1 text-gradient text-3xl font-bold">4+</div>
-                <div className="font-mono text-xs text-ethereal-on-surface-variant">Frameworks</div>
-              </div>
-            </div>
-
-            <div className="mt-8 space-y-4">
-              <div className="flex gap-4 items-start">
-                <span className="min-w-28 font-mono text-xs text-electric-violet">Languages</span>
-                <span className="text-base text-ethereal-on-surface-variant">English, Telugu, Hindi</span>
-              </div>
-              <div className="flex gap-4 items-start">
-                <span className="min-w-28 font-mono text-xs text-electric-violet">Certifications</span>
-                <span className="text-base text-ethereal-on-surface-variant">Edunet Foundation, AICTE, Google AIML, Prompt Engineering, Python Full Stack, Basics of Generative AI, Basics of DevOps, Basics of Python</span>
-              </div>
-              <div className="flex gap-4 items-start">
-                <span className="min-w-28 font-mono text-xs text-electric-violet">Awards</span>
-                <span className="text-base text-ethereal-on-surface-variant">Selected for Regional Round at Edunet - Sign Speak: The Silent Communicator</span>
-              </div>
+            <div className="mt-8 max-w-[58ch] space-y-5">
+              {ABOUT.bio.map((paragraph) => (
+                <p key={paragraph} className="leading-relaxed text-fg-2">
+                  {paragraph}
+                </p>
+              ))}
             </div>
           </motion.div>
 
+          {/* Marginalia */}
           <motion.div
-            variants={item}
-            className="grid grid-cols-1 gap-4 sm:grid-cols-2"
+            variants={container}
+            initial="hidden"
+            whileInView="visible"
+            viewport={revealViewport}
+            className="flex flex-col gap-8"
           >
-            {features.map((feature) => (
-              <motion.div
-                key={feature.title}
-                variants={item}
-                whileHover={{ y: -5 }}
-                className="group surface surface-card-hover"
-              >
-                <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl border transition-transform group-hover:scale-110 ${feature.bg}`}>
-                  <feature.Icon size={22} className={feature.color} />
-                </div>
-                <h4 className="mb-2 font-display text-lg text-ethereal-on-surface">{feature.title}</h4>
-                <p className="text-base text-ethereal-on-surface-variant leading-relaxed">{feature.description}</p>
-              </motion.div>
-            ))}
+            <div className="grid grid-cols-3 gap-px overflow-hidden rounded-lg border border-rule bg-[var(--rule)]">
+              {ABOUT.facts.map((fact) => (
+                <motion.div key={fact.label} variants={item} className="bg-canvas p-4">
+                  <div className="font-display text-[clamp(1.5rem,3vw,2.25rem)] leading-none font-extrabold text-accent">
+                    {fact.value}
+                  </div>
+                  <div className="meta mt-2">{fact.label}</div>
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.dl variants={item} className="space-y-5">
+              <div>
+                <dt className="meta mb-2 flex items-center gap-2">
+                  <Languages size={13} aria-hidden="true" />
+                  Languages
+                </dt>
+                <dd className="flex flex-wrap gap-2">
+                  {ABOUT.languages.map((language) => (
+                    <span key={language} className="tag">
+                      {language}
+                    </span>
+                  ))}
+                </dd>
+              </div>
+
+              <div>
+                <dt className="meta mb-2 flex items-center gap-2">
+                  <Award size={13} aria-hidden="true" />
+                  Recognition
+                </dt>
+                <dd className="text-sm leading-relaxed text-fg-2">{ABOUT.award}</dd>
+              </div>
+            </motion.dl>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

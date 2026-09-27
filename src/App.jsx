@@ -1,40 +1,46 @@
 import React from 'react';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-
+import Nav from './components/Nav';
 import Hero from './components/Hero';
-
+import Work from './components/Work';
+import Architecture from './components/Architecture';
 import About from './components/About';
 import Experience from './components/Experience';
-import Skills from './components/Skills';
-
-import Projects from './components/Projects';
-import Education from './components/Education';
-import Certifications from './components/Certifications';
 import Contact from './components/Contact';
+import Footer from './components/Footer';
+import CustomCursor from './components/CustomCursor';
+import CommandPalette from './components/CommandPalette';
+import { Education, Certifications } from './components/Credentials';
+import { useCommandPalette } from './lib/useCommandPalette';
 
-function App() {
+const App = () => {
+  const { open, openPalette, closePalette } = useCommandPalette();
+
   return (
-    <div className="relative min-h-screen overflow-x-clip font-body text-ethereal-on-background">
-      <a href="#main-content" className="skip-link">Skip to content</a>
-      <div className="relative z-10 w-full overflow-hidden">
-        <Navbar />
+    <div className="relative min-h-[100dvh] overflow-x-clip bg-canvas text-fg-1">
+      <a href="#main-content" className="skip-link">
+        Skip to content
+      </a>
 
-        <main id="main-content" className="relative" tabIndex={-1}>
-          <Hero />
-          <About />
-          <Experience />
-          <Skills />
-          <Projects />
-          <Education />
-          <Certifications />
-          <Contact />
-        </main>
+      <Nav onOpenCommand={openPalette} />
 
-        <Footer />
-      </div>
+      <main id="main-content" tabIndex={-1} className="relative">
+        <Hero />
+        <Work />
+        <Architecture />
+        <About />
+        <Experience />
+        <Education />
+        <Certifications />
+        <Contact />
+      </main>
+
+      <Footer />
+
+      {/* Rendered after the footer so they paint above every section. */}
+      <CustomCursor />
+      <CommandPalette open={open} onClose={closePalette} />
     </div>
   );
-}
+};
 
 export default App;
