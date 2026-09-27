@@ -1,82 +1,104 @@
 ﻿import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
-import { Mail, Github, Linkedin } from 'lucide-react';
-import SectionHeading from './SectionHeading';
+import { motion } from 'framer-motion';
+import { ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react';
 import { makeReveal, revealViewport } from '../lib/motion';
+import { usePrefersReducedMotion } from '../lib/hooks';
+import { SITE } from '../data/site';
+import SectionLabel from './SectionLabel';
+
+const CHANNELS = [
+  {
+    label: 'Email',
+    value: SITE.email,
+    href: `mailto:${SITE.email}`,
+    Icon: Mail,
+    note: 'Fastest route',
+  },
+  {
+    label: 'GitHub',
+    value: '@santhosh220z',
+    href: SITE.github,
+    Icon: Github,
+    note: 'Source',
+  },
+  {
+    label: 'LinkedIn',
+    value: 'Santhosh Sunkara',
+    href: SITE.linkedin,
+    Icon: Linkedin,
+    note: 'Professional',
+  },
+];
 
 const Contact = () => {
-  const reduceMotion = useReducedMotion();
-  const { item } = makeReveal(reduceMotion);
-  const contactItems = [
-    {
-      label: 'Email',
-      value: 'santhoshsunkarasbe@gmail.com',
-      href: 'mailto:santhoshsunkarasbe@gmail.com',
-      Icon: Mail,
-      iconColor: 'text-electric-violet',
-      iconBg: 'bg-accent-soft border-primary-container/30',
-    },
-    {
-      label: 'LinkedIn',
-      value: 'santhosh sunkara',
-      href: 'https://www.linkedin.com/in/siva-sambhavi-santhosh-sunkara-588a24265/',
-      Icon: Linkedin,
-      iconColor: 'text-electric-violet',
-      iconBg: 'bg-accent-soft border-accent-line',
-    },
-    {
-      label: 'GitHub',
-      value: '@santhosh220z',
-      href: 'https://github.com/santhosh220z',
-      Icon: Github,
-      iconColor: 'text-electric-violet',
-      iconBg: 'bg-accent-soft border-primary-container/30',
-    }
-  ];
+  const reduceMotion = usePrefersReducedMotion();
+  const { container, item } = makeReveal(reduceMotion);
 
   return (
-    <section id="contact" className="relative section-spacing">
-      <div className="relative z-10 section-container">
-        <SectionHeading title="Get in touch" />
+    <section id="contact" className="section-block border-t border-rule">
+      <div className="shell">
+        <SectionLabel
+          index="07"
+          eyebrow="Contact"
+          title="Open to an ML engineering role"
+          lede="Research positions, applied ML work, or anything where a model has to survive production. I read everything that comes in."
+        />
 
-        <div className="mx-auto mt-8 w-full max-w-5xl">
-          <motion.div
-            variants={item}
-            initial="hidden"
-            whileInView="visible"
-            viewport={revealViewport}
-            className="flex flex-col items-center gap-10 text-center"
-          >
-            <div className="surface surface-card text-center">
-              <h3 className="mb-4 font-display text-2xl text-ethereal-on-surface">Open to an ML engineering role</h3>
-              <p className="mx-auto max-w-2xl text-lg text-ethereal-on-surface-variant leading-relaxed">
-                I'm currently looking for new opportunities in AI/ML engineering, research roles, 
-                and software development. Whether you have a question or just want to say hi, 
-                I'll try my best to get back to you!
-              </p>
-            </div>
+        {/* Oversized mail link. The address is the point of the section, so it
+            is set at display size rather than tucked into a card. */}
+        <motion.a
+          variants={item}
+          initial="hidden"
+          whileInView="visible"
+          viewport={revealViewport}
+          href={`mailto:${SITE.email}`}
+          data-cursor="magnet"
+          className="group block border-y border-rule py-8 md:py-12"
+        >
+          <span className="flex flex-wrap items-center gap-x-6 gap-y-3">
+            <span className="font-mono text-[length:var(--text-meta)] tracking-[0.16em] text-fg-3 uppercase">
+              Write to
+            </span>
+            <span className="flex items-center gap-3 text-[clamp(1.1rem,3.4vw,2.5rem)] leading-tight font-extrabold break-all">
+              <span className="stroke-type transition-[--stroke-alpha] duration-500 group-hover:[--stroke-alpha:1]">
+                {SITE.email}
+              </span>
+              <ArrowUpRight
+                size={28}
+                aria-hidden="true"
+                className="shrink-0 text-accent transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
+              />
+            </span>
+          </span>
+        </motion.a>
 
-            <div className="grid w-full gap-6 md:grid-cols-3">
-              {contactItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  target={item.href.startsWith('http') ? '_blank' : undefined}
-                  rel={item.href.startsWith('http') ? 'noreferrer' : undefined}
-                  className="group flex flex-col items-center gap-4 surface surface-card-hover text-center"
-                >
-                  <div className={`flex h-14 w-14 items-center justify-center rounded-xl border transition-colors ${item.iconBg}`}>
-                    <item.Icon size={26} className={item.iconColor} />
-                  </div>
-                  <div>
-                    <div className="mb-1 font-mono text-xs text-ethereal-on-surface-variant">{item.label}</div>
-                    <div className="font-display text-lg font-medium text-ethereal-on-surface">{item.value}</div>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </motion.div>
-        </div>
+        {/* Channels */}
+        <motion.ul
+          variants={container}
+          initial="hidden"
+          whileInView="visible"
+          viewport={revealViewport}
+          className="mt-px grid list-none gap-px overflow-hidden rounded-b-lg border-x border-b border-rule bg-[var(--rule)] sm:grid-cols-3"
+        >
+          {CHANNELS.map((channel) => (
+            <motion.li key={channel.label} variants={item}>
+              <a
+                href={channel.href}
+                target={channel.href.startsWith('http') ? '_blank' : undefined}
+                rel={channel.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                className="flex h-full items-center gap-4 bg-canvas p-5 transition-colors hover:bg-surface-sunken md:p-6"
+              >
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-rule text-accent">
+                  <channel.Icon size={18} aria-hidden="true" />
+                </span>
+                <span className="min-w-0">
+                  <span className="meta block">{channel.label}</span>
+                  <span className="mt-1.5 block truncate text-sm text-fg-1">{channel.value}</span>
+                </span>
+              </a>
+            </motion.li>
+          ))}
+        </motion.ul>
       </div>
     </section>
   );
