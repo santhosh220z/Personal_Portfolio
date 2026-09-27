@@ -1,227 +1,243 @@
-﻿@import "@fontsource-variable/geist";
+﻿@import "@fontsource-variable/syne";
 @import "@fontsource-variable/geist-mono";
 @import "tailwindcss";
 
-/* ---------------------------------------------------------------------------
-   SEMANTIC TOKENS — the single source of colour truth.
-   Raw values live in the :root / [data-theme] blocks below and SWAP with the
-   theme. The @theme inline mapping at the bottom republishes them as Tailwind
-   utilities, so `bg-ethereal-surface` etc. keep working in components while
-   following the active mode automatically.
-   Do not hardcode hex in components — add a token here instead.
---------------------------------------------------------------------------- */
+/* ===========================================================================
+   KINETIC — design tokens.
+
+   The single source of colour truth. Raw values live in the :root blocks
+   below and SWAP with the theme; the @theme inline mapping republishes them
+   as Tailwind utilities so `text-fg-1` / `bg-canvas` follow the active mode
+   automatically. Do not hardcode hex in components — add a token here.
+
+   DARK IS THE PRIMARY ART DIRECTION. The acid accent was chosen against
+   charcoal; light mode is a tuned inversion, not a mirror (see the note on
+   --accent in the light block).
+
+   Contrast notes, measured against the page ground:
+     dark  --fg-1 #F4F4F5  17.4:1     body + headlines
+     dark  --fg-2 #A1A1AA   7.7:1     body copy, metadata
+     dark  --fg-3 #71717A   4.1:1     LARGE text and decorative only
+     dark  --accent #E2F952 14.3:1    badges, rules, scribbles
+     light --accent #4F5D00  7.1:1
+   --fg-3 is the brief's muted stone. At 4.1:1 it clears the 3:1 bar for
+   large text and UI boundaries but NOT the 4.5:1 bar for body copy, so it is
+   reserved for oversized type and decoration. See --fg-2 for reading text.
+=========================================================================== */
 
 :root,
-[data-theme="light"] {
+[data-theme='light'] {
   color-scheme: light;
 
-  --bg: #fcfcfd;
-  --bg-deep: #f4f4f7;
-  --surface-1: #ffffff;
-  --surface-2: #f7f7fa;
-  --surface-sunken: #eeeef2;
+  --canvas: #fafaf7;
+  --canvas-deep: #f1f1ec;
+  --surface: #ffffff;
+  --surface-sunken: #eeeee8;
 
-  --text-primary: #14141a;
-  --text-muted: #54545f;
-  --text-faint: #74747f;
+  --fg-1: #101012;
+  --fg-2: #4b4b55;
+  --fg-3: #6e6e78;
 
-  /* --border is DECORATIVE ONLY (dividers, card hairlines, table rows) and
-     sits well under 3:1 by design. Anything whose boundary is the sole thing
-     identifying a control must use --border-strong, which clears WCAG 1.4.11
-     at 4.84:1 on the page and 4.96:1 on a raised surface. */
-  --border: #e3e3ea;
-  --border-strong: #6f6f7a;
+  /* Decorative dividers and card hairlines only. Anything whose boundary is
+     the sole thing identifying a control uses --rule-strong, which clears
+     WCAG 1.4.11 on this ground. */
+  --rule: rgba(16, 16, 18, 0.1);
+  --rule-strong: #5c5c66;
 
-  /* One accent. Purple is brand-justified (favicon.svg is #863BFF/#7E14FF),
-     so it stays; the cyan secondary and the outer glows are gone. */
-  --accent: #6d28d9;
-  --accent-hover: #5b21b6;
-  --accent-contrast: #ffffff;
-  --accent-soft: #f1ebfe;
-  --accent-line: #ddd0f8;
+  /* Light mode cannot run the neon accent: #E2F952 on paper is ~1.1:1. Same
+     hue family, lightness crushed so it survives on white. */
+  --accent: #4f5d00;
+  --accent-hover: #3d4900;
+  --accent-on: #ffffff;
+  --accent-soft: #eef3d6;
+  --accent-line: #c2cf7e;
 
-  /* Shadows only read on a light canvas, so they are tinted to the page hue
-     rather than pure black, and are near-zero in dark mode. */
-  --shadow-sm: 0 1px 2px rgba(28, 22, 48, 0.06);
-  --shadow-md: 0 6px 20px -6px rgba(28, 22, 48, 0.14);
-  --shadow-lg: 0 18px 44px -14px rgba(28, 22, 48, 0.20);
-  --focus-ring: #6d28d9;
+  --shade: 28 22 48;
+
+  --specular: rgba(16, 16, 18, 0.06);
+  --scroll-track: rgba(16, 16, 18, 0.16);
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   color-scheme: dark;
 
-  --bg: #0e0e12;
-  --bg-deep: #08080b;
-  --surface-1: #17171c;
-  --surface-2: #1f1f26;
-  --surface-sunken: #121216;
+  /* Deep matte charcoal, deliberately not #000000 — pure black kills the
+     elevation cues the hairline borders depend on. */
+  --canvas: #0b0b0c;
+  --canvas-deep: #050506;
+  --surface: #131315;
+  --surface-sunken: #0e0e10;
 
-  --text-primary: #eeeef2;
-  --text-muted: #a5a5b0;
-  --text-faint: #7c7c88;
+  --fg-1: #f4f4f5;
+  --fg-2: #a1a1aa;
+  --fg-3: #71717a;
 
-  --border: #2a2a33;
-  --border-strong: #6b6b7a;
+  --rule: rgba(255, 255, 255, 0.08);
+  --rule-strong: #8b8b95;
 
-  --accent: #a78bfa;
-  --accent-hover: #c4b5fd;
-  --accent-contrast: #1c0d33;
-  --accent-soft: #1e1533;
-  --accent-line: #3b2d63;
+  --accent: #e2f952;
+  --accent-hover: #eefd78;
+  /* Ink on acid, not white: the accent is a light lime, so dark text on it is
+     the only pairing that clears 4.5:1. */
+  --accent-on: #0b0b0c;
+  --accent-soft: #1e2312;
+  --accent-line: #3f4a1a;
 
-  /* A shadow on a near-black canvas is invisible — elevation comes from
-     surface lightness plus the hairline border instead. */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 6px 20px -6px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 18px 44px -14px rgba(0, 0, 0, 0.6);
-  --focus-ring: #a78bfa;
+  --shade: 0 0 0;
+
+  --specular: rgba(255, 255, 255, 0.14);
+  --scroll-track: rgba(255, 255, 255, 0.22);
 }
 
 @theme {
-  --font-sans: "Geist Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: "Geist Mono Variable", ui-monospace, "SFMono-Regular", monospace;
-  /* Aliases: `font-display` (21 call sites) and `font-body` resolve here so
-     the Playfair -> Geist swap did not require rewriting 40 components.
-     Both are now the same family; only weight and tracking differentiate. */
-  --font-display: "Geist Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-body: "Geist Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: 'Syne Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Syne Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, 'SFMono-Regular', monospace;
 
-  /* Layout + type scale are mode-independent. */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-2xl: 1rem;
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
   --radius-full: 9999px;
 
-  --spacing-section: 7rem;
-  --spacing-gutter: 1.5rem;
-  --spacing-margin: 4rem;
-  --spacing-stack-sm: 0.5rem;
-  --spacing-stack-md: 1rem;
-  --spacing-stack-lg: 2rem;
-  --spacing-stack-xl: 4rem;
+  --spacing-section: 6.5rem;
+  --spacing-gutter: 1.25rem;
+  --spacing-margin: 3.5rem;
 
-  --text-display-lg: 3.5rem;
-  --text-display-lg-mobile: 2.5rem;
-  --text-headline-lg: 2.75rem;
-  --text-headline-md: 1.875rem;
-  --text-headline-sm: 1.375rem;
-  --text-body-lg: 1.125rem;
-  --text-body-md: 1rem;
-  --text-label-md: 0.875rem;
-  --text-label-sm: 0.75rem;
+  /* Fluid type. The hero is the only size allowed to reach 10.5vw, and it is
+     deliberately NOT clamped any lower at desktop widths: the headline is
+     full-bleed across the shell, so it is bounded by the viewport rather than
+     by a grid column, and both phrases ("APPLIED ML", "THAT SHIPS") fit the
+     shell at this size down to 640px.
 
-  /* 3D scene scales, shared by the CSS layers and the WebGL hero. */
-  --perspective: 1200px;
-  --depth-1: 40px;
-  --depth-2: 80px;
-  --depth-3: 140px;
+     The Hero pairs this with `whitespace-nowrap`. A wrapped display line
+     doubles the height of its block and silently pushes the CTAs below the
+     fold — which is exactly what happened at 12vw inside a grid column. */
+  --text-hero: clamp(2.5rem, 10.5vw, 9.5rem);
+  --text-display: clamp(2.5rem, 7vw, 6rem);
+  --text-headline: clamp(1.75rem, 3.4vw, 3rem);
+  --text-title: clamp(1.25rem, 1.8vw, 1.625rem);
+  --text-lede: 1.125rem;
+  --text-body: 1rem;
+  --text-label: 0.8125rem;
+  --text-meta: 0.6875rem;
+
+  --perspective: 1400px;
 }
 
-/* Republish the semantic tokens as Tailwind colour utilities. `inline` keeps
-   the var() reference live so utilities follow the active theme. */
+/* Republish the semantic tokens as Tailwind utilities. `inline` keeps the
+   var() reference live so utilities follow the active theme. */
 @theme inline {
-  --color-ethereal-background: var(--bg);
-  --color-ethereal-surface: var(--surface-1);
-  --color-ethereal-surface-low: var(--bg-deep);
-  --color-ethereal-surface-high: var(--surface-2);
-  --color-ethereal-surface-highest: var(--surface-2);
-  --color-ethereal-surface-sunken: var(--surface-sunken);
-  --color-ethereal-on-surface: var(--text-primary);
-  --color-ethereal-on-surface-variant: var(--text-muted);
-  --color-ethereal-on-background: var(--text-primary);
-  --color-ethereal-outline: var(--text-faint);
-  --color-ethereal-outline-variant: var(--border);
-  --color-ethereal-primary: var(--accent);
-  --color-ethereal-primary-container: var(--accent-soft);
-  --color-ethereal-on-primary: var(--accent-contrast);
-  --color-ethereal-secondary-container: var(--accent-soft);
-  --color-ethereal-secondary: var(--accent-soft);
-  --color-ethereal-on-secondary: var(--accent-contrast);
-  --color-electric-violet: var(--accent);
-  --color-electric-violet-hover: var(--accent-hover);
-
-  --color-hairline: var(--border);
-  --color-hairline-strong: var(--border-strong);
-}
-
-@theme {
-  /* Legacy aliases kept so existing component classes resolve. */
-  --color-ethereal-tertiary: var(--accent);
-  --color-ethereal-on-tertiary: var(--accent-contrast);
-  --color-ethereal-tertiary-container: var(--accent-soft);
+  --color-canvas: var(--canvas);
+  --color-canvas-deep: var(--canvas-deep);
+  --color-surface: var(--surface);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-fg-1: var(--fg-1);
+  --color-fg-2: var(--fg-2);
+  --color-fg-3: var(--fg-3);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-on: var(--accent-on);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-line: var(--accent-line);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
 }
 
 @layer base {
   body {
-    font-family: var(--font-sans);
-    background-color: var(--bg);
-    color: var(--text-primary);
+    font-family: var(--font-body);
+    background-color: var(--canvas);
+    color: var(--fg-1);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100dvh;
-    transition: background-color 0.25s ease, color 0.25s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-sans);
-    color: var(--text-primary);
-    font-weight: 600;
-    letter-spacing: -0.02em;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    color: var(--fg-1);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 0.92;
   }
 
   html {
     scroll-behavior: smooth;
   }
 
+  /* Must clear the fixed status bar, which is taller on mobile because the
+     compact anchor rail sits underneath it (64px bar + ~44px rail). A jump
+     that lands under the bar hides the section heading behind frosted glass. */
   section {
-    scroll-margin-top: 120px;
+    scroll-margin-top: 7rem;
   }
 
-  *::selection {
-    background-color: var(--color-electric-violet);
-    color: var(--color-ethereal-on-primary);
+  @media (min-width: 768px) {
+    section {
+      scroll-margin-top: 5rem;
+    }
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--accent-on);
   }
 
   /* Safety net: any focusable element without a component class still gets a
      visible ring. Never remove an outline without replacing it here. */
   :where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
-    outline: 2px solid var(--color-electric-violet);
-    outline-offset: 2px;
-    border-radius: var(--radius-sm);
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: var(--radius-xs);
+  }
+
+  /* The custom cursor replaces the native one on fine pointers only. Touch and
+     reduced-motion keep the platform behaviour, so this is a hardening rule
+     rather than the primary switch. */
+  @media (pointer: fine) {
+    html[data-cursor='on'],
+    html[data-cursor='on'] body {
+      cursor: none;
+    }
   }
 
   .skip-link {
-    position: absolute;
-    left: var(--spacing-stack-md);
-    top: var(--spacing-stack-md);
-    z-index: 100;
+    position: fixed;
+    left: var(--spacing-gutter);
+    top: var(--spacing-gutter);
+    z-index: 200;
     display: inline-flex;
     align-items: center;
     min-height: 2.75rem;
-    padding: var(--spacing-stack-sm) var(--spacing-stack-md);
-    background-color: var(--color-electric-violet);
-    color: var(--color-ethereal-on-primary);
-    font-family: var(--font-sans);
-    font-size: 0.875rem;
-    font-weight: 500;
-    border-radius: var(--radius-md);
-    transform: translateY(-200%);
+    padding: 0.5rem 1rem;
+    background-color: var(--accent);
+    color: var(--accent-on);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-radius: var(--radius-sm);
+    transform: translateY(-300%);
     transition: transform 0.2s ease;
   }
 
   .skip-link:focus-visible {
     transform: translateY(0);
-    outline: 2px solid var(--color-ethereal-on-surface);
+    outline: 2px solid var(--fg-1);
     outline-offset: 2px;
   }
 }
 
-/* Honour the OS "reduce motion" setting: every perpetual animation in this
-   project (float, float-delayed, float-slow, pulse-glow) is decorative and
-   stops dead rather than slowing down. */
+/* Every perpetual animation in this project is decorative, so reduced motion
+   stops them dead rather than slowing them down. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -236,242 +252,258 @@
     scroll-behavior: auto !important;
   }
 
+  /* The two decorative loops are cancelled outright rather than collapsed to
+     0.01ms: a single iteration would still leave each one parked on its final
+     keyframe, which for `drift` is a visibly offset hero layer. */
+  .availability-ping,
+  .drift {
+    animation: none !important;
+  }
 }
 
 @layer components {
   /* One surface recipe, driven entirely by the semantic tokens so it inverts
      with the theme. No backdrop-filter here: these sit on a flat canvas where
      blur costs a compositing layer and makes text contrast depend on whatever
-     is behind the card. */
+     happens to be behind the card. */
   .surface {
-    background-color: var(--surface-1);
-    border: 1px solid var(--border);
+    background-color: var(--surface);
+    border: 1px solid var(--rule);
   }
 
-  .surface-2 {
-    background-color: var(--surface-2);
-    border: 1px solid var(--border);
+  .surface-sunken {
+    background-color: var(--surface-sunken);
+    border: 1px solid var(--rule);
   }
 
-  /* Navbar only: genuinely floats over hero content, so blur is load-bearing. */
+  /* Nav bar, drawer, and palette only: each genuinely floats over content, so
+     the blur is load-bearing rather than decorative. */
   .surface-blur {
-    background-color: color-mix(in srgb, var(--surface-1) 72%, transparent);
-    backdrop-filter: blur(12px) saturate(140%);
-    border: 1px solid var(--border);
+    background-color: color-mix(in srgb, var(--canvas) 72%, transparent);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid var(--rule);
   }
 
-  .surface-blur-hover {
-    background-color: color-mix(in srgb, var(--surface-1) 88%, transparent);
-    backdrop-filter: blur(20px) saturate(150%);
-    border: 1px solid var(--border-strong);
-    box-shadow: var(--shadow-md);
-    transition: background-color 0.2s ease, border-color 0.2s ease;
+  .panel-blur {
+    background-color: color-mix(in srgb, var(--canvas) 88%, transparent);
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+    border: 1px solid var(--rule);
   }
 
-  .ghost-border {
-    border: 1px solid var(--border);
+  .shell {
+    width: 100%;
+    max-width: 90rem;
+    margin-inline: auto;
+    padding-inline: var(--spacing-gutter);
   }
 
-  /* Replaces the old `border-white/15 bg-white/5` utility stack, which was
-     invisible against a light background. Icon-sized controls get a real
-     44x44px hit area rather than the 36px the old padding produced. */
+  @media (min-width: 768px) {
+    .shell {
+      padding-inline: var(--spacing-margin);
+    }
+  }
+
+  .section-block {
+    position: relative;
+    padding-block: 4rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-block {
+      padding-block: var(--spacing-section);
+    }
+  }
+
+  /* --- Kinetic type ------------------------------------------------------ */
+
+  /* Outlined display type. The stroke is derived from --fg-1 rather than
+     hardcoded white: a white stroke is invisible on the light canvas, and the
+     brief's white is shorthand for "the primary text colour".
+
+     --stroke-alpha is a unitless number precisely so GSAP can tween it. A
+     colour-mix percentage, or an rgba() string, would have to be parsed and
+     re-serialised every frame; a plain number is a straight lerp. `paint-order`
+     keeps the stroke from eating the glyph's counters, which is what makes
+     cheap text outlines look muddy at display sizes. */
+  .stroke-type {
+    color: transparent;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: color-mix(
+      in srgb,
+      var(--fg-1) calc(var(--stroke-alpha, 0.4) * 100%),
+      transparent
+    );
+    paint-order: stroke fill;
+  }
+
+  .stroke-type[data-fill='true'] {
+    color: var(--fg-1);
+  }
+
+  .stroke-type-thick {
+    -webkit-text-stroke-width: 1.5px;
+  }
+
+  /* The giant background marquee. 13vw, deliberately unclamped: this layer is
+     a texture, not a headline, so it should keep bleeding off both edges at
+     every viewport instead of settling at a maximum size. Sits behind
+     everything at 12% opacity and is decorative, so it is aria-hidden at the
+     call site. */
+  .marquee-giant {
+    font-size: 13vw;
+    line-height: 0.78;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.045em;
+    white-space: nowrap;
+    will-change: transform;
+  }
+
+  /* --- Meta / label voice ----------------------------------------------- */
+
+  .meta {
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--fg-3);
+  }
+
+  .meta-strong {
+    color: var(--fg-2);
+  }
+
+  .meta-accent {
+    color: var(--accent);
+  }
+
+  /* --- Controls --------------------------------------------------------- */
+
+  .btn-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius-full);
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: 1px solid var(--rule-strong);
+    color: var(--fg-1);
+    background-color: transparent;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .btn-pill-solid {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-on);
+  }
+
+  /* Tactile click feedback: the press state is inset, not just a translate,
+     so a mouse-down still reads on a keyboard activation. */
+  .btn-pill:active {
+    transform: translateY(1px) scale(0.985);
+    box-shadow: inset 0 2px 6px rgb(var(--shade) / 0.28);
+  }
+
   .icon-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 2.75rem;
-    min-height: 2.75rem;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border);
-    background-color: var(--surface-1);
-    color: var(--text-muted);
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--rule);
+    color: var(--fg-2);
     transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
   }
 
+  .tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--fg-2);
+    padding: 0.3rem 0.5rem;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-xs);
+  }
 
-  .icon-btn:hover {
+  .tag-accent {
     color: var(--accent);
     border-color: var(--accent-line);
     background-color: var(--accent-soft);
   }
 
-  .ghost-border-hover {
-    border: 1px solid var(--border);
-    transition: border-color 0.2s ease;
-  }
-
-
-  .ghost-border-hover:hover {
-    border-color: var(--border-strong);
-  }
-
-  .btn-primary {
-    background-color: var(--accent);
-    color: var(--accent-contrast);
-    font-family: var(--font-sans);
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    font-weight: 500;
-    padding: 0.75rem 1.5rem;
-    border-radius: var(--radius-md);
-    transition: background-color 0.2s ease, transform 0.2s ease;
-  }
-
-
-  .btn-primary:hover {
-    background-color: var(--accent-hover);
-  }
-
-  .btn-primary:active {
-    transform: translateY(1px);
-  }
-
-  .btn-primary:focus-visible {
-    outline: 2px solid var(--focus-ring);
-    outline-offset: 2px;
-  }
-
-  .btn-secondary {
-    background-color: var(--surface-1);
-    border: 1px solid var(--border-strong);
-    color: var(--text-primary);
-    font-family: var(--font-sans);
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    font-weight: 500;
-    padding: 0.75rem 1.5rem;
-    border-radius: var(--radius-md);
-    transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
-  }
-
-
-  .btn-secondary:hover {
-    border-color: var(--accent);
-    background-color: var(--accent-soft);
-  }
-
-  .btn-secondary:active {
-    transform: translateY(1px);
-  }
-
-  .btn-secondary:focus-visible {
-    outline: 2px solid var(--focus-ring);
-    outline-offset: 2px;
-  }
-
-  .btn-ghost {
-    color: var(--text-primary);
-    font-family: var(--font-sans);
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    font-weight: 500;
-    padding: 0.75rem 1rem;
-    transition: color 0.2s ease;
-  }
-
-
-  .btn-ghost:hover {
-    color: var(--accent);
-  }
-
-  .btn-ghost:focus-visible {
-    outline: 2px solid var(--focus-ring);
-    outline-offset: 2px;
-  }
-
-  .section-container {
-    max-width: 82.5rem;
-    margin: 0 auto;
-    padding-left: var(--spacing-gutter);
-    padding-right: var(--spacing-gutter);
-  }
-
-  @media (min-width: 768px) {
-    .section-container {
-      padding-left: var(--spacing-margin);
-      padding-right: var(--spacing-margin);
-    }
-  }
-
-  .section-spacing {
-    padding-top: 4.5rem;
-    padding-bottom: 4.5rem;
-  }
-
-  @media (min-width: 768px) {
-    .section-spacing {
-      padding-top: var(--spacing-section);
-      padding-bottom: var(--spacing-section);
-    }
-  }
-
-  .surface-card {
-    padding: var(--spacing-stack-lg);
-    border-radius: var(--radius-2xl);
-  }
-
-  .surface-card-hover {
-    padding: var(--spacing-stack-lg);
-    border-radius: var(--radius-2xl);
-    transition: background-color 0.2s ease, border-color 0.2s ease,
-      transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
-  }
-
-
-  .surface-card-hover:hover {
-    background-color: var(--surface-2);
-    border-color: var(--border-strong);
-    box-shadow: var(--shadow-md);
-  }
-
-  .chip {
-    background-color: var(--surface-2);
-    color: var(--text-muted);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    line-height: 1rem;
-    font-weight: 400;
-    padding: 0.25rem 0.625rem;
-    border-radius: var(--radius-full);
-    border: 1px solid var(--border);
-  }
-
-  .chip-primary {
-    background-color: var(--accent-soft);
-    color: var(--accent);
-    border-color: var(--accent-line);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    line-height: 1rem;
-    font-weight: 500;
-    padding: 0.25rem 0.625rem;
-    border-radius: var(--radius-full);
-  }
-
-  .divider {
+  .rule-h {
     height: 1px;
-    background-color: var(--border);
+    background-color: var(--rule);
+    border: 0;
   }
 
-  /* Gradient display type stays inside one hue family so it keeps a reliable
-     contrast floor at both ends; a violet->cyan ramp did not. */
-  .text-gradient {
-    background: linear-gradient(
-      100deg,
-      var(--text-primary) 0%,
-      var(--accent) 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  /* --- Status bar ------------------------------------------------------- */
+
+  /* Fades in from transparent over the hero, then commits to an opaque
+     surface once the hero has scrolled away. The blur is load-bearing here
+     because the bar genuinely floats over content. */
+  .nav-bar {
+    border-bottom: 1px solid var(--rule);
+    background-color: color-mix(in srgb, var(--canvas) 0%, transparent);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .nav-bar[data-scrolled='true'] {
+    background-color: color-mix(in srgb, var(--canvas) 82%, transparent);
+    box-shadow: 0 1px 0 0 var(--rule), 0 18px 40px -30px rgb(var(--shade) / 0.5);
+  }
+
+  /* Expanding halo behind the availability dot. Separate element from the dot
+     itself so the pulse reads as outward energy rather than a size change. */
+  @keyframes availability-ping {
+    0% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+    70%,
+    100% {
+      transform: scale(3.2);
+      opacity: 0;
+    }
+  }
+
+  .availability-ping {
+    animation: availability-ping 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  /* Slow drift for the hero's background marquee layer. Held to a translate
+     only — animating anything else would force a layout on every frame. */
+  @keyframes drift-x {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(2%, -1.5%, 0);
+    }
+  }
+
+  .drift {
+    animation: drift-x 22s ease-in-out infinite alternate;
   }
 }
 
 /* ---------------------------------------------------------------------------
    3D / DEPTH LAYERS
-   Real perspective and transform-based depth. No WebGL required, so this
-   costs nothing in bundle size and degrades to flat instantly under
-   prefers-reduced-motion.
+   Real perspective and transform-based depth. No WebGL required, so this costs
+   nothing in bundle size and degrades to flat under prefers-reduced-motion.
 --------------------------------------------------------------------------- */
 @layer components {
   .scene-3d {
@@ -479,61 +511,54 @@
     perspective-origin: 50% 40%;
   }
 
-  .depth-1 { transform: translateZ(var(--depth-1)); }
-  .depth-2 { transform: translateZ(var(--depth-2)); }
-  .depth-3 { transform: translateZ(var(--depth-3)); }
-
-  /* 3D tilt lives entirely in Framer Motion (see TiltCard.jsx), which writes
+  /* 3D tilt lives entirely in Framer Motion (TiltCard.jsx), which writes
      `transform` inline from a spring. This class must NOT declare a transform
-     or a transform transition: either would fight the spring and double-smooth
-     the movement. Its only job is keeping the element in its own 3D context. */
+     or a transform transition: either would fight the spring and
+     double-smooth the movement. Its only job is keeping the element in its
+     own 3D context. */
   .tilt-3d {
     transform-style: preserve-3d;
     will-change: transform;
   }
 
-  /* Elevation only. box-shadow is safe to transition because Framer is not
-     writing that property. */
-  .tilt-lift {
-    transition: box-shadow 0.2s ease, background-color 0.2s ease,
-      border-color 0.2s ease;
-  }
-
-  /* Depth-stacked list: each row sits further back and recedes on hover.
-     Used by Certifications so 18 badges stop being a 4-column data dump. */
-  .stack-3d {
-    transform-style: preserve-3d;
-  }
-
-  .stack-3d > * {
-transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  /* The portrait's specular sweep. Driven by a CSS custom property written
+     from JS on pointermove; the gradient is a paint, not a transform, so it
+     is safe to keep in CSS. */
+  .specular::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      28rem circle at var(--sheen-x, 50%) var(--sheen-y, 50%),
+      var(--specular),
+      transparent 62%
+    );
+    opacity: var(--sheen-o, 0);
+    transition: opacity 0.35s ease;
   }
 }
 
-/* Hover-driven motion is gated on a fine pointer: on touch, :hover sticks
-   after a tap and a card would stay lifted until you tapped elsewhere. */
+/* Scrollbar: tinted to the theme so the page does not gain a bright default
+   strip the moment the accent moves to lime. */
+* {
+  scrollbar-color: var(--scroll-track) transparent;
+  scrollbar-width: thin;
+}
+
+/* Hover motion is gated on a fine pointer. On touch, :hover sticks after a
+   tap and a row would stay lit until you tapped elsewhere. */
 @media (hover: hover) and (pointer: fine) {
+  .btn-pill:hover {
+    border-color: var(--fg-1);
+  }
+  .btn-pill-solid:hover {
+    background-color: var(--accent-hover);
+    border-color: var(--accent-hover);
+  }
   .icon-btn:hover {
     color: var(--accent);
     border-color: var(--accent-line);
     background-color: var(--accent-soft);
-  }
-  .ghost-border-hover:hover {
-    border-color: var(--border-strong);
-  }
-  .btn-primary:hover {
-    background-color: var(--accent-hover);
-  }
-  .btn-secondary:hover {
-    border-color: var(--accent);
-    background-color: var(--accent-soft);
-  }
-  .btn-ghost:hover {
-    color: var(--accent);
-  }
-  .surface-card-hover:hover {
-    background-color: var(--surface-2);
-    border-color: var(--border-strong);
-    box-shadow: var(--shadow-md);
   }
 }

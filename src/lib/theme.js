@@ -5,6 +5,14 @@
 
 export const STORAGE_KEY = 'theme';
 
+/**
+ * Dark is the default, NOT the OS preference. The acid accent and the outlined
+ * display type were tuned against charcoal first, so an OS set to light should
+ * still land on the intended art direction until the visitor says otherwise.
+ * This is the one place that decision lives — index.html mirrors it.
+ */
+export const DEFAULT_MODE = 'dark';
+
 export function readStored() {
   // Safari private mode and "block all cookies" both make localStorage throw
   // on access, not just on write, so the read needs the same guard.
@@ -16,10 +24,10 @@ export function readStored() {
 }
 
 export function resolveMode() {
-  if (typeof window === 'undefined') return 'light';
+  if (typeof window === 'undefined') return DEFAULT_MODE;
   const stored = readStored();
   if (stored === 'light' || stored === 'dark') return stored;
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  return DEFAULT_MODE;
 }
 
 export function applyMode(mode) {
