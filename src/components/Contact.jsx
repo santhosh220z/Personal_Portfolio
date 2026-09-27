@@ -56,7 +56,7 @@ const Contact = () => {
           className="group block border-y border-rule py-8 md:py-12"
         >
           <span className="flex flex-wrap items-center gap-x-6 gap-y-3">
-            <span className="font-mono text-[length:var(--text-meta)] tracking-[0.16em] text-fg-3 uppercase">
+            <span className="font-mono text-[length:var(--text-meta)] tracking-[0.16em] text-fg-2 uppercase">
               Write to
             </span>
             <span className="flex items-center gap-3 text-[clamp(1.1rem,3.4vw,2.5rem)] leading-tight font-extrabold break-all">
