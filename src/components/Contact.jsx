@@ -40,8 +40,8 @@ const Contact = () => {
         <SectionLabel
           index="07"
           eyebrow="Contact"
-          title="Open to an ML engineering role"
-          lede="Research positions, applied ML work, or anything where a model has to survive production. I read everything that comes in."
+          title="Open to work in AI/ML"
+          lede="Looking for an entry-level AI/ML role — applied machine learning, computer vision, or MLOps — where I can keep building and learn from a team. I read everything that comes in."
         />
 
         {/* Oversized mail link. The address is the point of the section, so it
