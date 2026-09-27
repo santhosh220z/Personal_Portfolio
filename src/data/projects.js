@@ -1,32 +1,19 @@
 /**
  * Featured work.
  *
- * ── ON THE ASSETS ────────────────────────────────────────────────────────────
- * `image` uses Lorem Picsum (`picsum.photos/seed/<seed>`) rather than hand-picked
- * Unsplash photo IDs, because a wrong Unsplash ID renders as a broken image
- * and a portfolio that opens on broken images fails the brief outright. Picsum
- * seeds are deterministic, so the same card always gets the same picture.
- * To swap in real case-study stills, replace the `image` strings with your own
- * files in `public/` (e.g. '/work/deepfake.jpg') — nothing else needs to change.
- *
- * `demo` is an OPTIONAL short looping video for the hover capsule. It is left
- * off every entry below on purpose: the public sample MP4s that would fill this
- * slot are stock footage unrelated to the work, which makes the capsule look
- * broken rather than cinematic. Drop your own 4-6s silent webm into `public/`
- * and set `demo: '/work/deepfake.webm'` to switch a card over. The capsule
- * component already handles the video/poster split and the load-failure
- * fallback, so no component code needs to change.
- *
  * ── ON THE METRICS ──────────────────────────────────────────────────────────
  * `metricsPlaceholder: true` marks a figure that is illustrative rather than
  * measured, and the blueprint drawer renders a SAMPLE tag beside it so a
  * placeholder is never presented as a result. The gesture-recognition numbers
- * (92% validation accuracy, 50+ users) are real and come from the Edunet
- * Foundation research internship; the rest are placeholders to overwrite.
+ * (92% validation accuracy, 50+ users) are real and come from the TechSakshyam
+ * research internship; the rest are placeholders to overwrite.
+ *
+ * There are deliberately no image or video fields. An earlier revision carried
+ * `image` (a picsum.photos placeholder) and an optional `demo` clip so the work
+ * list could show a cursor-following preview card. That card is gone, and with
+ * it the only consumer of both fields, so carrying them would mean shipping
+ * four placeholder URLs and a video code path that nothing renders.
  */
-
-const seed = (name, w = 960, h = 620) =>
-  `https://picsum.photos/seed/${encodeURIComponent(name)}/${w}/${h}`;
 
 export const PROJECTS = [
   {
@@ -37,9 +24,7 @@ export const PROJECTS = [
     summary:
       'A classifier for manipulated stills and video, trained to spot the artefacts that compression leaves behind when a face is swapped.',
     stack: ['Python', 'TensorFlow', 'OpenCV', 'CNN'],
-    image: seed('kinetic-deepfake'),
     github: 'https://github.com/santhosh220z/Deepfake-Detection',
-    demo: null,
     problem:
       'Recycled faces were slipping past eyeball checks in moderation queues, and manual review does not scale past a few hundred uploads a day. The ask was a first-pass filter that a human could then confirm, not an autonomous verdict.',
     approach: [
@@ -66,11 +51,9 @@ export const PROJECTS = [
     summary:
       'Real-time sign-to-text on a live camera feed, built for people who type to communicate and cannot.',
     stack: ['Python', 'MediaPipe', 'TensorFlow', 'OpenCV', 'CNN'],
-    image: seed('kinetic-gesture'),
     github: 'https://github.com/santhosh220z',
-    demo: null,
     problem:
-      'The Edunet Foundation "Sign Speak" brief: make a usable communication aid for students with limited motor control. Accuracy on paper was not the hard part — the hard part was staying responsive on the webcam hardware these users actually have.',
+      'The TechSakshyam (Edunet) "Sign Speak" brief: make a usable communication aid for students with limited motor control. Accuracy on paper was not the hard part — the hard part was staying responsive on the webcam hardware these users actually have.',
     approach: [
       'MediaPipe for landmark detection so the model classifies hand pose rather than raw pixels, which cut the input resolution problem entirely',
       'A custom annotated dataset covering the sign set in natural lighting rather than studio conditions',
@@ -95,9 +78,7 @@ export const PROJECTS = [
     summary:
       'A reasoning assistant served locally through the Hugging Face transformers pipeline, with the full conversation carried server-side.',
     stack: ['Python', 'Hugging Face', 'FastAPI', 'HTML', 'CSS'],
-    image: seed('kinetic-chatbot'),
     github: 'https://github.com/santhosh220z',
-    demo: null,
     problem:
       'Hosted LLM APIs are fine until the budget conversation starts. The goal was a working reasoning assistant that runs on one machine, keeps a coherent thread across turns, and stays a few hundred milliseconds behind the keystroke.',
     approach: [
@@ -124,9 +105,7 @@ export const PROJECTS = [
     summary:
       'A risk model over routine clinical features, built for triage ordering rather than diagnosis.',
     stack: ['Python', 'Scikit-learn', 'Pandas', 'Feature Engineering'],
-    image: seed('kinetic-stroke'),
     github: 'https://github.com/santhosh220z',
-    demo: null,
     problem:
       'Given the standard stroke-risk factors, can a model order a triage queue usefully? Deliberately scoped as ranking, not diagnosis: the output is a priority ordering for a clinician, never a verdict handed to a patient.',
     approach: [
