@@ -2,7 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!-- Icons. The SVG is the only one most browsers will pick up, but iOS
+         ignores SVG for the home-screen icon and Android needs real PNGs at
+         declared sizes, so the set is deliberately redundant.
+         `mask-icon` covers the monochrome pinned-tab treatment in Chromium. -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link
+      rel="mask-icon"
+      href="/favicon.svg"
+      media="(prefers-color-scheme: dark)"
+    />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
