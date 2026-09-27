@@ -1,6 +1,6 @@
 ﻿import React, { useEffect, useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
-import { applyMode, resolveMode } from '../lib/theme';
+import { applyMode, readStored, resolveMode } from '../lib/theme';
 
 const ThemeToggle = () => {
   const [mode, setMode] = useState(resolveMode);
@@ -9,7 +9,7 @@ const ThemeToggle = () => {
     // Keep following the OS until the visitor states a preference.
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
     const onChange = (e) => {
-      if (window.localStorage.getItem('theme')) return;
+      if (readStored()) return;
       const next = e.matches ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', next);
       setMode(next);

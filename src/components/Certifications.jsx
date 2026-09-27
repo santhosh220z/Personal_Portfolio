@@ -150,34 +150,39 @@ const Certifications = () => {
           className="scene-3d stack-3d mt-8 grid list-none grid-cols-1 gap-5 p-0 sm:grid-cols-2 lg:grid-cols-3"
         >
           {featured.map((cert, index) => (
-            <motion.li
-              key={cert.name}
-              variants={item}
-              className="group surface surface-card-hover flex flex-col"
-              style={{ transform: `translateZ(${(FEATURED_COUNT - index) * 8}px)` }}
-            >
-              <div className="mb-5 flex items-center gap-3.5">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg surface-2 p-1.5">
-                  <img src={GoogleCloudLogo} alt="" width={687} height={687} className="h-full w-full object-contain" />
-                </div>
-                <div>
-                  <h3 className="text-sm leading-snug font-medium text-ethereal-on-surface">
-                    {cert.name}
-                  </h3>
-                  <p className="mt-1 font-mono text-xs text-ethereal-on-surface-variant">
-                    {cert.date}
-                  </p>
-                </div>
-              </div>
-              <a
-                href={cert.verifyLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-auto inline-flex min-h-[2.75rem] items-center gap-1.5 text-sm text-electric-violet transition-colors hover:text-electric-violet-hover"
+            <motion.li key={cert.name} variants={item}>
+              {/* Depth lives on this plain div, never on the motion element:
+                  Framer writes `transform` inline to animate `y`, so a
+                  translateZ on the same node would be overwritten. */}
+              <div
+                className="h-full"
+                style={{ transform: `translateZ(${(FEATURED_COUNT - index) * 8}px)` }}
               >
-                Verify
-                <ExternalLink size={14} aria-hidden="true" />
-              </a>
+                <article className="group surface surface-card-hover flex h-full flex-col">
+                  <div className="mb-5 flex items-center gap-3.5">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg surface-2 p-1.5">
+                      <img src={GoogleCloudLogo} alt="" width={687} height={687} className="h-full w-full object-contain" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm leading-snug font-medium text-ethereal-on-surface">
+                        {cert.name}
+                      </h3>
+                      <p className="mt-1 font-mono text-xs text-ethereal-on-surface-variant">
+                        {cert.date}
+                      </p>
+                    </div>
+                  </div>
+                  <a
+                    href={cert.verifyLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-auto inline-flex min-h-[2.75rem] items-center gap-1.5 text-sm text-electric-violet transition-colors hover:text-electric-violet-hover"
+                  >
+                    Verify
+                    <ExternalLink size={14} aria-hidden="true" />
+                  </a>
+                </article>
+              </div>
             </motion.li>
           ))}
         </motion.ul>

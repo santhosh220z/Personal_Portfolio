@@ -118,6 +118,7 @@ const Navbar = () => {
             </div>
 
             <div className="mt-4 flex items-center gap-2 border-t border-hairline pt-4">
+              <ThemeToggle />
               <a
                 href="https://github.com/santhosh220z"
                 target="_blank"

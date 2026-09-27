@@ -198,6 +198,9 @@
     left: var(--spacing-stack-md);
     top: var(--spacing-stack-md);
     z-index: 100;
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
     padding: var(--spacing-stack-sm) var(--spacing-stack-md);
     background-color: var(--color-electric-violet);
     color: var(--color-ethereal-on-primary);
@@ -480,17 +483,20 @@
   .depth-2 { transform: translateZ(var(--depth-2)); }
   .depth-3 { transform: translateZ(var(--depth-3)); }
 
-  /* 3D tilt card. --rx / --ry are written by the TiltCard component from
-     Motion values; the perspective lives on the parent .scene-3d. */
-  .tilt-card {
+  /* 3D tilt lives entirely in Framer Motion (see TiltCard.jsx), which writes
+     `transform` inline from a spring. This class must NOT declare a transform
+     or a transform transition: either would fight the spring and double-smooth
+     the movement. Its only job is keeping the element in its own 3D context. */
+  .tilt-3d {
     transform-style: preserve-3d;
-    transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))
-      translateZ(0);
-    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
   }
 
-  .tilt-card-lift {
-transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Elevation only. box-shadow is safe to transition because Framer is not
+     writing that property. */
+  .tilt-lift {
+    transition: box-shadow 0.2s ease, background-color 0.2s ease,
+      border-color 0.2s ease;
   }
 
   /* Depth-stacked list: each row sits further back and recedes on hover.

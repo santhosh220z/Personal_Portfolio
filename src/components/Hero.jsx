@@ -57,6 +57,9 @@ const Hero = () => {
           <h1 className="text-[2.5rem] leading-[1.05] font-semibold tracking-tight text-balance text-ethereal-on-surface md:text-6xl">
             Applied ML engineer
             <br />
+            {/* The <br> above is a visual break only; without this space a
+                screen reader announces "engineerwho". */}
+            {' '}
             <span className="text-electric-violet">who ships to production</span>
           </h1>
 
