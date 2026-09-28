@@ -26,8 +26,8 @@ const Work = () => {
       <div className="shell">
         <SectionLabel
           index="01"
-          eyebrow="Case studies"
-          title="Selected work"
+          eyebrow="Projects done"
+          title="Project works"
           lede="Four systems, each with a blueprint. Open one for the problem, the approach, and the pipeline it runs through."
         />
       </div>

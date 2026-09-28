@@ -13,7 +13,7 @@ const About = () => {
   return (
     <section id="about" className="section-block border-t border-rule">
       <div className="shell">
-        <SectionLabel index="03" eyebrow="Profile" title="Who is doing this" />
+        <SectionLabel index="03" eyebrow="Profile" title="Student profile" />
 
         <div className="grid gap-12 md:gap-16 lg:grid-cols-[1.15fr_0.85fr]">
           {/* Statement */}

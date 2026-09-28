@@ -40,8 +40,8 @@ const Contact = () => {
         <SectionLabel
           index="07"
           eyebrow="Contact"
-          title="Open to an ML engineering role"
-          lede="Research positions, applied ML work, or anything where a model has to survive production. I read everything that comes in."
+          title="Open to work in AI/ML"
+          lede="Looking for an entry-level AI/ML role — applied machine learning, computer vision, or MLOps — where I can keep building and learn from a team. I read everything that comes in."
         />
 
         {/* Oversized mail link. The address is the point of the section, so it
@@ -56,7 +56,7 @@ const Contact = () => {
           className="group block border-y border-rule py-8 md:py-12"
         >
           <span className="flex flex-wrap items-center gap-x-6 gap-y-3">
-            <span className="font-mono text-[length:var(--text-meta)] tracking-[0.16em] text-fg-3 uppercase">
+            <span className="font-mono text-[length:var(--text-meta)] tracking-[0.16em] text-fg-2 uppercase">
               Write to
             </span>
             <span className="flex items-center gap-3 text-[clamp(1.1rem,3.4vw,2.5rem)] leading-tight font-extrabold break-all">

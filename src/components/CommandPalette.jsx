@@ -185,7 +185,7 @@ const CommandPalette = ({ open, onClose }) => {
                 }
                 autoComplete="off"
                 spellCheck="false"
-                className="h-14 w-full bg-transparent font-mono text-sm text-fg-1 outline-none placeholder:text-fg-3"
+                className="h-14 w-full bg-transparent font-mono text-sm text-fg-1 outline-none placeholder:text-fg-2"
               />
               <kbd className="meta shrink-0 rounded-xs border border-rule px-1.5 py-1">ESC</kbd>
             </div>

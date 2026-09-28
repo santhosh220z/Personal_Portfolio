@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, ChevronDown } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { makeReveal, revealViewport } from '../lib/motion';
 import { usePrefersReducedMotion } from '../lib/hooks';
-import { CERTIFICATIONS, EDUCATION } from '../data/resume';
+import { CERTIFICATIONS, EDUCATION, FEATURED_CERTIFICATIONS } from '../data/resume';
 import SectionLabel from './SectionLabel';
 
 const Education = () => {
@@ -52,17 +52,16 @@ const Education = () => {
 /**
  * Certifications.
  *
- * Eighteen badges as eighteen cards is a data dump with no hierarchy. The first
- * five are shown as cards with a real issuer mark, and the remainder sit behind
- * a disclosure, so the section reads as "here is the evidence" instead of a wall.
+ * A curated six rather than all eighteen. Every badge is still in the data
+ * file, but twelve of them are role-specific Gemini variants (DevOps, Security,
+ * Network, Cloud Architect, Data Scientists) or near-duplicate intros, and
+ * rendering them all made the section read as a data dump rather than as
+ * evidence. The six shown span AI and LLM fundamentals, transformers,
+ * prompting, MLOps, and ethics, which is the range the rest of the CV claims.
  */
 const Certifications = () => {
-  const [showAll, setShowAll] = useState(false);
   const reduceMotion = usePrefersReducedMotion();
   const { container, item } = makeReveal(reduceMotion);
-
-  const featured = CERTIFICATIONS.slice(0, 5);
-  const rest = CERTIFICATIONS.slice(5);
 
   return (
     <section id="certifications" className="section-block border-t border-rule">
@@ -71,7 +70,7 @@ const Certifications = () => {
           index="06"
           eyebrow="Credentials"
           title="Certifications"
-          lede={`${CERTIFICATIONS.length} Google Cloud Skill Build badges, spanning generative AI, MLOps, and responsible AI.`}
+          lede={`${FEATURED_CERTIFICATIONS.length} of ${CERTIFICATIONS.length} Google Cloud Skill Build badges, chosen to span generative AI, LLMs, MLOps, and responsible AI.`}
         />
 
         <motion.ul
@@ -81,7 +80,7 @@ const Certifications = () => {
           viewport={revealViewport}
           className="grid list-none gap-px overflow-hidden rounded-lg border border-rule bg-[var(--rule)] p-0 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {featured.map((cert) => (
+          {FEATURED_CERTIFICATIONS.map((cert) => (
             <motion.li key={cert.href} variants={item} className="group bg-canvas">
               <a
                 href={cert.href}
@@ -94,7 +93,7 @@ const Certifications = () => {
                 <h3 className="mt-3 text-sm leading-snug font-medium text-fg-1">
                   {cert.name}
                 </h3>
-                <span className="meta mt-auto pt-5 flex items-center gap-1.5 text-accent">
+                <span className="meta mt-auto flex items-center gap-1.5 pt-5 text-accent">
                   Verify
                   <ArrowUpRight size={12} aria-hidden="true" />
                 </span>
@@ -102,40 +101,6 @@ const Certifications = () => {
             </motion.li>
           ))}
         </motion.ul>
-
-        <div className="mt-8">
-          <button
-            type="button"
-            onClick={() => setShowAll((open) => !open)}
-            aria-expanded={showAll}
-            className="btn-pill"
-          >
-            {showAll ? 'Show fewer' : `Show all ${CERTIFICATIONS.length} badges`}
-            <ChevronDown
-              size={15}
-              aria-hidden="true"
-              className={`transition-transform duration-200 ${showAll ? 'rotate-180' : ''}`}
-            />
-          </button>
-
-          {showAll ? (
-            <ul className="mt-6 grid list-none gap-x-8 p-0 sm:grid-cols-2">
-              {rest.map((cert) => (
-                <li key={cert.href} className="border-b border-rule">
-                  <a
-                    href={cert.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-baseline justify-between gap-4 py-3 transition-colors hover:text-fg-1"
-                  >
-                    <span className="text-sm text-fg-2">{cert.name}</span>
-                    <span className="meta shrink-0">{cert.date}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </div>
       </div>
     </section>
   );

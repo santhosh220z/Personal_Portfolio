@@ -171,6 +171,20 @@
 
   html {
     scroll-behavior: smooth;
+    /* Focus Not Obscured (WCAG 2.2 AA): when focus is moved by the keyboard,
+       the browser scrolls the focused element into view against the SCROLL
+       PORT's padding — not against the target's scroll-margin. Without this,
+       tabbing to a link low on the page parks it underneath the fixed status
+       bar. `section { scroll-margin-top }` below only helps elements that are
+       themselves <section>, so anchor jumps were covered while keyboard focus
+       was not. */
+    scroll-padding-top: 7rem;
+  }
+
+  @media (min-width: 768px) {
+    html {
+      scroll-padding-top: 5rem;
+    }
   }
 
   /* Must clear the fixed status bar, which is taller on mobile because the
@@ -363,17 +377,29 @@
 
   /* --- Meta / label voice ----------------------------------------------- */
 
+  /* Sits on --fg-2, not --fg-3. The token comment above reserves --fg-3 for
+     large text and decoration because it measures 4.07:1 on the canvas, and
+     this class is 11px uppercase — squarely reading text, not decoration. A
+     measured audit caught nav links and the hero's location line rendering at
+     4.07-4.35:1 through this class, i.e. failing AA by a small margin. --fg-2
+     measures 7.68:1, so every current and future use passes. */
   .meta {
     font-family: var(--font-mono);
     font-size: var(--text-meta);
     line-height: 1;
     text-transform: uppercase;
     letter-spacing: 0.16em;
+    color: var(--fg-2);
+  }
+
+  /* For genuinely non-essential labelling where the faint tone is the point.
+     Never apply to a link or to text that carries meaning on its own. */
+  .meta-faint {
     color: var(--fg-3);
   }
 
   .meta-strong {
-    color: var(--fg-2);
+    color: var(--fg-1);
   }
 
   .meta-accent {

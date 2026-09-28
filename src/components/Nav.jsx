@@ -49,10 +49,13 @@ const Nav = ({ onOpenCommand }) => {
     <header className="fixed inset-x-0 top-0 z-[120]">
       <div ref={barRef} className="nav-bar" data-scrolled="false">
         <div className="shell flex h-16 items-center justify-between gap-4">
-          {/* Brandmark */}
+          {/* Brandmark. min-h is not decoration: as a plain flex item this
+              collapsed to its 20px line box, which is under the WCAG 2.2 AA
+              24px minimum pointer-target size. 2.75rem comfortably clears it
+              and still fits inside the bar's h-16. */}
           <a
             href="#hero"
-            className="group flex shrink-0 items-center gap-3"
+            className="group flex min-h-[2.75rem] shrink-0 items-center gap-3"
             aria-label={`${SITE.name} — top of page`}
           >
             <span className="font-mono text-sm font-medium tracking-[0.22em] text-fg-1 transition-colors group-hover:text-accent">
@@ -88,7 +91,7 @@ const Nav = ({ onOpenCommand }) => {
                 className="font-mono text-meta tracking-[0.12em] tabular-nums text-fg-2"
               >
                 {time}
-                <span className="ml-1.5 text-fg-3">{SITE.timezoneLabel}</span>
+                <span className="ml-1.5 text-fg-2">{SITE.timezoneLabel}</span>
               </time>
             </div>
 
@@ -117,7 +120,7 @@ const Nav = ({ onOpenCommand }) => {
             <a
               key={link.id}
               href={link.href}
-              className="meta shrink-0 px-2 py-2.5 transition-colors hover:text-fg-1"
+              className="meta min-h-[2.75rem] shrink-0 px-2 py-2.5 transition-colors hover:text-fg-1"
             >
               {link.label}
             </a>

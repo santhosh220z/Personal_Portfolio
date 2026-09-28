@@ -1,19 +1,29 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" role="img" aria-label="SS monogram">
   <title>SS monogram</title>
-  <defs>
-    <linearGradient id="ssmark" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#7E14FF"/>
-      <stop offset="1" stop-color="#A78BFA"/>
-    </linearGradient>
-  </defs>
-  <rect width="100" height="100" rx="22" fill="url(#ssmark)"/>
-  <!-- The glyph paths are drawn around their own ink centre at (34,50); this
-       transform re-centres them on the 100x100 box and scales to fill it. The
-       offsets were measured with getBBox(), not eyeballed. -->
-  <g transform="translate(50 50) scale(1.08) translate(-34 -50)">
-    <g fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round">
-      <path d="M26 37C26 30 4 30 4 42c0 10 22 6 22 16 0 12-22 12-22 5"/>
-      <path d="M64 37c0-7-22-7-22 5 0 10 22 6 22 16 0 12-22 12-22 5"/>
-    </g>
+  <!--
+    The mark is a stroked path, never <text>. A favicon is rendered in the
+    browser chrome with no access to the page's webfonts, so a text-based mark
+    silently falls back to whatever the OS has and changes shape per platform.
+    Paths are font-independent by construction.
+
+    One "S" rather than the "SS" of the nav brandmark: at 16px two S's are ~6px
+    wide each and the bowls collapse into a smudge. Condensing to one keeps the
+    letterform legible at tab size while still reading as the brandmark.
+
+    The terminal is a square rather than a dot because squares are the site's
+    motif — the portrait's registration marks and the marquee's separators are
+    both squared.
+  -->
+  <rect width="100" height="100" rx="22" fill="#0B0B0C" />
+  <!-- Barely-there lime hairline: defines the tile against a dark tab bar
+       without drawing a second, competing edge. -->
+  <rect x="0.5" y="0.5" width="99" height="99" rx="21.5" fill="none" stroke="#E2F952" stroke-opacity="0.18" />
+
+  <g fill="none" stroke="#E2F952" stroke-width="16" stroke-linecap="butt">
+    <!-- Geometric S skeleton. Ink spans x 11-69, y 8-78, centred on x=40 so
+         the square terminal can occupy the right without crowding it. -->
+    <path d="M59 30C59 21 51 16 39 16C27 16 19 21 19 30C19 39 28 43 39 43C51 43 61 47 61 56C61 65 53 70 41 70C32 70 24 67 22 61" />
   </g>
+
+  <rect x="76" y="57" width="14" height="14" fill="#E2F952" />
 </svg>

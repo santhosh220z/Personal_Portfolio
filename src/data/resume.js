@@ -2,19 +2,25 @@
 // no hardcoded copy. Ordering here is the ordering on the page.
 
 export const ABOUT = {
-  headline: ['I turn research', 'into running', 'systems.'],
+  // Framed as a final-year student rather than a shipped engineer. The three
+  // lines are chosen so the middle one takes the stroke treatment, which keeps
+  // the outlined-type motif without losing the readable sentence.
+  headline: ['Final year B.Tech', 'in Computer Science', '(AI & ML).'],
   bio: [
-    'I build vision and language systems that hold up outside a notebook — real-time gesture recognition, deepfake detection, predictive clinical models. The interesting part is rarely the model; it is everything around it that decides whether anyone ever sees a prediction.',
-    'Currently finishing a B.Tech in Computer Science (AI & ML) at KIET, Kakinada. Previously a research intern at the Edunet Foundation and a machine learning engineering intern on the Google AI-ML programme, where I shipped three production-ready models onto Google Cloud.',
+    'I am in my final year of a B.Tech in Computer Science (AI & ML) at KIET, Kakinada, where I have built my focus around machine learning, computer vision, and how models behave once they leave a notebook.',
+    'Most of what I have learned so far has come from building rather than reading: a real-time sign-language interpreter, a deepfake classifier, a clinical risk model, and a locally hosted reasoning assistant. I have since interned with the Google AI-ML programme and with TechSakshyam, and I am looking for an AI/ML role where I can keep doing that with a team.',
   ],
+  // Academic rather than professional. Every value here already appears in
+  // EDUCATION below, so nothing on the page claims a number that cannot be
+  // traced to the education record.
   facts: [
-    { value: '10+', label: 'Models shipped' },
-    { value: '18', label: 'Cloud badges' },
-    { value: '3', label: 'Production deployments' },
+    { value: '7.44', label: 'CGPA' },
+    { value: '2026', label: 'Graduating' },
+    { value: '10+', label: 'Projects built' },
   ],
   languages: ['English', 'Telugu', 'Hindi'],
   award:
-    'Selected for the regional round at Edunet — Sign Speak: The Silent Communicator.',
+    'Selected for the regional round at TechSakshyam — Sign Speak: The Silent Communicator.',
 };
 
 export const EXPERIENCES = [
@@ -29,7 +35,7 @@ export const EXPERIENCES = [
   },
   {
     role: 'Research Intern',
-    company: 'Edunet Foundation',
+    company: 'TechSakshyam (Edunet)',
     period: '2024 — 2025',
     description:
       'Built a real-time hand sign recognition system with OpenCV and MediaPipe to improve gesture interpretation and communication accessibility. Trained CNN models on a custom annotated dataset.',
@@ -37,13 +43,19 @@ export const EXPERIENCES = [
     impact: 'Created an accessible AI tool used by 50+ users for communication assistance',
   },
   {
-    role: 'Machine Learning Teaching Assistant',
+    // TODO(fill in): three blanks below are deliberate. The three TODO comments
+    // mark the only facts about this mentoring I was not given, and inventing
+    // plausible numbers for a CV entry is worse than leaving them visible.
+    //   1. period      — when the hackathon ran
+    //   2. stack       — what the juniors were mentored on
+    //   3. impact      — how many juniors, and how it ended
+    role: 'Hackathon Mentor',
     company: 'KIET College',
-    period: '2023 — 2024',
+    period: '2024 — 2025', // TODO: confirm the dates
     description:
-      'Delivered ML coursework, graded assignments, and guided final-year projects on regression, trees, and neural networks, with review sessions structured around industry-style ML workflows.',
-    stack: ['Scikit-learn', 'Matplotlib', 'Student Mentoring', 'ML Workflow Design'],
-    impact: 'Helped 85% of students pass the final ML assessment',
+      'Mentored a team of juniors from problem statement to working demo over a single hackathon — helping them narrow the problem, pick a stack they could actually finish, and debug under time pressure.',
+    stack: ['Mentoring', 'Problem Scoping', 'Rapid Prototyping'], // TODO: add the real stack
+    impact: 'Guided a junior team from first idea to a working demo', // TODO: add team size and outcome
   },
 ];
 
@@ -169,6 +181,21 @@ export const EDUCATION = [
   },
 ];
 
+// All 18 Google Cloud Skill Build badges, kept in full so nothing is lost. The
+// `featured` flag marks the six the certifications section actually shows:
+// AI and LLM fundamentals, transformers, prompting, MLOps, and ethics. The
+// other twelve are role-specific Gemini variants (DevOps, Security, Network,
+// Cloud Architect, Data Scientists) plus a few overlapping intros, and showing
+// all eighteen read as a data dump rather than as evidence.
+const FEATURED_BADGES = new Set([
+  '11270258', // Machine Learning Operations (MLOps) for Generative AI
+  '11264871', // Transformer Models and BERT Model
+  '10600787', // Prompt Design in Vertex AI
+  '10686803', // Responsible AI: Applying AI Principles
+  '10469487', // Introduction to Large Language Models
+  '10329047', // Introduction to Generative AI
+]);
+
 export const CERTIFICATIONS = [
   ['Machine Learning Operations (MLOps) for Generative AI', 'Sep 11, 2024', '11270258'],
   ['Introduction to Vertex AI Studio', 'Sep 11, 2024', '11269094'],
@@ -192,4 +219,8 @@ export const CERTIFICATIONS = [
   name,
   date,
   href: `https://www.skills.google/public_profiles/b97527e0-fd88-4299-896f-66fa6547079c/badges/${id}`,
+  featured: FEATURED_BADGES.has(id),
 }));
+
+/** The curated subset the certifications section renders. */
+export const FEATURED_CERTIFICATIONS = CERTIFICATIONS.filter((c) => c.featured);
