@@ -2,12 +2,12 @@
 // no hardcoded copy. Ordering here is the ordering on the page.
 
 export const ABOUT = {
-  // Framed as a final-year student rather than a shipped engineer. The three
-  // lines are chosen so the middle one takes the stroke treatment, which keeps
-  // the outlined-type motif without losing the readable sentence.
-  headline: ['Final year B.Tech', 'in Computer Science', '(AI & ML).'],
+  // Framed as a recent graduate rather than a shipped engineer. The three lines
+  // are chosen so the middle one takes the stroke treatment, which keeps the
+  // outlined-type motif without losing the readable sentence.
+  headline: ['B.Tech graduate', 'in Computer Science', '(AI & ML).'],
   bio: [
-    'I am in my final year of a B.Tech in Computer Science (AI & ML) at KIET, Kakinada, where I have built my focus around machine learning, computer vision, and how models behave once they leave a notebook.',
+    'I graduated in 2026 with a B.Tech in Computer Science (AI & ML) from KIET, Kakinada, where I built my focus around machine learning, computer vision, and how models behave once they leave a notebook.',
     'Most of what I have learned so far has come from building rather than reading: a real-time sign-language interpreter, a deepfake classifier, a clinical risk model, and a locally hosted reasoning assistant. I have since interned with the Google AI-ML programme and with TechSakshyam, and I am looking for an AI/ML role where I can keep doing that with a team.',
   ],
   // Academic rather than professional. Every value here already appears in
@@ -15,7 +15,7 @@ export const ABOUT = {
   // traced to the education record.
   facts: [
     { value: '7.44', label: 'CGPA' },
-    { value: '2026', label: 'Graduating' },
+    { value: '2026', label: 'Graduated' },
     { value: '10+', label: 'Projects built' },
   ],
   languages: ['English', 'Telugu', 'Hindi'],

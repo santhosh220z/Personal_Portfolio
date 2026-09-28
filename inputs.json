@@ -33,7 +33,7 @@
       "I started with pixels. When I first watched a convolutional network learn to tell one face from the next, I stopped seeing vision as perception and started seeing it as a discipline — annotation, pre-processing, augmentation, patience. Everything I build now begins there.",
       "The second lesson came from a hand. Building a real-time sign-language translator meant confronting the difference between a notebook accuracy of 92% and a classroom where the lighting is wrong, the hands are fast, and the frame rate fights you. Accuracy is necessary. Robustness is required.",
       "I am drawn to work that sits just beyond the demo: deepfake detection that can be scrutinised, stroke risk models that clinicians could trust, assistants that remember context. I do not chase benchmarks for their own sake. I chase systems that survive contact with the real world.",
-      "This portfolio is arranged as a small magazine rather than a list — an index of work, a few convictions, and the record of a studio still learning. I am finishing a B.Tech in Computer Science (AI & ML), and I am, as the marginalia say, open to one project at a time."
+      "This portfolio is arranged as a small magazine rather than a list — an index of work, a few convictions, and the record of a studio still learning. I graduated in 2026 with a B.Tech in Computer Science (AI & ML), and I am, as the marginalia say, open to one project at a time."
     ],
     "pullquote": "A notebook accuracy of 92% is the beginning, never the verdict."
   },
@@ -290,7 +290,7 @@
   "contact": {
     "kicker": "Correspondence",
     "title": "One project at a time.",
-    "note": "Currently mid-final-year of a B.Tech in CSE (AI & ML), expecting completion in 2026. I take on internships, research roles, collaborations and the occasional honest question. If you have a project that needs to survive contact with the real world, the mailbox is open.",
+    "note": "Graduated in 2026 with a B.Tech in CSE (AI & ML). I take on internships, research roles, collaborations and the occasional honest question. If you have a project that needs to survive contact with the real world, the mailbox is open.",
     "actions": [
       { "label": "Write", "value": "santhoshsunkarasbe@gmail.com", "href": "mailto:santhoshsunkarasbe@gmail.com", "note": "mailtalk" },
       { "label": "Code", "value": "@santhosh220z", "href": "https://github.com/santhosh220z", "note": "GitHub" },
