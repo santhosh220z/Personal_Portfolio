@@ -35,16 +35,24 @@ const Architecture = () => {
               initial="hidden"
               whileInView="visible"
               viewport={revealViewport}
-              className="group relative bg-canvas p-5 md:p-6"
+              className="group relative bg-canvas p-6 md:p-8"
             >
               <div className="flex items-baseline justify-between gap-3">
                 <span className="meta meta-accent">{String(index + 1).padStart(2, '0')}</span>
                 <span className="meta">{stage.caption}</span>
               </div>
 
-              <h3 className="mt-5 text-[length:var(--text-title)] uppercase">{stage.label}</h3>
+              {/* Deliberately not --text-title. That token is shared with the
+                  experience and credential card titles, and those are card
+                  headings — raising it here to size up the pipeline would drag
+                  those two sections up with it. This clamp is scoped to the
+                  pipeline, which is the one place the stage name is the
+                  primary read. */}
+              <h3 className="mt-5 text-[length:clamp(1.5rem,2.3vw,2rem)] uppercase leading-[1.05] tracking-tight">
+                {stage.label}
+              </h3>
 
-              <p className="mt-3 text-sm leading-relaxed text-fg-2">{stage.detail}</p>
+              <p className="mt-4 text-base leading-relaxed text-fg-2">{stage.detail}</p>
 
               {/* Connector chevron, desktop only — the grid gap already implies
                   the sequence on narrow screens. */}
@@ -79,17 +87,17 @@ const Architecture = () => {
             className="grid gap-px overflow-hidden rounded-lg border border-rule bg-[var(--rule)] sm:grid-cols-2 lg:grid-cols-4"
           >
             {SKILL_GROUPS.map((group) => (
-              <motion.div key={group.id} variants={item} className="bg-canvas p-5 md:p-6">
+              <motion.div key={group.id} variants={item} className="bg-canvas p-6 md:p-8">
                 <div className="flex items-baseline gap-3">
                   <span className="meta meta-accent">{group.label}</span>
                   <span className="h-px flex-1 bg-rule" aria-hidden="true" />
                 </div>
 
-                <h4 className="mt-3 text-base font-semibold tracking-tight text-fg-1">
+                <h4 className="mt-4 text-[1.25rem] leading-tight font-semibold tracking-tight text-fg-1">
                   {group.title}
                 </h4>
 
-                <ul className="mt-4 flex list-none flex-wrap gap-1.5 p-0">
+                <ul className="mt-5 flex list-none flex-wrap gap-2 p-0">
                   {group.items.map((item_) => (
                     <li key={item_} className="tag">
                       {item_}

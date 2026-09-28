@@ -441,12 +441,19 @@
 
   .tag {
     font-family: var(--font-mono);
-    font-size: var(--text-meta);
+    /* --text-label, not --text-meta. A tag is a label, not a kicker, and 11px
+       uppercase mono sits right on the legibility floor — .meta's own comment
+       concedes 11px is "squarely reading text". --text-label is the size the
+       button labels already use, so tags and controls now match. */
+    font-size: var(--text-label);
     line-height: 1;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    /* Trimmed from 0.12em because tracking is sized against the glyph: holding
+       0.12em while stepping up to 13px widens every chip by ~10% and forces the
+       ledger's tag rows to wrap harder, undoing the size gain. */
+    letter-spacing: 0.08em;
     color: var(--fg-2);
-    padding: 0.3rem 0.5rem;
+    padding: 0.35rem 0.6rem;
     border: 1px solid var(--rule);
     border-radius: var(--radius-xs);
   }
