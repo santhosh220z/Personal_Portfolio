@@ -213,16 +213,6 @@
     border-radius: var(--radius-xs);
   }
 
-  /* The custom cursor replaces the native one on fine pointers only. Touch and
-     reduced-motion keep the platform behaviour, so this is a hardening rule
-     rather than the primary switch. */
-  @media (pointer: fine) {
-    html[data-cursor='on'],
-    html[data-cursor='on'] body {
-      cursor: none;
-    }
-  }
-
   .skip-link {
     position: fixed;
     left: var(--spacing-gutter);
@@ -268,9 +258,8 @@
 
   /* The two decorative loops are cancelled outright rather than collapsed to
      0.01ms: a single iteration would still leave each one parked on its final
-     keyframe, which for `drift` is a visibly offset hero layer. */
-  .availability-ping,
-  .drift {
+     keyframe. */
+  .availability-ping {
     animation: none !important;
   }
 }
@@ -508,21 +497,6 @@
 
   .availability-ping {
     animation: availability-ping 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-
-  /* Slow drift for the hero's background marquee layer. Held to a translate
-     only — animating anything else would force a layout on every frame. */
-  @keyframes drift-x {
-    from {
-      transform: translate3d(0, 0, 0);
-    }
-    to {
-      transform: translate3d(2%, -1.5%, 0);
-    }
-  }
-
-  .drift {
-    animation: drift-x 22s ease-in-out infinite alternate;
   }
 }
 
