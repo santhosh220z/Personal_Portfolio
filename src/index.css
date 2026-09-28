@@ -144,7 +144,13 @@
 
      The Hero pairs this with `whitespace-nowrap`. A wrapped display line
      doubles the height of its block and silently pushes the CTAs below the
-     fold — which is exactly what happened at 12vw inside a grid column. */
+     fold — which is exactly what happened at 12vw inside a grid column.
+
+     CAVEAT: this bare value only holds BELOW lg. From lg up the hero portrait
+     is pinned to the right edge and centred on this headline, so the headline
+     is no longer bounded by the shell alone — it has to fit the width the
+     portrait leaves behind. The `@layer base` override further down owns that.
+     10.5vw overlaps the portrait from 1024 up, by up to 131px at 1024. */
   --text-hero: clamp(2.5rem, 10.5vw, 9.5rem);
   --text-display: clamp(2.5rem, 7vw, 6rem);
   --text-headline: clamp(1.75rem, 3.4vw, 3rem);
@@ -183,6 +189,45 @@
 }
 
 @layer base {
+  /* The hero headline, sized against the width the portrait leaves.
+     Above this override the headline is sized on 10.5vw alone, which is only
+     correct while it owns the full shell width — true below lg, where the
+     portrait is in normal flow. From lg up the portrait is pinned to the
+     right edge and vertically centred on the headline, and its left edge lands
+     INSIDE the headline's span: at 1440 the 336px frame starts at x=1048 while
+     line 1 inks out to x=1076, so the outlined "L" of ML sat behind the photo.
+     Nothing wider than ~17rem clears that glyph and 17rem is the un-lifted
+     mobile size, so the type gives ground instead.
+
+     The terms:
+       7rem   = .shell's 2 x --spacing-margin padding, inside max-width 90rem
+       21rem  = the portrait's max-w at lg, right-aligned in its grid column
+       1.5rem = gutter between the longest line's last glyph and the frame.
+                Also absorbs the scrollbar, which `100vw` includes but .shell
+                does not.
+       6.745  = "APPLIED ML" inked width in em, measured at 1024/1280/1440/1920
+                (6.744 +/- 0.003). Longest of the two phrases, so it is the one
+                that has to fit; "THAT SHIPS" is 6.376em.
+
+     Measured outcome: 10.5 -> 9.98vw effective at 1440, 8.45vw at 1280, 7.99vw
+     at 1024. The reduction is the minimum that clears the frame and it scales
+     with the overlap it removes, which is why it steepens as the viewport
+     narrows: the frame is a fixed rem while the type is fluid, so the photo
+     claims a growing share of the row.
+
+     STALE-RISK: 6.745 is a measurement of a specific string. Rewording the
+     headline without re-measuring it will bring the overlap back, and the
+     failure is silent — the type will simply be sized for the wrong phrase. */
+  @media (min-width: 64rem) {
+    :root {
+      --text-hero: clamp(
+        2.5rem,
+        min(10.5vw, (min(100vw, 90rem) - 29.5rem) / 6.745),
+        9.5rem
+      );
+    }
+  }
+
   body {
     font-family: var(--font-body);
     background-color: var(--canvas);
@@ -613,28 +658,31 @@
       margin-top: calc(-1 * (0.96 * var(--text-hero) + 246px));
     }
 
-    /* Short viewports — 1280x720 laptops and the like — cannot afford the full
-       travel: the hero centres its content, so a 420px portrait centred on a
-       headline that already sits high pushes the frame's top star up behind the
-       65px status bar, where the glass clips it. 22rem is the most it can rise
-       and still leave the scribble's 28px of overhang visible (frame top 107 vs
-       a 65px bar). 768px tall and up needs no cap: 1366x768 lands the frame at
-       108 with 43px to spare. */
-    @media (max-height: 47.9375rem) {
-      .hero-subject-lift {
-        margin-top: -22rem;
-      }
-    }
+    /* Cap for short viewports, where the derived lift cannot be honoured.
+       The hero centres its content, so on a short viewport a 420px portrait
+       riding up on a headline that already sits high pushes the frame itself
+       behind the fixed 65px status bar.
 
-    /* Shorter still — 1024x600 and similar netbooks. Here the hero's content is
-       taller than the viewport, so the section's centring stops absorbing slack
-       and the row rides up under the status bar: 22rem lands the frame at y=38
-       and the top star at y=6, both behind the glass. Almost all of the lift is
-       dropped rather than tuned, because on a viewport this short the headline
-       cannot be centred on without the portrait losing the status bar. */
-    @media (max-height: 40rem) {
+       696px is where that starts. Measured, not guessed: with the uncapped
+       lift the frame's top is linear in viewport height at a slope of 0.5px per
+       px, identically at 1024, 1152 and 1280 wide — 108 at 768 tall, 84 at
+       720, 74 at 700, and 54 at 660, i.e. 11px behind the bar. 700 tall is the
+       last height that clears, with 9px to spare, which is why the boundary
+       sits just under it. -16.5rem is the most the frame can rise at 1024x640
+       and still clear the bar by 40px.
+
+       There is deliberately no cap for the 697px-and-taller band, which is
+       where the old 22rem cap used to sit. That band needs a DIFFERENT value at
+       each width — 1280x720 needs at most -21.75rem to keep the scribble clear,
+       but 1024x700 needs -18.5rem, and a single constant satisfying the first
+       over-lifts the second by 3rem and drives the frame under the bar. The
+       frame is the hard constraint and it holds across the band uncapped; the
+       scribble's 28px overhang is decorative, and a few px of it passing under
+       blurred glass reads as layering rather than clipping. Capping 700 to buy
+       that back would cost ~97px of centring, which is a far worse trade. */
+    @media (max-height: 43.5rem) {
       .hero-subject-lift {
-        margin-top: -10rem;
+        margin-top: -16.5rem;
       }
     }
   }

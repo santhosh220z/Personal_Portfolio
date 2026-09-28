@@ -7,7 +7,9 @@ import { GSAP_EASE_EXPO } from '../../lib/motion';
  * The hero display headline: a masked two-line entrance plus a scroll-linked
  * dispersal as the hero leaves the viewport.
  *
- * Word-level, not glyph-level. `--text-hero` reaches 9.5rem, so per-glyph would
+ * Word-level, not glyph-level. `--text-hero` peaks at 8.97rem — the clamp's
+ * 9.5rem ceiling is a backstop that the portrait-width term keeps from ever
+ * binding — so per-glyph would
  * mean ~24 spans per line each carrying its own transform; at that size the DOM
  * cost buys nothing a per-word offset does not already give, and it wrecks text
  * selection and screen-reader phrasing. Four word spans, no `aria-label`
