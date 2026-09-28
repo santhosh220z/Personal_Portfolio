@@ -37,7 +37,14 @@ const Nav = ({ onOpenCommand }) => {
         start: 'top top-=72',
         end: 'max',
         onToggle: (self) => {
-          bar.toggleAttribute('data-scrolled', self.isActive);
+          // setAttribute/removeAttribute, not toggleAttribute. toggleAttribute
+          // adds the attribute with an empty value when forced on, so the bar
+          // would end up as data-scrolled="" and the CSS selector
+          // [data-scrolled='true'] would never match — the committed surface
+          // silently never applied, leaving the bar transparent over the whole
+          // page. Absence of the attribute is the transparent base state.
+          if (self.isActive) bar.setAttribute('data-scrolled', 'true');
+          else bar.removeAttribute('data-scrolled');
         },
       });
     }, bar);
@@ -47,7 +54,7 @@ const Nav = ({ onOpenCommand }) => {
 
   return (
     <header className="fixed inset-x-0 top-0 z-[120]">
-      <div ref={barRef} className="nav-bar" data-scrolled="false">
+      <div ref={barRef} className="nav-bar">
         <div className="shell flex h-16 items-center justify-between gap-4">
           {/* Brandmark. min-h is not decoration: as a plain flex item this
               collapsed to its 20px line box, which is under the WCAG 2.2 AA

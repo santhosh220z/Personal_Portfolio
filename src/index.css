@@ -289,14 +289,12 @@
   .surface-blur {
     background-color: color-mix(in srgb, var(--canvas) 72%, transparent);
     backdrop-filter: blur(16px) saturate(140%);
-    -webkit-backdrop-filter: blur(16px) saturate(140%);
     border: 1px solid var(--rule);
   }
 
   .panel-blur {
     background-color: color-mix(in srgb, var(--canvas) 88%, transparent);
     backdrop-filter: blur(24px) saturate(150%);
-    -webkit-backdrop-filter: blur(24px) saturate(150%);
     border: 1px solid var(--rule);
   }
 
@@ -486,18 +484,38 @@
 
   /* Fades in from transparent over the hero, then commits to an opaque
      surface once the hero has scrolled away. The blur is load-bearing here
-     because the bar genuinely floats over content. */
+     because the bar genuinely floats over content.
+
+     Gloss comes from three things together, and deliberately not from lowering
+     the tint. A more transparent bar would look glassier and cost the nav links
+     their contrast — .meta is --fg-2, and what sits behind the bar changes with
+     scroll position, so legibility would become a function of the page rather
+     than of this rule. Instead: a wider blur so the frosted field is actually
+     diffuse, a saturation lift so the colour bleeding through stays alive
+     rather than greying out, and a 1px inset highlight on the top edge, which
+     is the single cue that reads as a lit glass surface rather than a
+     translucent rectangle. */
+  /* No hand-written -webkit-backdrop-filter anywhere. Lightning CSS emits
+     prefixes itself against the browser targets, and when both forms are
+     declared by hand the standard property is the one that gets dropped from
+     the build — the shipped rule kept only the prefixed form, so the
+     unprefixed value every modern engine actually reads came back `none`. */
   .nav-bar {
     border-bottom: 1px solid var(--rule);
     background-color: color-mix(in srgb, var(--canvas) 0%, transparent);
-    backdrop-filter: blur(16px) saturate(140%);
-    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    backdrop-filter: blur(26px) saturate(170%);
+    box-shadow: inset 0 1px 0 0 color-mix(in srgb, var(--fg-1) 8%, transparent);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
   }
 
+  /* Tint held at 82% so the links keep a fixed measured floor over any content.
+     The extra depth here is a wider ambient shadow, not a heavier fill. */
   .nav-bar[data-scrolled='true'] {
     background-color: color-mix(in srgb, var(--canvas) 82%, transparent);
-    box-shadow: 0 1px 0 0 var(--rule), 0 18px 40px -30px rgb(var(--shade) / 0.5);
+    box-shadow:
+      inset 0 1px 0 0 color-mix(in srgb, var(--fg-1) 12%, transparent),
+      0 1px 0 0 var(--rule),
+      0 22px 48px -28px rgb(var(--shade) / 0.62);
   }
 
   /* Expanding halo behind the availability dot. Separate element from the dot
