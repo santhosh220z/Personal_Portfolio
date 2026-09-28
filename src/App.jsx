@@ -7,7 +7,6 @@ import About from './components/About';
 import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import CustomCursor from './components/CustomCursor';
 import CommandPalette from './components/CommandPalette';
 import { Education, Certifications } from './components/Credentials';
 import { useCommandPalette } from './lib/useCommandPalette';
@@ -36,8 +35,6 @@ const App = () => {
 
       <Footer />
 
-      {/* Rendered after the footer so they paint above every section. */}
-      <CustomCursor />
       <CommandPalette open={open} onClose={closePalette} />
     </div>
   );

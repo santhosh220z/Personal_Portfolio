@@ -86,7 +86,6 @@ const Certifications = () => {
                 href={cert.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                data-cursor="magnet"
                 className="flex h-full flex-col p-5 transition-colors hover:bg-surface-sunken md:p-6"
               >
                 <span className="meta">Google Cloud</span>

@@ -72,7 +72,6 @@ const ProjectTicker = ({ projects, onOpen }) => {
         <div key={project.id} className="border-b border-rule">
           <a
             href={`#work-${project.id}`}
-            data-cursor="magnet"
             aria-label={`${project.title} — open the technical blueprint`}
             onClick={(event) => {
               event.preventDefault();

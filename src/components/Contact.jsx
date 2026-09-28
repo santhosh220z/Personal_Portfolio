@@ -52,7 +52,6 @@ const Contact = () => {
           whileInView="visible"
           viewport={revealViewport}
           href={`mailto:${SITE.email}`}
-          data-cursor="magnet"
           className="group block border-y border-rule py-8 md:py-12"
         >
           <span className="flex flex-wrap items-center gap-x-6 gap-y-3">

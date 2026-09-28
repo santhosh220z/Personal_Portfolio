@@ -99,7 +99,6 @@ const Nav = ({ onOpenCommand }) => {
               type="button"
               onClick={onOpenCommand}
               aria-label="Open command palette"
-              data-cursor-label="⌘K"
               className="hidden h-11 items-center gap-2 rounded-full border border-rule px-3 transition-colors hover:border-fg-1 sm:inline-flex"
             >
               <Command size={14} className="text-fg-2" aria-hidden="true" />
