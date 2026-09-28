@@ -124,35 +124,42 @@ const SubjectAsset = ({ image, alt }) => {
         <img
           src={image}
           alt={alt}
-          width={1024}
-          height={1280}
+          width={1000}
+          height={1000}
           loading="eager"
           decoding="async"
-          // brightness-90 plus contrast-125 is what actually tames a portrait
-          // shot against a white wall: grayscale alone leaves the highlights
-          // blown, and on a #0B0B0C canvas a bright rectangle reads as a hole
-          // punched in the page rather than as a photograph.
+          // scale/origin tighten the crop instead of the frame: the source is a
+          // 1:1 cut-out, so `object-cover` already trims the sides against the
+          // 4:5 frame and a scale past 1 only starts clipping the shoulders.
+          // Anchoring the scale near the crown keeps the head off the top edge
+          // while `overflow-hidden` trims the sides. Frame metrics are untouched,
+          // so the hero fold budget is unaffected.
           //
-          // scale/origin tighten the crop instead of the frame. The source is
-          // 1024x1280, the same 4:5 as the frame, so `object-cover` never crops
-          // and the original loose framing is what leaves the subject small.
-          // Anchoring the scale near the face pulls the crop in while
-          // `overflow-hidden` trims the surplus wall. Frame metrics are
-          // untouched, so the hero fold budget is unaffected.
-          className="h-full w-full origin-[48%_34%] scale-[1.28] object-cover grayscale contrast-125 brightness-90"
+          // No grayscale and no brightness reduction. Both existed to tame an
+          // opaque phone photo shot against a white wall, and neither has
+          // anything to do with a studio cut-out — the wall is already gone, so
+          // they were only desaturating the portrait and dimming a face that is
+          // correctly exposed to begin with.
+          className="h-full w-full origin-[50%_28%] scale-[1.02] object-cover"
         />
 
-        {/* Duotone + knock-back.
-            `luminosity`/overlay pulls the photograph into the charcoal/lime
-            palette without a real cut-out PNG, and a multiply pass over the
-            canvas colour drops the residual white of the backdrop. Both read as
-            blends, so they survive a theme swap instead of needing one value
-            per mode. */}
+        {/* Duotone tint + foot fade.
+            The `overlay` accent pass is kept — it is the only thing tying the
+            photograph to the palette, and at 16% it reads as a warm cast
+            rather than a filter.
+
+            The `multiply` knock-back that used to sit here is gone. It existed
+            to drop the residual white of an opaque phone photo's wall; a cut-out
+            has no wall, and multiplying a charcoal fill over a subject whose
+            suit measures luma 32 and hair luma 24 against an luma 11 canvas
+            simply erased both into the background. The fade underneath is
+            retained and slightly deepened, because with a transparent edge it
+            is what visually seats the subject on the frame's floor instead of
+            letting the cut-out read as a sticker. */}
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-accent opacity-[0.16] mix-blend-overlay"
         />
-        <div aria-hidden="true" className="absolute inset-0 bg-canvas mix-blend-multiply opacity-45" />
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-gradient-to-t from-canvas-deep via-transparent to-canvas-deep/40"

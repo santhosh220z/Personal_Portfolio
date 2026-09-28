@@ -6,7 +6,7 @@ import { GSAP_EASE_SOFT, GSAP_EASE_EXPO } from '../lib/motion';
 import { SITE } from '../data/site';
 import SubjectAsset from './SubjectAsset';
 import ScrubHeadline from './kinetic/ScrubHeadline';
-import profileImg from '../assets/profile2.jpeg';
+import profileImg from '../assets/profile3.png';
 
 /**
  * Copy-to-clipboard with a state the user can actually perceive.
