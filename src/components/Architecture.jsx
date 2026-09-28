@@ -84,20 +84,20 @@ const Architecture = () => {
             initial="hidden"
             whileInView="visible"
             viewport={revealViewport}
-            className="grid gap-px overflow-hidden rounded-lg border border-rule bg-[var(--rule)] sm:grid-cols-2 lg:grid-cols-4"
+            className="grid gap-px overflow-hidden rounded-lg border border-rule bg-[var(--rule)] sm:grid-cols-2 xl:grid-cols-4"
           >
             {SKILL_GROUPS.map((group) => (
-              <motion.div key={group.id} variants={item} className="bg-canvas p-6 md:p-8">
+              <motion.div key={group.id} variants={item} className="bg-canvas p-7 md:p-10">
                 <div className="flex items-baseline gap-3">
                   <span className="meta meta-accent">{group.label}</span>
                   <span className="h-px flex-1 bg-rule" aria-hidden="true" />
                 </div>
 
-                <h4 className="mt-4 text-[1.25rem] leading-tight font-semibold tracking-tight text-fg-1">
+                <h4 className="mt-4 text-[1.5rem] leading-tight font-semibold tracking-tight text-fg-1">
                   {group.title}
                 </h4>
 
-                <ul className="mt-5 flex list-none flex-wrap gap-2 p-0">
+                <ul className="mt-6 flex list-none flex-wrap gap-2.5 p-0">
                   {group.items.map((item_) => (
                     <li key={item_} className="tag">
                       {item_}

@@ -121,6 +121,11 @@
   --text-lede: 1.125rem;
   --text-body: 1rem;
   --text-label: 0.8125rem;
+  /* Sits between --text-label and --text-title, for chips that carry real
+     vocabulary rather than a control label. The skill ledger is the densest
+     tag surface on the page and was reading too small against its own group
+     titles at 13px. */
+  --text-chip: 0.875rem;
   --text-meta: 0.6875rem;
 
   --perspective: 1400px;
@@ -441,19 +446,26 @@
 
   .tag {
     font-family: var(--font-mono);
-    /* --text-label, not --text-meta. A tag is a label, not a kicker, and 11px
+    /* --text-chip, not --text-meta. A tag is a chip, not a kicker, and 11px
        uppercase mono sits right on the legibility floor — .meta's own comment
        concedes 11px is "squarely reading text". --text-label is the size the
-       button labels already use, so tags and controls now match. */
-    font-size: var(--text-label);
+       button labels use, but the skill ledger carries longer vocabulary
+       (FEATURE ENGINEERING, GESTURE RECOGNITION) and needs the extra step. */
+    font-size: var(--text-chip);
     line-height: 1;
     text-transform: uppercase;
+    /* A chip is one label, not a paragraph. Without this the chip is a flex item
+       that shrinks and wraps its own text, so at 14px the long ones (N8N
+       WORKFLOW AUTOMATION, GESTURE RECOGNITION) break mid-label and the row
+       ends up a ragged mix of one- and two-line pills. Wrapping is the list's
+       job, not the chip's. */
+    white-space: nowrap;
     /* Trimmed from 0.12em because tracking is sized against the glyph: holding
-       0.12em while stepping up to 13px widens every chip by ~10% and forces the
+       0.12em while stepping up would widen every chip by ~10% and force the
        ledger's tag rows to wrap harder, undoing the size gain. */
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     color: var(--fg-2);
-    padding: 0.35rem 0.6rem;
+    padding: 0.45rem 0.75rem;
     border: 1px solid var(--rule);
     border-radius: var(--radius-xs);
   }
