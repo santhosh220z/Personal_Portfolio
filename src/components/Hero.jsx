@@ -121,6 +121,54 @@ const Hero = () => {
         }}
       />
 
+      {/* Geometric backdrop. A second layer under the hairline grid, carrying
+          the same drafting vocabulary as the marks around the portrait — a
+          quarter arc on the far left, a squared bracket and a dotted field low
+          right — so the composition reads as one system rather than a decorated
+          photo on an empty page.
+
+          Deliberately no large ring here. The portrait already owns an arc
+          centred on its crown, and a second circle at a similar scale on a
+          similar axis read as a duplicate of it fighting for the same corner;
+          the backdrop needed shapes that do not repeat what the asset is
+          already saying. A circle-and-square mix also keeps the vocabulary from
+          collapsing into one motif.
+
+          Every shape is `absolute` inside this already-`inset-0` layer, so none
+          of them can affect layout, and the whole layer sits at z-0 beneath the
+          z-10 content. Opacities are low by design: these are structure, not
+          subjects, and the display type has to stay the loudest thing here. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
+        {/* Quarter arc on the far left, tucked under the copy. Its straight
+            edges fall on the viewport boundary, so it crops rather than ends. */}
+        <span className="absolute left-[-9rem] top-[18%] hidden h-[22rem] w-[22rem] rounded-t-full border border-r-0 border-b-0 border-accent/15 md:block" />
+
+        {/* Squared bracket on the right, mirroring the small one at the
+            portrait's shoulder but far larger and fainter, so the two read as a
+            matched pair at different scales. */}
+        <span className="absolute right-[4%] top-[26%] hidden h-[9rem] w-[7rem] border-l border-t border-accent/15 lg:block" />
+
+        {/* Dotted field, low and right, to weight the corner the grid leaves
+            empty. Built as a radial-gradient tile rather than markup so it stays
+            one node instead of a few dozen, with a radial mask so the dots fade
+            out instead of stopping at a hard edge. */}
+        <span
+          className="absolute bottom-[7%] right-[7%] hidden h-28 w-44 opacity-50 md:block"
+          style={{
+            backgroundImage: 'radial-gradient(circle, var(--accent) 1px, transparent 1px)',
+            backgroundSize: '10px 10px',
+            maskImage: 'radial-gradient(circle, #000 18%, transparent 70%)',
+            WebkitMaskImage: 'radial-gradient(circle, #000 18%, transparent 70%)',
+          }}
+        />
+
+        {/* Two hairlines at the lower left, the same 1px rule the status bar and
+            the ledger use, angled off the copy block so they lead the eye down
+            to the CTAs instead of sitting flat behind them. */}
+        <span className="absolute bottom-[16%] left-[6%] hidden h-px w-[14rem] -rotate-[8deg] bg-gradient-to-r from-accent/20 to-transparent lg:block" />
+        <span className="absolute bottom-[11%] left-[9%] hidden h-px w-[9rem] -rotate-[8deg] bg-gradient-to-r from-accent/15 to-transparent lg:block" />
+      </div>
+
       {/* ── Layer 1: content ────────────────────────────────────────────── */}
       <div className="shell relative z-10">
         <div data-hero-reveal="eyebrow" className="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2">

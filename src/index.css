@@ -687,9 +687,34 @@
     }
   }
 
+  /* Masks an overlay to the portrait's own alpha channel, so a tint or a sheen
+     lands on the subject instead of on the box around it. Required now the
+     asset is a transparent cut-out: a full-bleed `absolute inset-0` fill would
+     otherwise paint a visible rectangle over the canvas, because there is no
+     longer a photo's backdrop to hide it.
+
+     `--subject-mask-image` is set inline from the imported asset URL, so the
+     mask is the same file the <img> renders — no second request, and it tracks
+     the asset if it is ever swapped. `cover` + a shared 1.02 scale/50% 28%
+     origin reproduce the <img>'s own crop exactly, which is what keeps the tint
+     registered to the subject rather than drifting a few px off it. */
+  .subject-mask {
+    -webkit-mask-image: var(--subject-mask-image);
+    mask-image: var(--subject-mask-image);
+    -webkit-mask-size: cover;
+    mask-size: cover;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    transform: scale(1.02);
+    transform-origin: 50% 28%;
+  }
+
   /* The portrait's specular sweep. Driven by a CSS custom property written
      from JS on pointermove; the gradient is a paint, not a transform, so it is
-     safe to keep in CSS. */
+     safe to keep in CSS. Mounted on a `.subject-mask` element rather than on the
+     frame itself, so it lights the subject and not the empty canvas. */
   .specular::after {
     content: '';
     position: absolute;

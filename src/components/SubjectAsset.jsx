@@ -78,35 +78,35 @@ const SubjectAsset = ({ image, alt }) => {
       {/* Hand-drawn accents. `text-accent` is inherited so they follow the
           theme automatically rather than hardcoding the vermilion. Sized in px
           because they are absolute: at a fluid size they would collide with the
-          frame edge on a narrow viewport, which is the one place a scribble
-          that overlaps reads as a mistake rather than as a mark. The sizes track
-          the frame growing from 19rem to 21rem so they stay in proportion
-          instead of shrinking into insignificance against the larger portrait. */}
+          subject on a narrow viewport, which is the one place a scribble that
+          overlaps reads as a mistake rather than as a mark. The offsets sit off
+          the crown and shoulders rather than off the old frame edge, which no
+          longer exists. */}
       <Scribble
         shape="star"
         size={44}
         delay={0.5}
-        className="absolute -top-7 -left-8 text-accent"
+        className="absolute -top-5 -left-7 text-accent"
         style={{ rotate: '-12deg' }}
       />
       <Scribble
         shape="loop"
         size={58}
         delay={0.72}
-        className="absolute -right-10 -top-5 text-accent"
+        className="absolute -right-8 -top-3 text-accent"
         style={{ rotate: '8deg' }}
       />
       <Scribble
         shape="bracket"
         size={27}
         delay={0.9}
-        className="absolute -bottom-5 -left-9 text-accent"
+        className="absolute -bottom-3 -left-8 text-accent"
       />
       <Scribble
         shape="burst"
         size={35}
         delay={1.05}
-        className="absolute -right-5 -bottom-8 text-accent"
+        className="absolute -right-4 -bottom-6 text-accent"
         style={{ rotate: '10deg' }}
       />
 
@@ -119,8 +119,20 @@ const SubjectAsset = ({ image, alt }) => {
             ? { rotateX, rotateY, z: translateZ }
             : undefined
         }
-        className="tilt-3d specular relative aspect-[4/5] w-full overflow-hidden rounded-lg border border-rule-strong bg-surface-sunken"
+        className="tilt-3d specular relative aspect-[4/5] w-full"
       >
+        {/* Tint and sheen, both masked to the cut-out's own alpha.
+            They were plain `absolute inset-0` fills while the portrait was an
+            opaque photo, because the photo's backdrop absorbed the overflow.
+            A transparent cut-out has no backdrop, so the same fills would paint
+            a visible rectangle onto the canvas; `subject-mask` confines each one
+            to the subject's silhouette instead.
+
+            There is deliberately no foot fade here any more. It existed to seat
+            the subject on the frame's bottom edge, and once the frame was removed
+            there was no floor to blend into — on the light canvas the same
+            gradient washed charcoal up the length of the jacket and turned the
+            suit grey. A cut-out needs no seating. */}
         <img
           src={image}
           alt={alt}
@@ -132,8 +144,8 @@ const SubjectAsset = ({ image, alt }) => {
           // 1:1 cut-out, so `object-cover` already trims the sides against the
           // 4:5 frame and a scale past 1 only starts clipping the shoulders.
           // Anchoring the scale near the crown keeps the head off the top edge
-          // while `overflow-hidden` trims the sides. Frame metrics are untouched,
-          // so the hero fold budget is unaffected.
+          // while the sides are trimmed. Box metrics are untouched, so the hero
+          // fold budget and the headline-clearance maths are unaffected.
           //
           // No grayscale and no brightness reduction. Both existed to tame an
           // opaque phone photo shot against a white wall, and neither has
@@ -143,48 +155,40 @@ const SubjectAsset = ({ image, alt }) => {
           className="h-full w-full origin-[50%_28%] scale-[1.02] object-cover"
         />
 
-        {/* Duotone tint + foot fade.
-            The `overlay` accent pass is kept — it is the only thing tying the
-            photograph to the palette, and at 16% it reads as a warm cast
-            rather than a filter.
-
-            The `multiply` knock-back that used to sit here is gone. It existed
-            to drop the residual white of an opaque phone photo's wall; a cut-out
-            has no wall, and multiplying a charcoal fill over a subject whose
-            suit measures luma 32 and hair luma 24 against an luma 11 canvas
-            simply erased both into the background. The fade underneath is
-            retained and slightly deepened, because with a transparent edge it
-            is what visually seats the subject on the frame's floor instead of
-            letting the cut-out read as a sticker. */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-accent opacity-[0.16] mix-blend-overlay"
-        />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-t from-canvas-deep via-transparent to-canvas-deep/40"
+          className="subject-mask pointer-events-none absolute inset-0 bg-accent opacity-[0.18] mix-blend-overlay"
+          style={{ '--subject-mask-image': `url(${image})` }}
         />
 
-        {/* Corner registration marks, the kind printed on a contact sheet. */}
-        <div aria-hidden="true" className="absolute inset-3">
-          {[
-            'left-0 top-0 border-l border-t',
-            'right-0 top-0 border-r border-t',
-            'left-0 bottom-0 border-l border-b',
-            'right-0 bottom-0 border-r border-b',
-          ].map((position) => (
-            <span
-              key={position}
-              className={`absolute h-4 w-4 border-accent opacity-70 ${position}`}
-            />
-          ))}
+        {/* Geometric scaffolding, replacing the contact-sheet registration
+            marks that framed the photo. A pair of quarter arcs struck off the
+            crown and a hairline down each side, all in the accent at low opacity
+            so they read as drafting marks rather than as a second border around
+            the subject.
+
+            The arcs are drawn as bordered, mostly-transparent discs clipped to a
+            quadrant, not as full circles: a full ring inside a portrait-sized box
+            has to be clipped somewhere, and a hard horizontal or vertical cut
+            across the composition reads as an accident. A quadrant's cut edges
+            land in the corners, where the eye already expects a boundary.
+
+            `pointer-events-none` keeps all of them clear of the pointer tracking
+            above. */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+          <span className="absolute left-1/2 top-[0.34em] h-[20rem] w-[20rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-accent/25 [clip-path:polygon(0_0,100%_0,0_100%)]" />
+          <span className="absolute left-1/2 top-[0.34em] h-[14rem] w-[14rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-accent/20 [clip-path:polygon(100%_100%,0_100%,100%_0)]" />
+          <span className="absolute inset-y-0 left-[0.7rem] w-px bg-gradient-to-b from-transparent via-accent/25 to-transparent" />
+          <span className="absolute right-[0.7rem] top-0 h-[22%] w-px bg-gradient-to-b from-accent/30 to-transparent" />
         </div>
       </motion.div>
 
-      {/* Offset frame, sitting behind the portrait in Z. */}
-      <div
+      {/* A small square bracket off the shoulder. The one hard-edged mark in the
+          set, kept because a purely circular vocabulary reads as decoration
+          where a single square reads as a deliberate crop. */}
+      <span
         aria-hidden="true"
-        className="absolute -inset-3 -z-10 rounded-lg border border-accent-line"
+        className="pointer-events-none absolute -bottom-4 right-6 h-5 w-5 border-b-2 border-r-2 border-accent/50"
       />
     </div>
   );
