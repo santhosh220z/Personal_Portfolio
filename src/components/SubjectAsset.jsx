@@ -64,36 +64,47 @@ const SubjectAsset = ({ image, alt }) => {
     frameRef.current?.style.setProperty('--sheen-o', '0');
   };
 
+  // The frame's max-width is a measured ceiling, not a guess. The hero headline
+  // is full-bleed across the shell while this sits in a fixed-fraction column,
+  // so the two converge as the viewport narrows. Sweeping the width and
+  // measuring the last line's glyphs against the frame's left edge: at 1440x900
+  // and 1920x1080, 21rem leaves 18px and 23px of clearance; 22rem leaves only
+  // 2px and 7px; 23rem overlaps the "S" of SHIPS outright. Narrower viewports
+  // already overlapped before this change (1280 clears by -3px at the old 19rem)
+  // because the display type scales on vw while the column does not. Fixing
+  // that means touching the type scale, which is a separate decision.
   return (
-    <div className="scene-3d relative mx-auto w-full max-w-[15.5rem] sm:max-w-[17rem] lg:max-w-[19rem]">
+    <div className="scene-3d relative mx-auto w-full max-w-[17rem] sm:max-w-[19rem] lg:max-w-[21rem]">
       {/* Hand-drawn accents. `text-accent` is inherited so they follow the
-          theme automatically rather than hardcoding the lime. Sized in px
+          theme automatically rather than hardcoding the vermilion. Sized in px
           because they are absolute: at a fluid size they would collide with the
           frame edge on a narrow viewport, which is the one place a scribble
-          that overlaps reads as a mistake rather than as a mark. */}
+          that overlaps reads as a mistake rather than as a mark. The sizes track
+          the frame growing from 19rem to 21rem so they stay in proportion
+          instead of shrinking into insignificance against the larger portrait. */}
       <Scribble
         shape="star"
-        size={40}
+        size={44}
         delay={0.5}
         className="absolute -top-7 -left-8 text-accent"
         style={{ rotate: '-12deg' }}
       />
       <Scribble
         shape="loop"
-        size={52}
+        size={58}
         delay={0.72}
-        className="absolute -right-9 -top-5 text-accent"
+        className="absolute -right-10 -top-5 text-accent"
         style={{ rotate: '8deg' }}
       />
       <Scribble
         shape="bracket"
-        size={24}
+        size={27}
         delay={0.9}
         className="absolute -bottom-5 -left-9 text-accent"
       />
       <Scribble
         shape="burst"
-        size={32}
+        size={35}
         delay={1.05}
         className="absolute -right-5 -bottom-8 text-accent"
         style={{ rotate: '10deg' }}
