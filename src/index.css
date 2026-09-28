@@ -590,9 +590,58 @@
     will-change: transform;
   }
 
+  /* The hero portrait, vertically centred on the headline.
+     `margin-top` is derived rather than eyeballed, because the display type
+     scales on vw while the portrait is a fixed rem frame: a fixed lift reads as
+     centred at exactly one viewport and drifts everywhere else. The terms are
+
+       headline height = 2 lines x (0.92 line-height + 0.04em pad) = 1.92em,
+                        so half of it is 0.96 x --text-hero
+       frame height    = 21rem wide at 4:5 = 420px, half is 210px
+       headline -> row gap = 36px (mt-9 on the grid row)
+
+     and centring means subtracting half the sum of the two heights plus that
+     gap. Reading --text-hero rather than restating the clamp keeps this correct
+     if the type scale is retuned; the two fixed terms are the frame's aspect
+     and the row gap, both of which live in the components above.
+
+     The grid row's height is set by the copy, which is taller than this margin
+     box, so the row — and the hero's height — is unchanged and the fold budget
+     cannot move. Below lg the portrait stacks in normal flow and stays unlifted. */
+  @media (min-width: 64rem) {
+    .hero-subject-lift {
+      margin-top: calc(-1 * (0.96 * var(--text-hero) + 246px));
+    }
+
+    /* Short viewports — 1280x720 laptops and the like — cannot afford the full
+       travel: the hero centres its content, so a 420px portrait centred on a
+       headline that already sits high pushes the frame's top star up behind the
+       65px status bar, where the glass clips it. 22rem is the most it can rise
+       and still leave the scribble's 28px of overhang visible (frame top 107 vs
+       a 65px bar). 768px tall and up needs no cap: 1366x768 lands the frame at
+       108 with 43px to spare. */
+    @media (max-height: 47.9375rem) {
+      .hero-subject-lift {
+        margin-top: -22rem;
+      }
+    }
+
+    /* Shorter still — 1024x600 and similar netbooks. Here the hero's content is
+       taller than the viewport, so the section's centring stops absorbing slack
+       and the row rides up under the status bar: 22rem lands the frame at y=38
+       and the top star at y=6, both behind the glass. Almost all of the lift is
+       dropped rather than tuned, because on a viewport this short the headline
+       cannot be centred on without the portrait losing the status bar. */
+    @media (max-height: 40rem) {
+      .hero-subject-lift {
+        margin-top: -10rem;
+      }
+    }
+  }
+
   /* The portrait's specular sweep. Driven by a CSS custom property written
-     from JS on pointermove; the gradient is a paint, not a transform, so it
-     is safe to keep in CSS. */
+     from JS on pointermove; the gradient is a paint, not a transform, so it is
+     safe to keep in CSS. */
   .specular::after {
     content: '';
     position: absolute;

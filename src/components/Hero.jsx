@@ -170,16 +170,23 @@ const Hero = () => {
           </div>
 
           {/* ── Layer 2: the subject asset ───────────────────────────────────
-              Pulled up 10rem on large screens so it overlaps the headline's
-              baseline instead of stacking beneath it. Stacked, its 380px of
-              height was what pushed the hero to 971px against an 805px
-              viewport and put both CTAs below the fold; overlapped, the grid
-              row only has to be as tall as the copy. The two phrases end
-              around x=990 at this size, and this column starts past x=1050, so
-              the portrait layers over empty canvas rather than over type. */}
+              Bottom-right in the grid, but lifted by `.hero-subject-lift` so it
+              is vertically centred on the headline and pinned to the shell's
+              right edge. Stacked, its 420px of height was what pushed the hero
+              to 971px against an 805px viewport and put both CTAs below the
+              fold; overlapped, the grid row only has to be as tall as the copy.
+
+              Centring it does mean the frame's top-left corner now crosses the
+              outlined "L" of ML, whose ink reaches ~28px past the frame's left
+              edge. That is deliberate: "ML" is a `.stroke-type` outline at
+              --stroke-alpha 0.4 and the shell sits above the subject in z, so
+              the letter reads as passing in front of the photograph rather than
+              being clipped by it. Nothing wider than ~17rem clears that glyph,
+              and 17rem is the un-lifted mobile size, so shrinking away the
+              overlap is not an option that keeps the portrait prominent. */}
           <div
             data-hero-reveal="subject"
-            className="justify-self-center lg:-mt-40 lg:justify-self-end"
+            className="hero-subject-lift justify-self-center lg:justify-self-end lg:self-start"
           >
             <SubjectAsset image={profileImg} alt={SITE.name} />
           </div>
