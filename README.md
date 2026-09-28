@@ -169,8 +169,34 @@ scripts/
 
 ## Deploy
 
-The `build/index.html` (or `apps/landing-page/index.html`) is a static file — deploy to any static host (GitHub Pages, Netlify, Vercel, Cloudflare Pages).
+**The published site is the React app in `src/`, built to `dist/`.** This is the
+only thing that should be deployed to the portfolio domain.
 
-Current deployment: `santhosh_sunkara_portfolio.com` (CNAME in repo root).
+`vercel.json` pins the framework, install command, build command and output
+directory, so the build is determined by the repo rather than by dashboard
+settings. This matters: the repo also contains `build/index.html` — the
+generated Atelier Zero static page — and a `build/` directory at the root is
+enough to send auto-detection to the wrong artifact. Serving that page instead
+of the app is what previously made the live site look like a different, smaller
+website, and it also hid every change made to the React app.
+
+```
+npm ci
+npm run build     # -> dist/
+npx vercel deploy --prod
+```
+
+Vercel settings that must agree (Settings → Build & Deployment):
+
+| Setting | Value |
+| --- | --- |
+| Framework Preset | Vite |
+| Install Command | `npm ci` |
+| Build Command | `npm run build` |
+| Output Directory | `dist` |
+
+The Atelier Zero static page is a separate artifact, still generated from
+`inputs.json` by `node scripts/compose.js` into `build/index.html` and mirrored
+to `apps/landing-page/index.html`. It is **not** the published site.
 
 
