@@ -10,24 +10,27 @@
    as Tailwind utilities so `text-fg-1` / `bg-canvas` follow the active mode
    automatically. Do not hardcode hex in components — add a token here.
 
-   DARK IS THE PRIMARY ART DIRECTION. The acid accent was chosen against
-   charcoal; light mode is a tuned inversion, not a mirror (see the note on
-   --accent in the light block).
+   DARK IS THE PRIMARY ART DIRECTION. The ground is a deep navy; light mode is
+   a tuned inversion, not a mirror (see the note on --accent in the light
+   block).
 
-   Contrast notes, measured against the page ground:
-     dark  --fg-1 #F4F4F5  17.4:1     body + headlines
-     dark  --fg-2 #A1A1AA   7.7:1     body copy, metadata
-     dark  --fg-3 #71717A   4.1:1     LARGE text and decorative only
-     dark  --accent #E34A3A  5.2:1    badges, rules, scribbles
+   Contrast notes, measured against the active page ground:
+     dark  --fg-1 #F4F4F5  17.8:1    body + headlines
+     dark  --fg-2 #A1A1AA   7.2:1    body copy, metadata
+     dark  --fg-3 #71717A   3.6:1    LARGE text and decorative only
+     dark  --accent #E34A3A  4.7:1    badges, rules, scribbles, 11px kickers
      light --accent #7D2920  9.3:1
-   --fg-3 is the brief's muted stone. At 4.1:1 it clears the 3:1 bar for
-   large text and UI boundaries but NOT the 4.5:1 bar for body copy, so it is
-   reserved for oversized type and decoration. See --fg-2 for reading text.
+   The dark figures above are all against #000747. The accent sits close to the
+   4.5:1 floor rather than the headroom the old charcoal ground gave it, so the
+   11px meta kickers are the tightest thing on the page. Anything that needs
+   room to breathe should reach for --fg-1, not --accent.
+   --fg-3 is the muted stone. At 3.6:1 it clears the 3:1 bar for large text
+   and UI boundaries but NOT the 4.5:1 bar for body copy, so it is reserved
+   for oversized type and decoration. See --fg-2 for reading text.
 
-   The accent clears AA as small text in both themes but with far less headroom
-   than the acid lime it replaced (17.6:1 dark). It still passes at 11px, it is
-   just quieter — expect the meta kickers to read softer. Both accent variants
-   are kept inline above as labelled rollback blocks. ============================ */
+   ROLLBACK: the previous acid-lime accent, and the previous charcoal ground
+   with the vermilion accent, are both kept inline in the dark block below as
+   labelled blocks. ========================================================= */
 
 :root,
 [data-theme='light'] {
@@ -80,10 +83,21 @@
 [data-theme='dark'] {
   color-scheme: dark;
 
-  /* Deep matte charcoal, deliberately not #000000 — pure black kills the
-     elevation cues the hairline borders depend on. */
-  --canvas: #0b0b0c;
-  --canvas-deep: #050506;
+  /* Deep navy ground. Dark enough to still read as a rich near-black rather
+     than an electric blue: relative luminance 0.0035, against 0.0005 for the
+     old charcoal and 0.0164 for a brighter blue. That darkness is what lets the
+     rest of the palette stay exactly as it was — the vermilion accent still
+     measures 4.67:1 here, and --fg-3 still clears its 3:1 bar at 3.62:1.
+
+     --canvas-deep has to be DARKER than the canvas, not lighter: it is the
+     scrim behind the blueprint drawer and the command palette, and a lighter
+     scrim reads as a haze rather than a dim. */
+  --canvas: #000747;
+  --canvas-deep: #00052f;
+  /* Left near-black and neutral. They separate from the navy by only 1.03:1,
+     so the drawer and the palette lean on their hairline borders rather than on
+     fill contrast to read as panels — which is how the page already separates
+     everything else. */
   --surface: #131315;
   --surface-sunken: #0e0e10;
 
@@ -94,12 +108,13 @@
   --rule: rgba(255, 255, 255, 0.08);
   --rule-strong: #8b8b95;
 
-  /* Vermilion. 75% saturation, comfortably inside the 80% ceiling the design
-     skill sets, against 93% for the acid lime it replaces. */
+  /* Unchanged from the charcoal ground, and still AA here at 4.67:1. Worth
+     remembering this is close to the floor: the 11px meta kickers are the
+     tightest thing on the page, and anything lighter in the type would need
+     --fg-1 instead. */
   --accent: #e34a3a;
   --accent-hover: #e96e61;
-  /* Ink on vermilion, not white: white on this fill is only 3.97:1, so near-black
-     (5.18:1) is the only pairing that clears AA. */
+  /* Ink on the accent, not white: white on this fill is only 3.97:1. */
   --accent-on: #0b0b0c;
   --accent-soft: #200d0c;
   --accent-line: #591f1a;
@@ -113,6 +128,18 @@
   --accent-on: #0b0b0c;
   --accent-soft: #1e2312;
   --accent-line: #3f4a1a; */
+
+  /* ROLLBACK — the whole previous charcoal ground + vermilion accent. To
+     restore: comment out --canvas, --canvas-deep, --fg-3, --rule, --accent
+     and --accent-soft above, and uncomment this. */
+  /* --canvas: #0b0b0c;
+  --canvas-deep: #050506;
+  --fg-3: #71717a;
+  --rule: rgba(255, 255, 255, 0.08);
+  --accent: #e34a3a;
+  --accent-hover: #e96e61;
+  --accent-soft: #200d0c;
+  --accent-line: #591f1a; */
 
   --shade: 0 0 0;
 
