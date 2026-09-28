@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { revealViewport } from '../lib/motion';
+import ReactiveTitle from './kinetic/ReactiveTitle';
 
 /**
  * Numbered section kicker: `03 — Featured Work`.
@@ -29,19 +30,9 @@ const SectionLabel = ({ index, eyebrow, title, lede, id }) => {
         </motion.div>
       ) : null}
 
-      <motion.h2
-        id={id}
-        variants={{
-          hidden: { opacity: 0, y: reduceMotion ? 0 : 14 },
-          visible: { opacity: 1, y: 0, transition: { duration: reduceMotion ? 0 : 0.5, ease: [0.22, 0.61, 0.36, 1] } },
-        }}
-        initial="hidden"
-        whileInView="visible"
-        viewport={revealViewport}
-        className="text-[length:var(--text-display)]"
-      >
+      <ReactiveTitle id={id}>
         {title}
-      </motion.h2>
+      </ReactiveTitle>
 
       {lede ? (
         <motion.p
