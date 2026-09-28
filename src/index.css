@@ -619,75 +619,7 @@
    Real perspective and transform-based depth. No WebGL required, so this costs
    nothing in bundle size and degrades to flat under prefers-reduced-motion.
 --------------------------------------------------------------------------- */
-@layer components {
-  .scene-3d {
-    perspective: var(--perspective);
-    perspective-origin: 50% 40%;
-  }
-
-  /* 3D tilt lives entirely in Framer Motion (TiltCard.jsx), which writes
-     `transform` inline from a spring. This class must NOT declare a transform
-     or a transform transition: either would fight the spring and
-     double-smooth the movement. Its only job is keeping the element in its
-     own 3D context. */
-  .tilt-3d {
-    transform-style: preserve-3d;
-    will-change: transform;
-  }
-
-  /* The hero portrait, vertically centred on the headline.
-     `margin-top` is derived rather than eyeballed, because the display type
-     scales on vw while the portrait is a fixed rem frame: a fixed lift reads as
-     centred at exactly one viewport and drifts everywhere else. The terms are
-
-       headline height = 2 lines x (0.92 line-height + 0.04em pad) = 1.92em,
-                        so half of it is 0.96 x --text-hero
-       frame height    = 21rem wide at 4:5 = 420px, half is 210px
-       headline -> row gap = 36px (mt-9 on the grid row)
-
-     and centring means subtracting half the sum of the two heights plus that
-     gap. Reading --text-hero rather than restating the clamp keeps this correct
-     if the type scale is retuned; the two fixed terms are the frame's aspect
-     and the row gap, both of which live in the components above.
-
-     The grid row's height is set by the copy, which is taller than this margin
-     box, so the row — and the hero's height — is unchanged and the fold budget
-     cannot move. Below lg the portrait stacks in normal flow and stays unlifted. */
-  @media (min-width: 64rem) {
-    .hero-subject-lift {
-      margin-top: calc(-1 * (0.96 * var(--text-hero) + 246px));
-    }
-
-    /* Cap for short viewports, where the derived lift cannot be honoured.
-       The hero centres its content, so on a short viewport a 420px portrait
-       riding up on a headline that already sits high pushes the frame itself
-       behind the fixed 65px status bar.
-
-       696px is where that starts. Measured, not guessed: with the uncapped
-       lift the frame's top is linear in viewport height at a slope of 0.5px per
-       px, identically at 1024, 1152 and 1280 wide — 108 at 768 tall, 84 at
-       720, 74 at 700, and 54 at 660, i.e. 11px behind the bar. 700 tall is the
-       last height that clears, with 9px to spare, which is why the boundary
-       sits just under it. -16.5rem is the most the frame can rise at 1024x640
-       and still clear the bar by 40px.
-
-       There is deliberately no cap for the 697px-and-taller band, which is
-       where the old 22rem cap used to sit. That band needs a DIFFERENT value at
-       each width — 1280x720 needs at most -21.75rem to keep the scribble clear,
-       but 1024x700 needs -18.5rem, and a single constant satisfying the first
-       over-lifts the second by 3rem and drives the frame under the bar. The
-       frame is the hard constraint and it holds across the band uncapped; the
-       scribble's 28px overhang is decorative, and a few px of it passing under
-       blurred glass reads as layering rather than clipping. Capping 700 to buy
-       that back would cost ~97px of centring, which is a far worse trade. */
-    @media (max-height: 43.5rem) {
-      .hero-subject-lift {
-        margin-top: -16.5rem;
-      }
-    }
-  }
-
-  /* Masks an overlay to the portrait's own alpha channel, so a tint or a sheen
+/* Masks an overlay to the portrait's own alpha channel, so a tint or a sheen
      lands on the subject instead of on the box around it. Required now the
      asset is a transparent cut-out: a full-bleed `absolute inset-0` fill would
      otherwise paint a visible rectangle over the canvas, because there is no
@@ -709,24 +641,6 @@
     mask-repeat: no-repeat;
     transform: scale(1.02);
     transform-origin: 50% 28%;
-  }
-
-  /* The portrait's specular sweep. Driven by a CSS custom property written
-     from JS on pointermove; the gradient is a paint, not a transform, so it is
-     safe to keep in CSS. Mounted on a `.subject-mask` element rather than on the
-     frame itself, so it lights the subject and not the empty canvas. */
-  .specular::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: radial-gradient(
-      28rem circle at var(--sheen-x, 50%) var(--sheen-y, 50%),
-      var(--specular),
-      transparent 62%
-    );
-    opacity: var(--sheen-o, 0);
-    transition: opacity 0.35s ease;
   }
 }
 

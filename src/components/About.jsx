@@ -5,6 +5,7 @@ import { makeReveal, revealViewport } from '../lib/motion';
 import { usePrefersReducedMotion } from '../lib/hooks';
 import { ABOUT } from '../data/resume';
 import SectionLabel from './SectionLabel';
+import SectionGeometry from './SectionGeometry';
 
 const About = () => {
   const reduceMotion = usePrefersReducedMotion();
@@ -12,6 +13,7 @@ const About = () => {
 
   return (
     <section id="about" className="section-block border-t border-rule">
+      <SectionGeometry variant="about" />
       <div className="shell">
         <SectionLabel index="03" eyebrow="Profile" title="Background" />
 

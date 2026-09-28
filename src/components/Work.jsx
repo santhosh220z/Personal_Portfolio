@@ -6,6 +6,7 @@ import { usePrefersReducedMotion } from '../lib/hooks';
 import { PROJECTS } from '../data/projects';
 import { SITE } from '../data/site';
 import SectionLabel from './SectionLabel';
+import SectionGeometry from './SectionGeometry';
 import ProjectTicker from './ProjectTicker';
 import BlueprintDrawer from './BlueprintDrawer';
 
@@ -23,7 +24,13 @@ const Work = () => {
 
   return (
     <section id="work" className="section-block border-t border-rule">
-      <div className="shell">
+      <SectionGeometry variant="work" />
+
+      {/* `relative` on every content child: the geometry layer is absolutely
+          positioned, and an absolutely positioned box paints after in-flow
+          content at the same stacking level, so without this the shapes would
+          sit on top of the project list rather than behind it. */}
+      <div className="shell relative">
         <SectionLabel
           index="01"
           eyebrow="Projects done"
@@ -39,12 +46,12 @@ const Work = () => {
         initial="hidden"
         whileInView="visible"
         viewport={revealViewport}
-        className="shell"
+        className="shell relative"
       >
         <ProjectTicker projects={PROJECTS} onOpen={setOpenProject} />
       </motion.div>
 
-      <div className="shell mt-10">
+      <div className="shell relative mt-10">
         <a
           href={SITE.github}
           target="_blank"

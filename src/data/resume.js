@@ -8,7 +8,7 @@ export const ABOUT = {
   headline: ['B.Tech graduate', 'in Computer Science', '(AI & ML).'],
   bio: [
     'I graduated in 2026 with a B.Tech in Computer Science (AI & ML) from KIET, Kakinada, where I built my focus around machine learning, computer vision, and how models behave once they leave a notebook.',
-    'Most of what I have learned so far has come from building rather than reading: a real-time sign-language interpreter, a deepfake classifier, a clinical risk model, and a locally hosted reasoning assistant. I have since interned with the Google AI-ML programme and with TechSakshyam, and I am looking for an AI/ML role where I can keep doing that with a team.',
+    'Most of what I have learned so far has come from building rather than reading: a real-time sign-language interpreter, a deepfake classifier, a clinical risk model, and a locally hosted reasoning assistant. I have since interned with TechSakshyam and mentored a hackathon team at KIET, and I am looking for an AI/ML role where I can keep doing that with a team.',
   ],
   // Academic rather than professional. Every value here already appears in
   // EDUCATION below, so nothing on the page claims a number that cannot be
@@ -24,15 +24,6 @@ export const ABOUT = {
 };
 
 export const EXPERIENCES = [
-  {
-    role: 'Machine Learning Engineer',
-    company: 'Google AI-ML Virtual Internship',
-    period: '2024 — 2025',
-    description:
-      'An immersive programme across ML concepts, algorithms, and production deployment. Built and deployed scalable models with TensorFlow and PyTorch on Google Cloud.',
-    stack: ['TensorFlow', 'PyTorch', 'Google Cloud AI', 'Model Deployment', 'MLOps'],
-    impact: 'Delivered 3 production-ready ML models for real-time prediction services',
-  },
   {
     role: 'Research Intern',
     company: 'TechSakshyam (Edunet)',

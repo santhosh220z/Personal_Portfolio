@@ -9,6 +9,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import CommandPalette from './components/CommandPalette';
 import { Education, Certifications } from './components/Credentials';
+import { PageBackdrop } from './components/SectionGeometry';
 import { useCommandPalette } from './lib/useCommandPalette';
 
 const App = () => {
@@ -16,6 +17,8 @@ const App = () => {
 
   return (
     <div className="relative min-h-[100dvh] overflow-x-clip bg-canvas text-fg-1">
+      <PageBackdrop />
+
       <a href="#main-content" className="skip-link">
         Skip to content
       </a>

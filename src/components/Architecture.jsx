@@ -4,6 +4,7 @@ import { makeReveal, revealViewport } from '../lib/motion';
 import { usePrefersReducedMotion } from '../lib/hooks';
 import { PIPELINE, SKILL_GROUPS } from '../data/resume';
 import SectionLabel from './SectionLabel';
+import SectionGeometry from './SectionGeometry';
 
 /**
  * Architecture.
@@ -18,7 +19,10 @@ const Architecture = () => {
 
   return (
     <section id="architecture" className="section-block border-t border-rule">
-      <div className="shell">
+      <SectionGeometry variant="architecture" />
+
+      {/* `relative` so the geometry layer stays behind this content. */}
+      <div className="shell relative">
         <SectionLabel
           index="02"
           eyebrow="System"
