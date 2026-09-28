@@ -1,211 +1,235 @@
-# Graph Report - Personal_Portfolio  (2026-09-25)
+# Graph Report - Personal_Portfolio  (2026-09-28)
 
 ## Corpus Check
-- 1 files · ~72,774 words
+- 54 files · ~81,721 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 432 nodes · 701 edges · 27 communities (25 shown, 2 thin omitted)
-- Extraction: 81% EXTRACTED · 18% INFERRED · 1% AMBIGUOUS · INFERRED: 129 edges (avg confidence: 0.83)
+- 571 nodes · 1066 edges · 29 communities
+- Extraction: 85% EXTRACTED · 14% INFERRED · 0% AMBIGUOUS · INFERRED: 152 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Community Hubs (Navigation)
+- React App & Motion Libraries
 - Anti-Slop Frontend Design Rules
-- Resume: AI/ML Career and Skills
-- Editorial Content Sections (inputs.json)
-- Build Tooling and Dev Dependencies
-- Compose HTML Section Templates
-- Atelier Zero Movements and Behaviors
-- React App Components and Cloud Badges
-- Runtime Frontend Dependencies
-- Profile Schema (inputs.json)
-- SVG Plate Primitives Library
-- Favicon Monogram and Brand Tokens
-- compose.js Build Orchestrator
-- About Section Copy
-- Manifesto Section Copy
-- Social Icon SVG Sprite
-- Hero Isometric Layer Illustration
-- React Logo Asset and Scaffold Leftovers
-- Editorial Navigation Handlers
-- Google Cloud Badge Asset
-- generate-assets.js Image Pipeline
-- profile2.jpeg Portrait Headshot
-- Vite Logo Asset and Filters
-- Watermark-Removed Portrait Copy
-- Skip Link and Focus Ring
-- Inlined Base64 Portrait Embed
+- AI/ML Resume & Career Content
+- Atelier Zero Landing Build
+- Lint Toolchain & Config
+- Section Renderer Functions
+- Landing Movements & Interaction
+- Composer Script & Node Builtins
+- Package Manifest & Fonts
+- Site Identity Data Module
+- Procedural Collage Plate Library
+- Favicon Brand Mark Design
+- 512px App Icon Design
+- Maskable Icon Design
+- Portfolio Brief Schema
+- Biography Copy
+- Manifesto Essay Copy
+- SVG Icon Sprite
+- Credentials Section Renderers
+- Apple Touch Icon Design
+- Theme Toggle Implementation
+- Hero Section Composition
+- Google Cloud Badge Assets
+- 192px App Icon Design
+- Capabilities Section Renderer
+- Contact Section Renderer
+- Journal Section Renderer
+- Portrait & Backdrop Imagery
+- Headshot Image Transform
 
 ## God Nodes (most connected - your core abstractions)
 1. `Sunkara Siva Sambhavi Santhosh` - 35 edges
-2. `Final Pre-Flight Check Matrix` - 26 edges
-3. `esc()` - 20 edges
-4. `compose()` - 15 edges
-5. `person` - 13 edges
-6. `design-taste-frontend (Anti-Slop Frontend Skill)` - 13 edges
-7. `Atelier Zero Portfolio (Santhosh Sunkara)` - 11 edges
-8. `Sign-Speak: The Silent Communicator (Jun 2024)` - 11 edges
-9. `opener()` - 10 edges
-10. `Atelier Zero Editorial Portfolio System` - 10 edges
+2. `usePrefersReducedMotion()` - 33 edges
+3. `Final Pre-Flight Check Matrix` - 26 edges
+4. `react` - 24 edges
+5. `esc()` - 20 edges
+6. `compose()` - 16 edges
+7. `makeReveal()` - 14 edges
+8. `person` - 13 edges
+9. `design-taste-frontend (Anti-Slop Frontend Skill)` - 13 edges
+10. `framer-motion` - 12 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Performance and Core Web Vitals Guardrails` --semantically_similar_to--> `Accessibility and Craft Baseline`  [INFERRED] [semantically similar]
+- `Motion Scroll-Reveal Stagger Skeleton` --semantically_similar_to--> `Motion (subtle, editorial)`  [INFERRED] [semantically similar]
   .agents/skills/design-taste-frontend/SKILL.md → DESIGN.md
-- `Motion Scroll-Reveal Stagger Skeleton` --semantically_similar_to--> `Editorial Motion System (Scroll Reveal + Headroom Nav)`  [INFERRED] [semantically similar]
+- `Semantic Colour Tokens in src/index.css (No Hardcoded Hex)` --semantically_similar_to--> `Material & Colour Tokens (paper / ink / rule / accent)`  [INFERRED] [semantically similar]
+  README.md → DESIGN.md
+- `Reduced-Motion Contract — Stops Marquee/Pulse/Parallax/Cursor, Keeps Content` --semantically_similar_to--> `prefers-reduced-motion Renders Everything Static and Visible`  [INFERRED] [semantically similar]
+  README.md → DESIGN.md
+- `Performance and Core Web Vitals Guardrails` --semantically_similar_to--> `Accessibility & Craft — Landmarks, Skip Link, Focus in Accent`  [INFERRED] [semantically similar]
   .agents/skills/design-taste-frontend/SKILL.md → DESIGN.md
-- `Mandatory Reduced-Motion Handling` --semantically_similar_to--> `Static Reduced-Motion Fallback`  [INFERRED] [semantically similar]
+- `Mandatory Reduced-Motion Handling` --semantically_similar_to--> `prefers-reduced-motion Renders Everything Static and Visible`  [INFERRED] [semantically similar]
   .agents/skills/design-taste-frontend/SKILL.md → DESIGN.md
-- `Vol. 01 Atelier Zero Landing Document` --semantically_similar_to--> `Root Vite Entry Document`  [INFERRED] [semantically similar]
-  apps/landing-page/index.html → index.html
-- `Atelier Zero :root Design Token Block` --implements--> `Three-Voice Typography (Fraunces / Archivo / Space Mono)`  [INFERRED]
-  apps/landing-page/index.html → DESIGN.md
 
 ## Import Cycles
 - None detected.
 
 ## Hyperedges (group relationships)
-- **Vol. 01 Numbered Movements Spine** — apps_landing_page_index_movement_sections, apps_landing_page_index_manifesto_movement, apps_landing_page_index_work_movement, apps_landing_page_index_about_movement, apps_landing_page_index_experience_movement, apps_landing_page_index_studio_movement, apps_landing_page_index_credentials_movement, apps_landing_page_index_journal_movement, apps_landing_page_index_contact_movement [EXTRACTED 1.00]
-- **Favicon Duotone/Tricolor Palette** — public_favicon_brand_purple_863bff, public_favicon_deep_violet_7e14ff, public_favicon_pale_lavender_ede6ff, public_favicon_accent_blue_47bfff [EXTRACTED 1.00]
-- **Favicon Glow Construction Pipeline (silhouette -> mask -> blurred ellipse field -> filters)** — public_favicon, public_favicon_alpha_mask_a, public_favicon_ellipse_field, public_favicon_blur_filter_primitives, public_favicon_mask_knockout [EXTRACTED 1.00]
-- **Movement 02 - Featured Work: Four Studies** — apps_landing_page_index_work_movement, apps_landing_page_index_the_counterfeit_face, apps_landing_page_index_sign_speak, apps_landing_page_index_designing_a_conversationalist, apps_landing_page_index_the_quiet_warning [EXTRACTED 1.00]
-- **Google Cloud Brand Identity Composition** — image_google_cloud, image_google_cloud_cloud_glyph, image_google_cloud_wordmark, image_google_cloud_brand_colour_palette [EXTRACTED 1.00]
-- **First-Party Accent Line Icon Set** — public_icons_documentation_icon, public_icons_social_icon, public_icons_line_icon_style [EXTRACTED 1.00]
-- **Third-Party Social Brand Mark Set** — public_icons_bluesky_icon, public_icons_discord_icon, public_icons_github_icon, public_icons_x_icon, public_icons_brand_mark_style [EXTRACTED 1.00]
 - **Pre-Flight Quality Gate Rule Set** — _agents_skills_design_taste_frontend_skill_preflight_check, _agents_skills_design_taste_frontend_skill_em_dash_ban, _agents_skills_design_taste_frontend_skill_page_theme_lock, _agents_skills_design_taste_frontend_skill_color_consistency_lock, _agents_skills_design_taste_frontend_skill_shape_consistency_lock, _agents_skills_design_taste_frontend_skill_eyebrow_restraint, _agents_skills_design_taste_frontend_skill_serif_discipline, _agents_skills_design_taste_frontend_skill_premium_consumer_palette_ban, _agents_skills_design_taste_frontend_skill_copy_self_audit, _agents_skills_design_taste_frontend_skill_motion_must_be_motivated, _agents_skills_design_taste_frontend_skill_dark_mode_protocol, _agents_skills_design_taste_frontend_skill_reduced_motion_rule [EXTRACTED 1.00]
+- **Atelier Zero Three-Voice Typographic System** — design_typography_three_voices, design_fraunces_display_serif, design_archivo_grotesk_body, design_space_mono_captions, design_fluid_type_scale [EXTRACTED 1.00]
+- **Atelier Zero Restrained Motion Contract** — design_motion_scroll_reveal, design_motion_headroom_navigation, design_motion_no_autoplay_parallax, design_prefers_reduced_motion_static [EXTRACTED 1.00]
+- **Vol. 01 Numbered Movements Spine** — apps_landing_page_index_movement_sections, apps_landing_page_index_manifesto_movement, apps_landing_page_index_work_movement, apps_landing_page_index_about_movement, apps_landing_page_index_experience_movement, apps_landing_page_index_studio_movement, apps_landing_page_index_credentials_movement, apps_landing_page_index_journal_movement, apps_landing_page_index_contact_movement [EXTRACTED 1.00]
+- **Movement 02 - Featured Work: Four Studies** — apps_landing_page_index_work_movement, apps_landing_page_index_the_counterfeit_face, apps_landing_page_index_sign_speak, apps_landing_page_index_designing_a_conversationalist, apps_landing_page_index_the_quiet_warning [EXTRACTED 1.00]
+- **No-Flash Theme Resolution Flow (Inline Script + Shared State)** — index_prepaint_theme_script, index_localstorage_theme_read, index_data_theme_attribute, index_src_lib_theme_resolvemode, readme_theme_localstorage_toggle, readme_prepaint_no_flash [INFERRED 0.95]
 - **RAG Customer Support Chatbot Architecture** — public_resume_rag_based_customer_support_chatbot, public_resume_rag, public_resume_langchain, public_resume_vector_database, public_resume_embedding_model, public_resume_llm [EXTRACTED 1.00]
-- **Spam Detection NLP Text-Classification Pipeline** — public_resume_spam_email_detection_system, public_resume_nlp_text_classification, public_resume_nlp, public_resume_naive_bayes, public_resume_logistic_regression, public_resume_python [EXTRACTED 1.00]
-- **Exploded-View Stack Components** — src_assets_hero_dark_top_panel, src_assets_hero_purple_gradient_base_layer, src_assets_hero_white_content_placeholder, src_assets_hero_exploded_view_connectors, src_assets_hero_stacked_layers_illustration [EXTRACTED 1.00]
-- **Vite Logo Mark Composition** — src_assets_vite_vite_logo_mark, src_assets_vite_light_beam_gradients, src_assets_vite_dark_scheme_parenthesis, src_assets_vite_accessible_title [EXTRACTED 1.00]
-- **Personal Branding Presentation Stack (Subject + Asset + Photography Convention + Web Framing)** — src_assets_profile2_santhosh_sunkara, src_assets_profile2_portrait_asset, src_assets_profile2_professional_headshot_convention, src_assets_profile2_hero_portrait_framing_pattern [INFERRED 0.75]
-- **Favicon Brand Identity System** — public_favicon, public_favicon_monogram_z_letterform, public_favicon_brand_purple_863bff, public_favicon_duotone_gradient_treatment, public_favicon_small_size_legibility [INFERRED 0.85]
-- **React Brand Mark Composition** — src_assets_react_react_logo_glyph, src_assets_react_electron_orbit_motif, src_assets_react_cyan_brand_palette, src_assets_react_iconify_logos_set [INFERRED 0.85]
 - **Real-Time Computer Vision Inference Stack** — public_resume_opencv, public_resume_live_video_processing, public_resume_real_time_inference, public_resume_hand_gesture_recognition, public_resume_mediapipe, public_resume_object_detection, public_resume_yolo, public_resume_ssd [INFERRED 0.85]
-- **Atelier Zero Deterministic Compose Pipeline** — design_inputs_json, design_pure_function_core, design_scripts_compose_js, design_scripts_lib_sections_js, design_scripts_lib_plates_js, readme_pure_function_core, design_single_file_output, readme_no_frameworks_vanilla_es_modules [INFERRED 0.95]
-- **Atelier Zero Visual Language System** — design_material_and_colour, design_typography, design_layout_grammar, design_collage_and_imperfection, design_accessibility_and_craft, readme_visual_language_summary, design_scripts_lib_tokens_js [INFERRED 0.95]
+- **Spam Detection NLP Text-Classification Pipeline** — public_resume_spam_email_detection_system, public_resume_nlp_text_classification, public_resume_nlp, public_resume_naive_bayes, public_resume_logistic_regression, public_resume_python [EXTRACTED 1.00]
+- **Google Cloud Brand Identity Composition** — image_google_cloud, image_google_cloud_cloud_glyph, image_google_cloud_wordmark, image_google_cloud_brand_colour_palette [EXTRACTED 1.00]
+- **Third-Party Social Brand Mark Set** — public_icons_bluesky_icon, public_icons_discord_icon, public_icons_github_icon, public_icons_x_icon, public_icons_brand_mark_style [EXTRACTED 1.00]
+- **First-Party Accent Line Icon Set** — public_icons_documentation_icon, public_icons_social_icon, public_icons_line_icon_style [EXTRACTED 1.00]
+- **Personal Branding Presentation Stack (Subject + Asset + Photography Convention + Web Framing)** — src_assets_profile2_santhosh_sunkara, src_assets_profile2_portrait_asset, src_assets_profile2_professional_headshot_convention, src_assets_profile2_hero_portrait_framing_pattern [INFERRED 0.75]
 
-## Communities (27 total, 2 thin omitted)
+## Communities (29 total, 0 thin omitted)
 
-### Community 0 - "Anti-Slop Frontend Design Rules"
+### Community 0 - "React App & Motion Libraries"
 Cohesion: 0.07
-Nodes (65): design-taste-frontend (Anti-Slop Frontend Skill), AI Tells (Forbidden Patterns), Anti-Default Discipline, Apple Liquid Glass Web Approximation, Block Library Contract, Brief Inference and Design Read, Color Calibration (One Accent, Lila Rule), Color Consistency Lock (+57 more)
+Nodes (62): framer-motion, gsap/Flip, gsap/Observer, gsap/ScrollTrigger, lucide-react, react, App(), About() (+54 more)
 
-### Community 1 - "Resume: AI/ML Career and Skills"
+### Community 1 - "Anti-Slop Frontend Design Rules"
+Cohesion: 0.05
+Nodes (69): design-taste-frontend (Anti-Slop Frontend Skill), AI Tells (Forbidden Patterns), Anti-Default Discipline, Apple Liquid Glass Web Approximation, Block Library Contract, Brief Inference and Design Read, Color Calibration (One Accent, Lila Rule), Color Consistency Lock (+61 more)
+
+### Community 2 - "AI/ML Resume & Career Content"
 Cohesion: 0.08
 Nodes (59): AI/ML Engineer (Target Role), AI/ML Intern — Edunet Foundation (Apr 2024 – Jun 2024), API Integration, B.Tech — Computer Science & Engineering (AI & ML), CGPA 7.44, Convolutional Neural Networks (CNNs), Coordinate-Based Frame Optimization, DevOps, Edunet Foundation AICTE Certification (+51 more)
 
-### Community 2 - "Editorial Content Sections (inputs.json)"
-Cohesion: 0.05
-Nodes (39): capabilities, intro, kicker, rooms, title, colophon, line, note (+31 more)
+### Community 3 - "Atelier Zero Landing Build"
+Cohesion: 0.06
+Nodes (47): Colophon Provenance Note, Inlined Base64 Portrait Asset, Procedural Collage Plates (inline SVG), Vol. 01 Atelier Zero Landing Document, build/index.html Mirrored to apps/landing-page/index.html, Collage & imperfection, scripts/compose.js — compose(inputs) → html + CLI, build/ Separate from dist/ (Vite App Owns dist/) (+39 more)
 
-### Community 3 - "Build Tooling and Dev Dependencies"
-Cohesion: 0.07
+### Community 4 - "Lint Toolchain & Config"
+Cohesion: 0.08
 Nodes (29): autoprefixer, eslint, @eslint/js, eslint-plugin-react-hooks, eslint-plugin-react-refresh, globals, devDependencies, autoprefixer (+21 more)
 
-### Community 4 - "Compose HTML Section Templates"
+### Community 5 - "Section Renderer Functions"
 Cohesion: 0.21
 Nodes (26): plate(), aboutHtml(), capabilitiesHtml(), colophonHtml(), compose(), contactHtml(), credentialsHtml(), css() (+18 more)
 
-### Community 5 - "Atelier Zero Movements and Behaviors"
+### Community 6 - "Landing Movements & Interaction"
 Cohesion: 0.10
-Nodes (27): Movement 03 - Brief Biography, Active Section Observer, Colophon Provenance Note, Movement 08 - Correspondence, Movement 06 - Credentials, Designing a Conversationalist (DeepSeek-R1 Chat Agent), Movement 04 - Experience & Collaborations, Google Cloud Skill Badge Ledger (18 badges) (+19 more)
+Nodes (27): Movement 03 - Brief Biography, Active Section Observer, Anchor Offset Handler, closeMenu(), Movement 08 - Correspondence, Movement 06 - Credentials, Designing a Conversationalist (DeepSeek-R1 Chat Agent), Movement 04 - Experience & Collaborations (+19 more)
 
-### Community 6 - "React App Components and Cloud Badges"
-Cohesion: 0.15
-Nodes (13): App(), About(), Certifications(), certificationsData, Contact(), Education(), Experience(), Footer() (+5 more)
-
-### Community 7 - "Runtime Frontend Dependencies"
+### Community 7 - "Composer Script & Node Builtins"
 Cohesion: 0.11
-Nodes (18): framer-motion, lucide-react, dependencies, framer-motion, lucide-react, react, react-dom, name (+10 more)
+Nodes (21): node:fs/promises, node:path, node:url, ASSET_DIR, buildContext(), collageAsset(), __dirname, DIST_DIR (+13 more)
 
-### Community 8 - "Profile Schema (inputs.json)"
+### Community 8 - "Package Manifest & Fonts"
+Cohesion: 0.09
+Nodes (21): @fontsource-variable/geist-mono, @fontsource-variable/syne, gsap, dependencies, @fontsource-variable/geist-mono, @fontsource-variable/syne, framer-motion, gsap (+13 more)
+
+### Community 9 - "Site Identity Data Module"
 Cohesion: 0.13
 Nodes (15): person, disciplines, email, github, githubHandle, indexLine, initials, linkedin (+7 more)
 
-### Community 9 - "SVG Plate Primitives Library"
+### Community 10 - "Procedural Collage Plate Library"
 Cohesion: 0.32
 Nodes (12): bars(), crosshair(), halftone(), hand(), iso(), network(), openSvg(), plateRegistry (+4 more)
 
-### Community 10 - "Favicon Monogram and Brand Tokens"
-Cohesion: 0.19
-Nodes (14): Favicon (48x46 Monogram Mark), Accent Blue #47BFFF (display-p3 .2799 .748 1), Alpha Mask id=a (mask-type:alpha), feFlood/feBlend/feGaussianBlur Filter Chain (defs b-p), Brand Purple #863BFF (display-p3 .5252 .23 1), Deep Violet #7E14FF (display-p3 .4922 .0767 1), Duotone/Tricolor Gradient Treatment via Blurred Ellipses, Masked Blurred Ellipse Field (13 ellipses, filters b-p) (+6 more)
+### Community 11 - "Favicon Brand Mark Design"
+Cohesion: 0.21
+Nodes (14): Brand Palette #0B0B0C / #E2F952, Tile Definition Against Dark Tab Bar, Lime Hairline Border, Marquee Separators, Nav Brandmark (SS), Portrait Registration Marks, Single-S Condensation for 16px Legibility, Geometric S Skeleton Path (+6 more)
 
-### Community 11 - "compose.js Build Orchestrator"
-Cohesion: 0.19
-Nodes (13): ASSET_DIR, buildContext(), collageAsset(), __dirname, DIST_DIR, embedAsset(), ensureDir(), INPUTS_PATH (+5 more)
+### Community 12 - "512px App Icon Design"
+Cohesion: 0.29
+Nodes (12): Single-Color High-Contrast Monogram Identity, Developer Initials as Lettermark Strategy, Lime / Chartreuse Accent Color (approx #D9E64B), Lime Lowercase 's' Monogram Glyph, Portfolio App Icon 512x512 (black squircle with lime 'S.' monogram), Thin Lime Perimeter Stroke, Square Period Glyph Baseline Marker, PWA 512px Home-Screen / Install Prompt Icon Asset (+4 more)
 
-### Community 12 - "About Section Copy"
+### Community 13 - "Maskable Icon Design"
+Cohesion: 0.27
+Nodes (11): 512px Raster Export, Flat Minimal Visual Style, Lime-to-Yellow-Green Gradient Fill, Maskable App Icon (512x512), Near-Black Background Fill, Thin Olive-Yellow Border Stroke, Square Period Dot, PWA Home-Screen / Launcher Role (+3 more)
+
+### Community 14 - "Portfolio Brief Schema"
+Cohesion: 0.20
+Nodes (9): colophon, line, note, year, edition, experience, movements, projects (+1 more)
+
+### Community 15 - "Biography Copy"
 Cohesion: 0.20
 Nodes (10): about, facts, heading, kicker, paragraphs, recognition, title, I am an applied AI developer with a product instinct and an engineer's patience. My work lives in computer vision and language systems — real-time gesture recognition, deepfake detection, predictive health models — built to survive real environments rather than demos. (+2 more)
 
-### Community 13 - "Manifesto Section Copy"
+### Community 16 - "Manifesto Essay Copy"
 Cohesion: 0.20
-Nodes (10): I am drawn to work that sits just beyond the demo: deepfake detection that can be scrutinised, stroke risk models that clinicians could trust, assistants that remember context. I do not chase benchmarks for their own sake. I chase systems that survive contact with the real world., I started with pixels. When I first watched a convolutional network learn to tell one face from the next, I stopped seeing vision as perception and started seeing it as a discipline — annotation, pre-processing, augmentation, patience. Everything I build now begins there., The second lesson came from a hand. Building a real-time sign-language translator meant confronting the difference between a notebook accuracy of 92% and a classroom where the lighting is wrong, the hands are fast, and the frame rate fights you. Accuracy is necessary. Robustness is required., This portfolio is arranged as a small magazine rather than a list — an index of work, a few convictions, and the record of a studio still learning. I am finishing a B.Tech in Computer Science (AI & ML), and I am, as the marginalia say, open to one project at a time., manifesto, kicker, lede, paragraphs (+2 more)
+Nodes (10): manifesto, kicker, lede, paragraphs, pullquote, title, I am drawn to work that sits just beyond the demo: deepfake detection that can be scrutinised, stroke risk models that clinicians could trust, assistants that remember context. I do not chase benchmarks for their own sake. I chase systems that survive contact with the real world., I started with pixels. When I first watched a convolutional network learn to tell one face from the next, I stopped seeing vision as perception and started seeing it as a discipline — annotation, pre-processing, augmentation, patience. Everything I build now begins there. (+2 more)
 
-### Community 14 - "Social Icon SVG Sprite"
+### Community 17 - "SVG Icon Sprite"
 Cohesion: 0.47
 Nodes (9): Bluesky Icon, Filled Brand Mark Style, Discord Icon, Documentation Icon (file with code brackets), GitHub Icon, Stroked Accent Line Icon Style, Social Icon (person profile plus gear), SVG Symbol Sprite (icons.svg) (+1 more)
 
-### Community 15 - "Hero Isometric Layer Illustration"
-Cohesion: 0.36
-Nodes (8): Hero Image Asset (hero.png), Dark Isometric Design Intent (rounded layers, single purple accent), Dark Top Panel (Outlined Card), Exploded-View Dashed Connector Lines, Layered Stack / Architecture-as-Visual-Metaphor, Purple Gradient Marbled Base Layer, Stacked Layers Isometric Illustration, White Content Placeholder Block
+### Community 18 - "Credentials Section Renderers"
+Cohesion: 0.25
+Nodes (8): credentials, count, countNote, intro, items, kicker, profileUrl, title
 
-### Community 16 - "React Logo Asset and Scaffold Leftovers"
+### Community 19 - "Apple Touch Icon Design"
+Cohesion: 0.39
+Nodes (8): iOS Home-Screen Bookmark Icon Usage, Lime-Yellow on Near-Black Color Palette, Apple Touch Icon (180px Rounded-Square App Icon Asset), Detached Period Block (Small Filled Square Dot), Personal Brand Identity Mark (Owner Initials), Rounded-Square Icon Container Mask (iOS App Icon Shape), S. Monogram Glyph (Bold Geometric Letterform), Thin Lime Inset Stroke Border (Hairline Frame)
+
+### Community 20 - "Theme Toggle Implementation"
+Cohesion: 0.43
+Nodes (6): ThemeToggle(), applyMode(), DEFAULT_MODE, readStored(), resolveMode(), STORAGE_KEY
+
+### Community 21 - "Hero Section Composition"
 Cohesion: 0.29
-Nodes (7): React Brand Cyan (#00D8FF), Decorative Mark A11y Pattern (aria-hidden / role=img), Electron Orbit Motif, Iconify logos Icon Set, React Logo Glyph, react.svg (React logo asset file), Vite Scaffold Asset Remainder
+Nodes (7): hero, lines, marginalia, subline, hands, faces, bodies in motion., Teach a machine, to read
 
-### Community 17 - "Editorial Navigation Handlers"
-Cohesion: 0.33
-Nodes (5): Anchor Offset Handler, closeMenu(), Headroom Masthead Navigation, Mobile Menu Toggle Handler, Masthead Scroll Handler
-
-### Community 18 - "Google Cloud Badge Asset"
+### Community 22 - "Google Cloud Badge Assets"
 Cohesion: 0.47
 Nodes (6): Google Cloud Logo (PNG Asset), Google Brand Four-Colour Palette (Blue, Red, Yellow, Green), Google Cloud Platform, Google Cloud Four-Colour Cloud Glyph, Technology Stack Credential Marker, Google Cloud Wordmark
 
-### Community 19 - "generate-assets.js Image Pipeline"
+### Community 23 - "192px App Icon Design"
 Cohesion: 0.47
-Nodes (5): ASSET_DIR, derivePrompts(), INPUTS_URL, main(), requestImage()
+Nodes (6): App Icon 192x192 (Rounded Square Tile), Personal Brand Identity Marker (Home Screen), Chartreuse / Lime-Green Brand Color (#C6F24E-like), Near-Black Rounded Square Background, PWA / Web App Manifest Icon Asset, S. Monogram Logo Mark
 
-### Community 20 - "profile2.jpeg Portrait Headshot"
+### Community 24 - "Capabilities Section Renderer"
+Cohesion: 0.40
+Nodes (5): capabilities, intro, kicker, rooms, title
+
+### Community 25 - "Contact Section Renderer"
+Cohesion: 0.40
+Nodes (5): contact, actions, kicker, note, title
+
+### Community 26 - "Journal Section Renderer"
+Cohesion: 0.40
+Nodes (5): journal, entries, intro, kicker, title
+
+### Community 27 - "Portrait & Backdrop Imagery"
 Cohesion: 0.60
 Nodes (5): Abstract Geometric Mural Backdrop (Yellow / White / Black), Hero Portrait Framing Pattern (Rotated Card + Floating Glass Chips), profile2.jpeg - Personal Portrait Headshot Asset, Professional Headshot Convention (Framing, Attire, Gaze), Santhosh Sunkara (Portrait Subject)
 
-### Community 21 - "Vite Logo Asset and Filters"
-Cohesion: 0.60
-Nodes (5): SVG Accessible Title / a11y Label, Dark-Scheme Aware Parenthesis Fill, Filtered Gradient Light Beams, Vite Brand Identity, Vite Logo Mark (SVG asset)
-
-### Community 22 - "Watermark-Removed Portrait Copy"
+### Community 28 - "Headshot Image Transform"
 Cohesion: 0.50
 Nodes (4): Portrait Photograph (transformed copy), Selfie Subject (adult male, gray collared shirt), Watermark-Removal Image Transform, Yellow Geometric Mural Backdrop
 
 ## Ambiguous Edges - Review These
-- `SignSpeak Accessibility Project` → `Sign-Speak: The Silent Communicator (Jun 2024)`  [AMBIGUOUS]
+- `build/index.html Mirrored to apps/landing-page/index.html` → `index.html — Vite App Entry Shell`  [AMBIGUOUS]
+  index.html · relation: conceptually_related_to
+- `Sign-Speak: The Silent Communicator (Jun 2024)` → `SignSpeak Accessibility Project`  [AMBIGUOUS]
   public/resume.pdf · relation: semantically_similar_to
-- `Layered Stack / Architecture-as-Visual-Metaphor` → `White Content Placeholder Block`  [AMBIGUOUS]
-  src/assets/hero.png · relation: conceptually_related_to
+- `Thin Lime Perimeter Stroke` → `Small-Size Legibility (16px Favicon to 512px Home Screen)`  [AMBIGUOUS]
+  public/icon-512.png · relation: rationale_for
+- `Small-Size Legibility (16px Favicon to 512px Home Screen)` → `Heavy Grotesque Monogram vs Hairline Frame Contrast`  [AMBIGUOUS]
+  public/icon-512.png · relation: rationale_for
 - `profile2.jpeg - Personal Portrait Headshot Asset` → `Hero Portrait Framing Pattern (Rotated Card + Floating Glass Chips)`  [AMBIGUOUS]
   src/assets/profile2.jpeg · relation: implements
-- `Selfie Subject (adult male, gray collared shirt)` → `Portrait Photograph (transformed copy)`  [AMBIGUOUS]
-  IMAGE/wmremove-transformed.jpeg · relation: conceptually_related_to
 
 ## Knowledge Gaps
-- **128 isolated node(s):** `plateRegistry`, `facts`, `heading`, `kicker`, `recognition` (+123 more)
+- **133 isolated node(s):** `$schema`, `edition`, `movements`, `name`, `initials` (+128 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **2 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **What is the exact relationship between `SignSpeak Accessibility Project` and `Sign-Speak: The Silent Communicator (Jun 2024)`?**
-  _Edge tagged AMBIGUOUS (relation: semantically_similar_to) - confidence is low._
-- **What is the exact relationship between `Layered Stack / Architecture-as-Visual-Metaphor` and `White Content Placeholder Block`?**
+- **What is the exact relationship between `build/index.html Mirrored to apps/landing-page/index.html` and `index.html — Vite App Entry Shell`?**
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
+- **What is the exact relationship between `Sign-Speak: The Silent Communicator (Jun 2024)` and `SignSpeak Accessibility Project`?**
+  _Edge tagged AMBIGUOUS (relation: semantically_similar_to) - confidence is low._
+- **What is the exact relationship between `Thin Lime Perimeter Stroke` and `Small-Size Legibility (16px Favicon to 512px Home Screen)`?**
+  _Edge tagged AMBIGUOUS (relation: rationale_for) - confidence is low._
+- **What is the exact relationship between `Small-Size Legibility (16px Favicon to 512px Home Screen)` and `Heavy Grotesque Monogram vs Hairline Frame Contrast`?**
+  _Edge tagged AMBIGUOUS (relation: rationale_for) - confidence is low._
 - **What is the exact relationship between `profile2.jpeg - Personal Portrait Headshot Asset` and `Hero Portrait Framing Pattern (Rotated Card + Floating Glass Chips)`?**
   _Edge tagged AMBIGUOUS (relation: implements) - confidence is low._
-- **What is the exact relationship between `Selfie Subject (adult male, gray collared shirt)` and `Portrait Photograph (transformed copy)`?**
-  _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
-- **Why does `person` connect `Profile Schema (inputs.json)` to `Editorial Content Sections (inputs.json)`?**
-  _High betweenness centrality (0.010) - this node is a cross-community bridge._
-- **Why does `devDependencies` connect `Build Tooling and Dev Dependencies` to `Runtime Frontend Dependencies`?**
-  _High betweenness centrality (0.010) - this node is a cross-community bridge._
-- **What connects `plateRegistry`, `facts`, `heading` to the rest of the system?**
-  _128 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Why does `devDependencies` connect `Lint Toolchain & Config` to `Package Manifest & Fonts`?**
+  _High betweenness centrality (0.025) - this node is a cross-community bridge._
+- **Why does `react` connect `React App & Motion Libraries` to `Package Manifest & Fonts`, `Theme Toggle Implementation`?**
+  _High betweenness centrality (0.021) - this node is a cross-community bridge._
