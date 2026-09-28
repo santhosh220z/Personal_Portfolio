@@ -1,14 +1,12 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowDown, ArrowUpRight, Check, Copy } from 'lucide-react';
-import { gsap, ScrollTrigger } from '../lib/gsap';
+import { ArrowUpRight, Check, Copy } from 'lucide-react';
+import { gsap } from '../lib/gsap';
 import { usePrefersReducedMotion } from '../lib/hooks';
+import { GSAP_EASE_SOFT, GSAP_EASE_EXPO } from '../lib/motion';
 import { SITE } from '../data/site';
-import Marquee from './Marquee';
 import SubjectAsset from './SubjectAsset';
+import ScrubHeadline from './kinetic/ScrubHeadline';
 import profileImg from '../assets/profile2.jpeg';
-
-const BACKDROP_WORDS = ['Engineering', 'Intelligence', 'Motion', 'Architecture'];
 
 /**
  * Copy-to-clipboard with a state the user can actually perceive.
@@ -61,43 +59,8 @@ const Hero = () => {
   const reduceMotion = usePrefersReducedMotion();
   const { copied, failed, copy } = useCopy(SITE.email);
 
-  // Parallax: the backdrop drifts slower than the foreground, the subject
-  // faster, which is what sells the sandwich as three real planes.
-  React.useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return undefined;
-
-    if (reduceMotion) {
-      gsap.set('[data-hero-layer]', { y: 0 });
-      return undefined;
-    }
-
-    const context = gsap.context(() => {
-      const layers = gsap.utils.toArray('[data-hero-layer]');
-
-      layers.forEach((layer) => {
-        const depth = Number(layer.dataset.depth ?? 0);
-        gsap.fromTo(
-          layer,
-          { yPercent: depth * 2.2 },
-          {
-            yPercent: -depth * 3.4,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top top',
-              end: 'bottom top',
-              scrub: 0.6,
-            },
-          },
-        );
-      });
-    }, section);
-
-    return () => context.revert();
-  }, [reduceMotion]);
-
-  // Entrance: the headline rises in two beats rather than all at once.
+  // Entrance: the hero furniture rises around the headline. The headline's own
+  // two-beat entrance lives in ScrubHeadline, which owns those elements.
   React.useEffect(() => {
     const section = sectionRef.current;
     if (!section) return undefined;
@@ -113,36 +76,24 @@ const Hero = () => {
         .fromTo(
           '[data-hero-reveal="eyebrow"]',
           { opacity: 0, y: 12 },
-          { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' },
-        )
-        .fromTo(
-          '[data-hero-reveal="line-1"]',
-          { opacity: 0, yPercent: 110 },
-          { opacity: 1, yPercent: 0, duration: 0.85, ease: 'expo.out' },
-          '-=0.25',
-        )
-        .fromTo(
-          '[data-hero-reveal="line-2"]',
-          { opacity: 0, yPercent: 110 },
-          { opacity: 1, yPercent: 0, duration: 0.85, ease: 'expo.out' },
-          '-=0.62',
+          { opacity: 1, y: 0, duration: 0.5, ease: GSAP_EASE_SOFT },
         )
         .fromTo(
           '[data-hero-reveal="body"]',
           { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' },
-          '-=0.4',
+          { opacity: 1, y: 0, duration: 0.6, ease: GSAP_EASE_SOFT },
+          '-=0.25',
         )
         .fromTo(
           '[data-hero-reveal="actions"]',
           { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' },
+          { opacity: 1, y: 0, duration: 0.6, ease: GSAP_EASE_SOFT },
           '-=0.45',
         )
         .fromTo(
           '[data-hero-reveal="subject"]',
           { opacity: 0, scale: 0.94 },
-          { opacity: 1, scale: 1, duration: 0.9, ease: 'expo.out' },
+          { opacity: 1, scale: 1, duration: 0.9, ease: GSAP_EASE_EXPO },
           '-=0.8',
         );
     }, section);
@@ -159,34 +110,6 @@ const Hero = () => {
       // the rail. md:pt-28 is enough because the rail is hidden from md up.
       className="relative flex min-h-[100dvh] items-center overflow-hidden pt-32 pb-14 md:pt-28 md:pb-20"
     >
-      {/* ── Layer 0: the giant marquee backdrop ─────────────────────────── */}
-      <div
-        data-hero-layer="backdrop"
-        data-depth="0.35"
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 flex flex-col justify-center gap-1 opacity-[0.11] select-none"
-      >
-        <Marquee
-          items={BACKDROP_WORDS}
-          duration={34}
-          itemClassName="marquee-giant stroke-type stroke-type-thick px-[0.06em]"
-        />
-        <Marquee
-          items={[...BACKDROP_WORDS].reverse()}
-          duration={44}
-          reverse
-          itemClassName="marquee-giant px-[0.06em] font-extrabold"
-        />
-      </div>
-
-      {/* Scrim. Opaque at the top where the display headline sits, thinning
-          toward the middle so the marquee still reads as a texture band rather
-          than a flat wash. Without this the outlined half of the headline sits
-          on identically-shaped giant glyphs and the two cancel out. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-canvas via-canvas/75 to-canvas/30"
-      />
       {/* Hairline grid, for structure on an otherwise empty canvas. */}
       <div
         aria-hidden="true"
@@ -211,18 +134,7 @@ const Hero = () => {
             column grid is only ~850px, which wraps each phrase onto a second
             line and doubles the headline's height. Spanning the shell keeps the
             type massive AND keeps the CTAs above the fold. */}
-        <h1 className="text-[length:var(--text-hero)] uppercase">
-          <span className="block overflow-hidden pb-[0.04em]">
-            <span data-hero-reveal="line-1" className="block whitespace-nowrap will-change-transform">
-              Applied <span className="stroke-type">ML</span>
-            </span>
-          </span>
-          <span className="block overflow-hidden pb-[0.04em]">
-            <span data-hero-reveal="line-2" className="block whitespace-nowrap will-change-transform">
-              <span className="stroke-type">That</span> Ships
-            </span>
-          </span>
-        </h1>
+        <ScrubHeadline />
 
         <div className="mt-9 grid gap-10 lg:grid-cols-[1.25fr_0.75fr] lg:items-end lg:gap-16">
           <div>
@@ -236,7 +148,7 @@ const Hero = () => {
             </p>
 
             <div data-hero-reveal="actions" className="mt-8 flex flex-wrap items-center gap-3">
-              <a href="#work" className="btn-pill btn-pill-solid" data-cursor>
+              <a href="#work" className="btn-pill btn-pill-solid">
                 View work
                 <ArrowUpRight size={15} aria-hidden="true" />
               </a>
@@ -244,7 +156,6 @@ const Hero = () => {
               <button
                 type="button"
                 onClick={copy}
-                data-cursor-label={copied ? 'Copied' : undefined}
                 aria-live="polite"
                 className="btn-pill"
               >
@@ -274,22 +185,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-
-      {/* Scroll cue. Anchored to the section, not the viewport, so it leaves
-          with the hero instead of hovering over the next section. */}
-      <a
-        href="#work"
-        aria-label="Scroll to featured work"
-        className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 text-fg-3 transition-colors hover:text-accent md:flex"
-      >
-        <span className="meta">Scroll</span>
-        <motion.span
-          animate={reduceMotion ? undefined : { y: [0, 6, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <ArrowDown size={14} aria-hidden="true" />
-        </motion.span>
-      </a>
     </section>
   );
 };
