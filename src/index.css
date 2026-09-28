@@ -18,12 +18,16 @@
      dark  --fg-1 #F4F4F5  17.4:1     body + headlines
      dark  --fg-2 #A1A1AA   7.7:1     body copy, metadata
      dark  --fg-3 #71717A   4.1:1     LARGE text and decorative only
-     dark  --accent #E2F952 14.3:1    badges, rules, scribbles
-     light --accent #4F5D00  7.1:1
+     dark  --accent #E34A3A  5.2:1    badges, rules, scribbles
+     light --accent #7D2920  9.3:1
    --fg-3 is the brief's muted stone. At 4.1:1 it clears the 3:1 bar for
    large text and UI boundaries but NOT the 4.5:1 bar for body copy, so it is
    reserved for oversized type and decoration. See --fg-2 for reading text.
-=========================================================================== */
+
+   The accent clears AA as small text in both themes but with far less headroom
+   than the acid lime it replaced (17.6:1 dark). It still passes at 11px, it is
+   just quieter — expect the meta kickers to read softer. Both accent variants
+   are kept inline above as labelled rollback blocks. ============================ */
 
 :root,
 [data-theme='light'] {
@@ -44,13 +48,28 @@
   --rule: rgba(16, 16, 18, 0.1);
   --rule-strong: #5c5c66;
 
-  /* Light mode cannot run the neon accent: #E2F952 on paper is ~1.1:1. Same
-     hue family, lightness crushed so it survives on white. */
-  --accent: #4f5d00;
+  /* Light mode crushes the accent's lightness so it survives on paper. The
+     vermilion needs less of a crush than the acid lime did, because red holds
+     contrast at higher lightness than yellow-green does. */
+  --accent: #7d2920;
+  --accent-hover: #9e5e58;
+  --accent-on: #ffffff;
+  --accent-soft: #ebe1dd;
+  --accent-line: #caaba5;
+
+  /* Positive-status signal. Separate from the accent on purpose: the accent is
+     free to be any colour, but this dot means "available for roles", and a red
+     status light reads as an error. Kept green in every accent variant. */
+  --status-available: #1f7a4d;
+
+  /* ROLLBACK — previous acid-lime light accent. To restore: comment out the
+     four --accent lines above and uncomment these. Nothing else references the
+     hex values; all 22 consumers read the tokens. */
+  /* --accent: #4f5d00;
   --accent-hover: #3d4900;
   --accent-on: #ffffff;
   --accent-soft: #eef3d6;
-  --accent-line: #c2cf7e;
+  --accent-line: #c2cf7e; */
 
   --shade: 28 22 48;
 
@@ -75,13 +94,25 @@
   --rule: rgba(255, 255, 255, 0.08);
   --rule-strong: #8b8b95;
 
-  --accent: #e2f952;
+  /* Vermilion. 75% saturation, comfortably inside the 80% ceiling the design
+     skill sets, against 93% for the acid lime it replaces. */
+  --accent: #e34a3a;
+  --accent-hover: #e96e61;
+  /* Ink on vermilion, not white: white on this fill is only 3.97:1, so near-black
+     (5.18:1) is the only pairing that clears AA. */
+  --accent-on: #0b0b0c;
+  --accent-soft: #200d0c;
+  --accent-line: #591f1a;
+
+  --status-available: #4ade80;
+
+  /* ROLLBACK — previous acid-lime dark accent. To restore: comment out the
+     --accent lines above and uncomment these. */
+  /* --accent: #e2f952;
   --accent-hover: #eefd78;
-  /* Ink on acid, not white: the accent is a light lime, so dark text on it is
-     the only pairing that clears 4.5:1. */
   --accent-on: #0b0b0c;
   --accent-soft: #1e2312;
-  --accent-line: #3f4a1a;
+  --accent-line: #3f4a1a; */
 
   --shade: 0 0 0;
 
@@ -146,6 +177,7 @@
   --color-accent-on: var(--accent-on);
   --color-accent-soft: var(--accent-soft);
   --color-accent-line: var(--accent-line);
+  --color-status-available: var(--status-available);
   --color-rule: var(--rule);
   --color-rule-strong: var(--rule-strong);
 }

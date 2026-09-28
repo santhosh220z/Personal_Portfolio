@@ -9,9 +9,15 @@ const Availability = () => (
   <span className="hidden items-center gap-2 sm:flex">
     <span className="relative flex h-1.5 w-1.5 shrink-0" aria-hidden="true">
       {/* The halo is a separate element so the pulse expands outward instead
-          of the dot itself growing, which would read as a size change. */}
-      <span className="availability-ping absolute inline-flex h-full w-full rounded-full bg-accent" />
-      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+          of the dot itself growing, which would read as a size change.
+
+          Both dots use --status-available rather than the accent. This is a
+          positive "open to work" signal, and the accent is free to be any
+          colour - under a red accent a red status light reads as an error,
+          which is the opposite of what it says. The label beside it stays on
+          the accent, because that is decoration rather than state. */}
+      <span className="availability-ping absolute inline-flex h-full w-full rounded-full bg-status-available" />
+      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-status-available" />
     </span>
     <span className="meta meta-accent">{SITE.status}</span>
   </span>
