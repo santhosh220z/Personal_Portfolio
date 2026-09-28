@@ -6,6 +6,14 @@ import { GSAP_EASE_SOFT, GSAP_EASE_EXPO } from '../lib/motion';
 import { SITE } from '../data/site';
 import SubjectAsset from './SubjectAsset';
 import ScrubHeadline from './kinetic/ScrubHeadline';
+import {
+  AttentionGrid,
+  LossCurve,
+  NeuralNet,
+  NodeGraph,
+  ScatterCluster,
+  SigmoidCurve,
+} from './geometry/MLMotif';
 import profileImg from '../assets/profile3.png';
 
 /**
@@ -121,52 +129,43 @@ const Hero = () => {
         }}
       />
 
-      {/* Geometric backdrop. A second layer under the hairline grid, carrying
-          the same drafting vocabulary as the marks around the portrait — a
-          quarter arc on the far left, a squared bracket and a dotted field low
-          right — so the composition reads as one system rather than a decorated
-          photo on an empty page.
+      {/* Machine-learning backdrop.
+          Three tiers, all `absolute` inside this already-`inset-0` z-0 layer so
+          none of it can touch layout, and all beneath the z-10 content:
 
-          Deliberately no large ring here. The portrait already owns an arc
-          centred on its crown, and a second circle at a similar scale on a
-          similar axis read as a duplicate of it fighting for the same corner;
-          the backdrop needed shapes that do not repeat what the asset is
-          already saying. A circle-and-square mix also keeps the vocabulary from
-          collapsing into one motif.
+            1. a sparse node-link graph filling the whole area, which is what
+               stops the space between the diagrams reading as empty canvas;
+            2. the specific diagrams, placed in the regions the composition
+               actually leaves free;
+            3. hairlines, to tie the corners together.
 
-          Every shape is `absolute` inside this already-`inset-0` layer, so none
-          of them can affect layout, and the whole layer sits at z-0 beneath the
-          z-10 content. Opacities are low by design: these are structure, not
-          subjects, and the display type has to stay the loudest thing here. */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
-        {/* Quarter arc on the far left, tucked under the copy. Its straight
-            edges fall on the viewport boundary, so it crops rather than ends. */}
-        <span className="absolute left-[-9rem] top-[18%] hidden h-[22rem] w-[22rem] rounded-t-full border border-r-0 border-b-0 border-accent/15 md:block" />
+          The earlier pass scattered a few generic arcs and squares and left
+          most of the field bare, which is what made the hero read as a
+          photograph standing on empty space. Filling it with a node graph plus
+          real diagrams makes the backdrop a technical field the portrait sits
+          inside, rather than a backdrop for a portrait.
 
-        {/* Squared bracket on the right, mirroring the small one at the
-            portrait's shoulder but far larger and fainter, so the two read as a
-            matched pair at different scales. */}
-        <span className="absolute right-[4%] top-[26%] hidden h-[9rem] w-[7rem] border-l border-t border-accent/15 lg:block" />
+          Opacities are graded by tier and all low: the display type has to stay
+          the loudest thing on the page, and none of this is content. Everything
+          below `md` is `hidden` — at phone widths the hero is already dense
+          with content, and a diagram behind 16px copy is just noise. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 text-accent">
+        {/* Tier 1 — connective tissue across the whole field. */}
+        <NodeGraph className="absolute inset-0 h-full w-full opacity-[0.07]" />
 
-        {/* Dotted field, low and right, to weight the corner the grid leaves
-            empty. Built as a radial-gradient tile rather than markup so it stays
-            one node instead of a few dozen, with a radial mask so the dots fade
-            out instead of stopping at a hard edge. */}
-        <span
-          className="absolute bottom-[7%] right-[7%] hidden h-28 w-44 opacity-50 md:block"
-          style={{
-            backgroundImage: 'radial-gradient(circle, var(--accent) 1px, transparent 1px)',
-            backgroundSize: '10px 10px',
-            maskImage: 'radial-gradient(circle, #000 18%, transparent 70%)',
-            WebkitMaskImage: 'radial-gradient(circle, #000 18%, transparent 70%)',
-          }}
-        />
+        {/* Tier 2 — the diagrams, in the free regions. Left column above the
+            copy, then behind the copy, then the two lower corners. */}
+        <ScatterCluster className="absolute -left-16 top-[4%] hidden w-[26rem] opacity-[0.16] md:block" />
+        <NeuralNet className="absolute left-[1%] top-[34%] hidden w-[22rem] opacity-[0.13] md:block" />
+        <LossCurve className="absolute left-[3%] bottom-[4%] hidden w-[24rem] opacity-[0.17] lg:block" />
+        <AttentionGrid className="absolute bottom-[4%] right-[3%] hidden w-[8.5rem] opacity-[0.07] lg:block" />
+        <SigmoidCurve className="absolute right-[16%] top-[6%] hidden w-[15rem] opacity-[0.14] lg:block" />
 
-        {/* Two hairlines at the lower left, the same 1px rule the status bar and
-            the ledger use, angled off the copy block so they lead the eye down
-            to the CTAs instead of sitting flat behind them. */}
+        {/* Tier 3 — hairlines, angled off the copy block so they lead the eye
+            down to the CTAs instead of sitting flat behind them. */}
         <span className="absolute bottom-[16%] left-[6%] hidden h-px w-[14rem] -rotate-[8deg] bg-gradient-to-r from-accent/20 to-transparent lg:block" />
         <span className="absolute bottom-[11%] left-[9%] hidden h-px w-[9rem] -rotate-[8deg] bg-gradient-to-r from-accent/15 to-transparent lg:block" />
+        <span className="absolute left-[3%] top-[13%] hidden h-px w-[10rem] -rotate-[6deg] bg-gradient-to-r from-transparent via-accent/20 to-accent/20 lg:block" />
       </div>
 
       {/* ── Layer 1: content ────────────────────────────────────────────── */}

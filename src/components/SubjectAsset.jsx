@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useFinePointer, usePrefersReducedMotion } from '../lib/hooks';
-import Scribble from './Scribble';
+import { LossCurve, NeuralNet, NodeOrbit } from './geometry/MLMotif';
 
 const MAX_TILT = 9; // degrees at the corner of the frame
 const MAX_SHEEN = 0.9; // peak opacity of the specular sweep
@@ -64,52 +64,21 @@ const SubjectAsset = ({ image, alt }) => {
     frameRef.current?.style.setProperty('--sheen-o', '0');
   };
 
-  // The frame's max-width is a measured ceiling, not a guess. The hero headline
-  // is full-bleed across the shell while this sits in a fixed-fraction column,
-  // so the two converge as the viewport narrows. Sweeping the width and
-  // measuring the last line's glyphs against the frame's left edge: at 1440x900
-  // and 1920x1080, 21rem leaves 18px and 23px of clearance; 22rem leaves only
-  // 2px and 7px; 23rem overlaps the "S" of SHIPS outright. Narrower viewports
-  // already overlapped before this change (1280 clears by -3px at the old 19rem)
-  // because the display type scales on vw while the column does not. Fixing
-  // that means touching the type scale, which is a separate decision.
+  // Placement below is derived from the asset, not eyeballed. Sampling the
+  // cut-out's alpha gives the silhouette's width profile in source pixels: the
+  // crown starts at y=90, the skull is widest at y=220-260 (x 312..694, so
+  // centred at 503), the jaw tapers to a 260px neck at y=500, and the shoulders
+  // only reach full width past y=700. `object-cover` in a 4:5 box renders the
+  // 1:1 source at 420px and crops 42px off each side, which maps those numbers
+  // to: head occupying x 29-72% and y 8-54% of the box, head centre at (50%, 31%),
+  // shoulders beginning at y=62% and spanning 20-88%.
+  //
+  // That profile is what the earlier decoration got wrong — a ring sized off the
+  // box rather than off the head sat across the face, and the arcs were anchored
+  // in `em` (0.34em of the inherited 16px = 5px) which put them nowhere near the
+  // crown. Percentages of the box, keyed to those landmarks, is the fix.
   return (
     <div className="scene-3d relative mx-auto w-full max-w-[17rem] sm:max-w-[19rem] lg:max-w-[21rem]">
-      {/* Hand-drawn accents. `text-accent` is inherited so they follow the
-          theme automatically rather than hardcoding the vermilion. Sized in px
-          because they are absolute: at a fluid size they would collide with the
-          subject on a narrow viewport, which is the one place a scribble that
-          overlaps reads as a mistake rather than as a mark. The offsets sit off
-          the crown and shoulders rather than off the old frame edge, which no
-          longer exists. */}
-      <Scribble
-        shape="star"
-        size={44}
-        delay={0.5}
-        className="absolute -top-5 -left-7 text-accent"
-        style={{ rotate: '-12deg' }}
-      />
-      <Scribble
-        shape="loop"
-        size={58}
-        delay={0.72}
-        className="absolute -right-8 -top-3 text-accent"
-        style={{ rotate: '8deg' }}
-      />
-      <Scribble
-        shape="bracket"
-        size={27}
-        delay={0.9}
-        className="absolute -bottom-3 -left-8 text-accent"
-      />
-      <Scribble
-        shape="burst"
-        size={35}
-        delay={1.05}
-        className="absolute -right-4 -bottom-6 text-accent"
-        style={{ rotate: '10deg' }}
-      />
-
       <motion.div
         ref={frameRef}
         onPointerMove={onPointerMove}
@@ -161,35 +130,27 @@ const SubjectAsset = ({ image, alt }) => {
           style={{ '--subject-mask-image': `url(${image})` }}
         />
 
-        {/* Geometric scaffolding, replacing the contact-sheet registration
-            marks that framed the photo. A pair of quarter arcs struck off the
-            crown and a hairline down each side, all in the accent at low opacity
-            so they read as drafting marks rather than as a second border around
-            the subject.
+        {/* Machine-learning scaffolding, sized and placed off that profile.
+            Each diagram sits in a region the silhouette leaves empty, and — unlike
+            the arcs they replace — none of them is sliced by the box edge, which
+            is what made the previous set read as accidental:
 
-            The arcs are drawn as bordered, mostly-transparent discs clipped to a
-            quadrant, not as full circles: a full ring inside a portrait-sized box
-            has to be clipped somewhere, and a hard horizontal or vertical cut
-            across the composition reads as an accident. A quadrant's cut edges
-            land in the corners, where the eye already expects a boundary.
+              - the k-NN orbit is centred on the head at 50%/31%, which the
+                profile puts at the head's own centre, and sized so its samples
+                land just outside the hairline;
+              - the network takes the strip left of the jaw (x 2-28%, y 44-61%),
+                which the silhouette does not enter until the shoulders at y=62%;
+              - the loss curve takes the corner above the right shoulder, which
+                the profile leaves empty to the top edge.
 
-            `pointer-events-none` keeps all of them clear of the pointer tracking
-            above. */}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-          <span className="absolute left-1/2 top-[0.34em] h-[20rem] w-[20rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-accent/25 [clip-path:polygon(0_0,100%_0,0_100%)]" />
-          <span className="absolute left-1/2 top-[0.34em] h-[14rem] w-[14rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-accent/20 [clip-path:polygon(100%_100%,0_100%,100%_0)]" />
-          <span className="absolute inset-y-0 left-[0.7rem] w-px bg-gradient-to-b from-transparent via-accent/25 to-transparent" />
-          <span className="absolute right-[0.7rem] top-0 h-[22%] w-px bg-gradient-to-b from-accent/30 to-transparent" />
+            `pointer-events-none` and `overflow-hidden` keep them clear of the
+            pointer tracking and off the box's outside. */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden text-accent">
+          <NodeOrbit className="absolute left-1/2 top-[31%] w-[105%] -translate-x-1/2 -translate-y-1/2 opacity-[0.34]" />
+          <NeuralNet className="absolute left-[2%] top-[44%] w-[26%] opacity-[0.34]" />
+          <LossCurve className="absolute right-[1%] top-[3%] w-[25%] opacity-[0.32]" />
         </div>
       </motion.div>
-
-      {/* A small square bracket off the shoulder. The one hard-edged mark in the
-          set, kept because a purely circular vocabulary reads as decoration
-          where a single square reads as a deliberate crop. */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-4 right-6 h-5 w-5 border-b-2 border-r-2 border-accent/50"
-      />
     </div>
   );
 };
