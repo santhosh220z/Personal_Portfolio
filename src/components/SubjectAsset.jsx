@@ -132,7 +132,14 @@ const SubjectAsset = ({ image, alt }) => {
           // shot against a white wall: grayscale alone leaves the highlights
           // blown, and on a #0B0B0C canvas a bright rectangle reads as a hole
           // punched in the page rather than as a photograph.
-          className="h-full w-full object-cover grayscale contrast-125 brightness-90"
+          //
+          // scale/origin tighten the crop instead of the frame. The source is
+          // 1024x1280, the same 4:5 as the frame, so `object-cover` never crops
+          // and the original loose framing is what leaves the subject small.
+          // Anchoring the scale near the face pulls the crop in while
+          // `overflow-hidden` trims the surplus wall. Frame metrics are
+          // untouched, so the hero fold budget is unaffected.
+          className="h-full w-full origin-[48%_34%] scale-[1.28] object-cover grayscale contrast-125 brightness-90"
         />
 
         {/* Duotone + knock-back.
