@@ -190,8 +190,9 @@ const Hero = () => {
               className="max-w-[54ch] text-balance text-[length:var(--text-lede)] leading-relaxed text-fg-2"
             >
               Vision and language systems built to survive contact with production:
-              real-time gesture recognition, deepfake forensics, and clinical risk
-              models.
+              a fire-detection service that refuses to alert on one frame, a PPO
+              agent that grades its own runs, and sign-language input turned into
+              speech.
             </p>
 
             <div data-hero-reveal="actions" className="mt-8 flex flex-wrap items-center gap-3">

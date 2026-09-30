@@ -3,11 +3,12 @@ import { Github } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { makeReveal, revealViewport } from '../lib/motion';
 import { usePrefersReducedMotion } from '../lib/hooks';
-import { PROJECTS } from '../data/projects';
+import { PROJECTS, SUPPORTING } from '../data/projects';
 import { SITE } from '../data/site';
 import SectionLabel from './SectionLabel';
 import SectionGeometry from './SectionGeometry';
 import ProjectTicker from './ProjectTicker';
+import ProjectStrip from './ProjectStrip';
 import BlueprintDrawer from './BlueprintDrawer';
 
 /**
@@ -35,7 +36,7 @@ const Work = () => {
           index="01"
           eyebrow="Projects done"
           title="Project works"
-          lede="Four systems, each with a blueprint. Open one for the problem, the approach, and the pipeline it runs through."
+          lede="Six systems, each with a blueprint. Open one for the problem, the approach, and the pipeline it runs through."
         />
       </div>
 
@@ -50,6 +51,18 @@ const Work = () => {
       >
         <ProjectTicker projects={PROJECTS} onOpen={setOpenProject} />
       </motion.div>
+
+      {/* Supporting work. Sits between the ticker and the GitHub pill so the
+          outbound link stays the last thing in the section, with the two
+          smaller systems reading as near-neighbours of the six rather than as
+          a separate destination of their own.
+
+          No `shell` on this wrapper: ProjectStrip's own root already carries it,
+          and two of them would double the page gutter. Only the vertical rhythm
+          is contributed from here. */}
+      <div className="relative mt-14">
+        <ProjectStrip projects={SUPPORTING} />
+      </div>
 
       <div className="shell relative mt-10">
         <a

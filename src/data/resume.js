@@ -8,7 +8,7 @@ export const ABOUT = {
   headline: ['B.Tech graduate', 'in Computer Science', '(AI & ML).'],
   bio: [
     'I graduated in 2026 with a B.Tech in Computer Science (AI & ML) from KIET, Kakinada, where I built my focus around machine learning, computer vision, and how models behave once they leave a notebook.',
-    'Most of what I have learned so far has come from building rather than reading: a real-time sign-language interpreter, a deepfake classifier, a clinical risk model, and a locally hosted reasoning assistant. I have since interned with TechSakshyam and mentored a hackathon team at KIET, and I am looking for an AI/ML role where I can keep doing that with a team.',
+    'Most of what I have learned so far has come from building rather than reading: a sign-language interpreter that speaks, a fire-detection service that confirms before it alerts, a reinforcement-learning agent that grades its own runs, and a deepfake classifier served over an API. I have since interned with TechSakshyam and mentored a hackathon team at KIET, and I am looking for an AI/ML role where I can keep doing that with a team.',
   ],
   // Academic rather than professional. Every value here already appears in
   // EDUCATION below, so nothing on the page claims a number that cannot be
@@ -59,6 +59,7 @@ export const SKILL_GROUPS = [
       'Python',
       'Machine Learning',
       'Deep Learning',
+      'Reinforcement Learning',
       'Neural Networks',
       'NLP',
       'Prompt Engineering',
@@ -93,6 +94,9 @@ export const SKILL_GROUPS = [
       'Git',
       'GitHub Actions',
       'Docker',
+      'Docker Compose',
+      'FastAPI',
+      'REST API Design',
       'Vertex AI',
       'API Deployment',
     ],
