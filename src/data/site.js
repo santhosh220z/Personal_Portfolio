@@ -13,6 +13,11 @@ export const SITE = {
   github: 'https://github.com/santhosh220z',
   linkedin:
     'https://www.linkedin.com/in/siva-sambhavi-santhosh-sunkara-588a24265/',
+  // The PDF in `public/`, which Vite copies to the site root verbatim. Held
+  // here rather than inlined at each call site so the hero, the bar, the footer
+  // and the command palette cannot drift onto different paths — and so swapping
+  // in a new `public/resume.pdf` needs no code change at all.
+  resume: '/resume.pdf',
 };
 
 /**
@@ -44,5 +49,5 @@ export const COMMAND_INDEX = [
   { label: 'GitHub', href: SITE.github, group: 'Elsewhere', external: true },
   { label: 'LinkedIn', href: SITE.linkedin, group: 'Elsewhere', external: true },
   { label: 'Email', href: `mailto:${SITE.email}`, group: 'Elsewhere', external: true },
-  { label: 'Résumé (PDF)', href: '/resume.pdf', group: 'Elsewhere', download: true },
+  { label: 'Résumé (PDF)', href: SITE.resume, group: 'Elsewhere', download: true },
 ];

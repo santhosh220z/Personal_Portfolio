@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Command, Moon, Sun } from 'lucide-react';
+import { Command, Download, Moon, Sun } from 'lucide-react';
 import { gsap, ScrollTrigger } from '../lib/gsap';
 import { useLocalTime } from '../lib/hooks';
 import { NAV_LINKS, SITE } from '../data/site';
@@ -117,6 +117,21 @@ const Nav = ({ onOpenCommand }) => {
               <Command size={14} className="text-fg-2" aria-hidden="true" />
               <span className="meta">K</span>
             </button>
+
+            {/* Résumé download. A labelled control is a lot of width to spend in a
+                56px bar that already carries four anchors, the clock, the ⌘K
+                hint and the theme toggle — so this is gated to lg, the same
+                breakpoint the local clock uses. Below lg the hero CTA and the
+                footer row both reach the PDF. */}
+            <a
+              href={SITE.resume}
+              download
+              aria-label="Download résumé (PDF)"
+              className="hidden h-11 items-center gap-2 rounded-full border border-rule px-3 transition-colors hover:border-fg-1 lg:inline-flex"
+            >
+              <Download size={14} className="text-fg-2" aria-hidden="true" />
+              <span className="meta">Résumé</span>
+            </a>
 
             <ThemeToggle />
           </div>

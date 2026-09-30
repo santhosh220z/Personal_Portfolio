@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { Download, Github, Linkedin, Mail } from 'lucide-react';
 import { SITE } from '../data/site';
 import Marquee from './Marquee';
 
@@ -54,6 +54,14 @@ const Footer = () => {
             </a>
             <a href={`mailto:${SITE.email}`} aria-label="Email" className="icon-btn">
               <Mail size={18} aria-hidden="true" />
+            </a>
+            <a
+              href={SITE.resume}
+              download
+              aria-label="Download résumé (PDF)"
+              className="icon-btn"
+            >
+              <Download size={18} aria-hidden="true" />
             </a>
           </div>
         </div>

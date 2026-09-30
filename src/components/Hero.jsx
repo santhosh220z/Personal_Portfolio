@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { ArrowUpRight, Check, Copy } from 'lucide-react';
+import { ArrowUpRight, Check, Copy, Download } from 'lucide-react';
 import { gsap } from '../lib/gsap';
 import { usePrefersReducedMotion } from '../lib/hooks';
 import { GSAP_EASE_SOFT, GSAP_EASE_EXPO } from '../lib/motion';
@@ -198,6 +198,22 @@ const Hero = () => {
               <a href="#work" className="btn-pill btn-pill-solid">
                 View work
                 <ArrowUpRight size={15} aria-hidden="true" />
+              </a>
+
+              {/* `hidden sm:inline-flex` — a three-pill row measures ~441px and
+                  the shell's content box is 528px at sm, so the row stays on one
+                  line from sm up. Below sm it is only 335px, where the third
+                  pill would wrap the row onto a second line and add 56px of
+                  height to a hero that is composed to keep every CTA above the
+                  fold. Mobile reaches the PDF through the footer instead. */}
+              <a
+                href={SITE.resume}
+                download
+                aria-label="Download résumé (PDF)"
+                className="btn-pill hidden sm:inline-flex"
+              >
+                Résumé
+                <Download size={15} aria-hidden="true" />
               </a>
 
               <button
