@@ -642,7 +642,6 @@
     transform: scale(1.02);
     transform-origin: 50% 28%;
   }
-}
 
 /* Scrollbar: tinted to the theme so the page does not gain a bright default
    strip the moment the accent moves to lime. */
