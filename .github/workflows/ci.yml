@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+# Only the latest commit per ref matters; a superseded run tells you nothing.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Vite 8 requires node ^20.19 || >=22.12, and the repo pins no .nvmrc,
+      # so this is the only thing keeping a silent engine mismatch from turning
+      # into a confusing build error. Bump it when Vite is bumped.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # `npm ci`, not `npm install`: it installs exactly the lockfile and fails
+      # if package.json and the lockfile have drifted, which is the failure this
+      # job exists to catch.
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit and data tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      # The build succeeding only proves the code compiles. This job proves the
+      # site actually mounts, that the fonts load, that the deferred chunks are
+      # genuinely deferred, and that reduced-motion leaves nothing invisible —
+      # none of which a build can tell you.
+      #
+      # It drives the built output over the DevTools Protocol, so it needs a
+      # static server rather than `vite preview` (which would add a dev-server
+      # dependency to CI for no benefit).
+      - name: Verify the built site in a real browser
+        run: |
+          npx --yes serve@14 dist -l 3000 --no-clipboard &
+          npx --yes wait-on@8 http-get://localhost:3000 -t 60000
+          node scripts/verify-site.mjs http://localhost:3000
+
+      # Upload the build output so a failure can be inspected without
+      # reproducing locally.
+      - name: Archive dist
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 7
