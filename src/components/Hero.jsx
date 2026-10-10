@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { ArrowUpRight, Check, Copy, Download } from 'lucide-react';
+import { ArrowUpRight, Award, Check, Copy, Download } from 'lucide-react';
 import { gsap } from '../lib/gsap';
 import { usePrefersReducedMotion } from '../lib/hooks';
 import { GSAP_EASE_SOFT, GSAP_EASE_EXPO } from '../lib/motion';
@@ -99,6 +99,12 @@ const Hero = () => {
           '-=0.45',
         )
         .fromTo(
+          '[data-hero-reveal="credential"]',
+          { opacity: 0, y: 10 },
+          { opacity: 1, y: 0, duration: 0.5, ease: GSAP_EASE_SOFT },
+          '-=0.4',
+        )
+        .fromTo(
           '[data-hero-reveal="subject"]',
           { opacity: 0, scale: 0.94 },
           { opacity: 1, scale: 1, duration: 0.9, ease: GSAP_EASE_EXPO },
@@ -170,10 +176,21 @@ const Hero = () => {
 
       {/* ── Layer 1: content ────────────────────────────────────────────── */}
       <div className="shell relative z-10">
-        <div data-hero-reveal="eyebrow" className="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2">
-          <span className="meta meta-accent">{SITE.role}</span>
-          <span className="hidden h-3 w-px bg-rule sm:block" aria-hidden="true" />
-          <span className="meta">{SITE.location}</span>
+        {/* The eyebrow is a rail rather than a floating line: full shell width,
+            hairline under it, and a right-hand marker to close the measure.
+            Previously role and location sat as loose type in the top-left with
+            nothing on the other side, which left the top of the hero reading as
+            an accidental margin rather than a deliberate edge. */}
+        <div
+          data-hero-reveal="eyebrow"
+          className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-rule pb-3"
+        >
+          <span className="flex items-center gap-4">
+            <span className="meta meta-accent">{SITE.role}</span>
+            <span className="hidden h-3 w-px bg-rule sm:block" aria-hidden="true" />
+            <span className="meta">{SITE.location}</span>
+          </span>
+          <span className="meta hidden lg:inline">Portfolio — Vol. 01</span>
         </div>
 
         {/* Full-bleed across the shell rather than boxed into the left column.
@@ -183,7 +200,7 @@ const Hero = () => {
             type massive AND keeps the CTAs above the fold. */}
         <ScrubHeadline />
 
-        <div className="mt-9 grid gap-10 lg:grid-cols-[1.25fr_0.75fr] lg:items-end lg:gap-16">
+        <div className="mt-9 grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-16">
           <div>
             <p
               data-hero-reveal="body"
@@ -217,20 +234,35 @@ const Hero = () => {
                 <Download size={15} aria-hidden="true" />
               </a>
 
-              <button
-                type="button"
-                onClick={copy}
-                aria-live="polite"
-                className="btn-pill"
-              >
+              {/* Copying an address is a convenience, not a primary action, so it
+                  steps out of the pill row rather than competing with the two
+                  links as a third equal-weight target. It keeps the mono voice
+                  and the icon swap, just without the container. */}
+              <button type="button" onClick={copy} aria-live="polite" className="hero-text-action">
                 {copied ? (
-                  <Check size={15} className="text-accent" aria-hidden="true" />
+                  <Check size={14} className="text-accent" aria-hidden="true" />
                 ) : (
-                  <Copy size={15} aria-hidden="true" />
+                  <Copy size={14} aria-hidden="true" />
                 )}
                 {copied ? 'Copied' : failed ? 'Press ⌘C' : 'Copy email'}
               </button>
             </div>
+
+            {/* The one verifiable distinction, placed directly beneath the actions
+                it justifies rather than left for the About section to find.
+                A recruiter reads the fold top-down and stops where the buttons
+                are; a selection that sits three sections lower does no work
+                there. Hidden below sm for the same reason the Résumé pill is —
+                it is the first thing to go when the row would wrap. */}
+            <p
+              data-hero-reveal="credential"
+              className="mt-7 hidden max-w-[52ch] items-start gap-2.5 text-[length:var(--text-meta)] uppercase leading-[1.7] tracking-[0.14em] text-fg-3 sm:flex"
+            >
+              <Award size={13} className="mt-[5px] shrink-0 text-accent" aria-hidden="true" />
+              <span>
+                Selected — regional round, <span className="text-fg-2">TechSakshyam</span>
+              </span>
+            </p>
           </div>
 
           {/* ── Layer 2: the subject asset ───────────────────────────────────
@@ -250,7 +282,7 @@ const Hero = () => {
               overlap is not an option that keeps the portrait prominent. */}
           <div
             data-hero-reveal="subject"
-            className="hero-subject-lift justify-self-center lg:justify-self-end lg:self-start"
+            className="hero-subject-lift justify-self-center lg:justify-self-end"
           >
             <SubjectAsset image={profileImg} alt={SITE.name} />
           </div>
