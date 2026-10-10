@@ -1,5 +1,51 @@
-﻿@import "@fontsource-variable/syne";
-@import "@fontsource-variable/geist-mono";
+﻿/* Latin + Latin Extended only.
+   The `@import "@fontsource-variable/<family>"` entry points pull in every
+   subset the package ships — cyrillic, greek, vietnamese and symbols2 as well —
+   and this package version exposes no per-subset CSS file to narrow that.
+
+   Nothing in this portfolio renders a glyph outside Latin: the only non-ASCII
+   characters in src/data are em dashes, and the four box rules (U+2500) in the
+   codebase all sit inside JS/CSS comments that never reach the DOM. So the
+   other ~72 KB would ship in the build for nothing. `unicode-range` already
+   stops the browser downloading them, which means this trims the artefact
+   rather than the page weight — worth doing, but do not expect it in the
+   network panel.
+
+   The four @font-face blocks below are copied verbatim from the packages' own
+   `wght.css`, minus the subsets listed above. If either family is upgraded,
+   re-copy from node_modules/@fontsource-variable/<family>/wght.css. */
+@font-face {
+  font-family: 'Syne Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400 800;
+  src: url('@fontsource-variable/syne/files/syne-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'Syne Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400 800;
+  src: url('@fontsource-variable/syne/files/syne-latin-ext-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Geist Mono Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'Geist Mono Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('@fontsource-variable/geist-mono/files/geist-mono-latin-ext-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
 @import "tailwindcss";
 
 /* ===========================================================================
@@ -627,9 +673,15 @@
 
      `--subject-mask-image` is set inline from the imported asset URL, so the
      mask is the same file the <img> renders — no second request, and it tracks
-     the asset if it is ever swapped. `cover` + a shared 1.02 scale/50% 28%
-     origin reproduce the <img>'s own crop exactly, which is what keeps the tint
-     registered to the subject rather than drifting a few px off it. */
+     the asset if it is ever swapped. `cover` gives the mask the same crop
+     geometry as the <img>'s own `object-cover`.
+
+     The scale and origin below MUST stay identical to the <img>'s
+     `scale-[1.03]` / `origin-[50%_32%]` in SubjectAsset.jsx. Both layers draw
+     the same file into the same box, so any difference between the two
+     transforms slides the tint off the silhouette — which is exactly what this
+     mask exists to prevent. They drifted once already (the img was retuned and
+     the mask was not); if you change one, change both. */
   .subject-mask {
     -webkit-mask-image: var(--subject-mask-image);
     mask-image: var(--subject-mask-image);
@@ -639,8 +691,8 @@
     mask-position: center;
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
-    transform: scale(1.02);
-    transform-origin: 50% 28%;
+    transform: scale(1.03);
+    transform-origin: 50% 32%;
   }
 
 /* Scrollbar: tinted to the theme so the page does not gain a bright default
