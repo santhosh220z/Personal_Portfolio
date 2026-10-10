@@ -22,8 +22,8 @@ const SubjectAsset = ({ image, alt }) => {
         <img
           src={image}
           alt={alt}
-          width={1000}
-          height={1000}
+          width={800}
+          height={800}
           loading="eager"
           decoding="async"
           className="h-full w-full origin-[50%_32%] scale-[1.03] object-cover opacity-80"
