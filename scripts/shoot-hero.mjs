@@ -32,6 +32,7 @@ if (!CHROME) {
 mkdirSync(OUT, { recursive: true });
 
 const WIDTHS = [
+  { w: 1920, h: 950, name: 'wide-1920' },
   { w: 1440, h: 900, name: 'desktop-1440' },
   { w: 1280, h: 800, name: 'desktop-1280' },
   { w: 834, h: 1000, name: 'tablet-834' },
