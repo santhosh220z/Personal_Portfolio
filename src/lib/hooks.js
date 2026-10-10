@@ -1,13 +1,38 @@
-import { useCallback, useEffect, useLayoutEffect, useState, useSyncExternalStore } from 'react';
+import { useCallback, useEffect, useState, useSyncExternalStore } from 'react';
 
 /**
- * useLayoutEffect that stays quiet on the server. This is a Vite SPA so there
- * is no server render today, but every measure-then-paint component in this
- * project (marquee width, capsule offset, drawer height) depends on this
- * primitive and a future SSR migration should not turn them into warnings.
+ * Keeps a lazily-loaded overlay mounted after its first open.
+ *
+ * `React.lazy` starts fetching its chunk when the component is *rendered*, not
+ * when it decides to show something. So a `lazy()` overlay that is always
+ * rendered is not actually deferred — it is fetched during the first render
+ * pass, competing with the hero for bandwidth.
+ *
+ * The fix is to render it only once it has been opened at least once. But
+ * simply rendering `{open && <Overlay/>}` is wrong in the other direction: the
+ * component unmounts the instant `open` goes false, so AnimatePresence never
+ * gets to play its exit animation and the overlay vanishes instead of sliding
+ * or fading out.
+ *
+ * This hook is the shape that gets both: false until the first open, then
+ * permanently true. The chunk is deferred until it is genuinely wanted, and
+ * afterwards the component stays mounted so its exit animation can run.
+ *
+ * Only the very first open pays the fetch; every later one reuses the loaded
+ * chunk.
+ *
+ * The "ever opened" flag is adjusted during render rather than in an effect.
+ * React explicitly permits this — it is the documented pattern for "adjusting
+ * state when a prop changes" — and an effect here would only add a cascading
+ * second render pass to arrive at the same value a frame later.
  */
-export const useIsomorphicLayoutEffect =
-  typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+export function useMountOnDemand(open) {
+  const [everOpened, setEverOpened] = useState(false);
+
+  if (open && !everOpened) setEverOpened(true);
+
+  return everOpened;
+}
 
 /**
  * Subscribes to a `matchMedia` query and returns a settled boolean.
@@ -45,9 +70,6 @@ function useMatchMedia(query) {
  */
 export const usePrefersReducedMotion = () =>
   useMatchMedia('(prefers-reduced-motion: reduce)');
-
-/** Live media query as a settled boolean. */
-export const useMediaQuery = (query) => useMatchMedia(query);
 
 /** True only for a real mouse/trackpad. Gates the custom cursor and every
  *  pointer-tracking tilt, because on touch the values only ever get one junk
