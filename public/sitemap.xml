@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This is a single-page site: every section is an anchor on one document, so
+  there is exactly one URL to list. The section ids are deliberately NOT
+  enumerated here. Anchor-only URLs are treated as the same document by search
+  engines, and listing eight near-identical entries makes a one-page site look
+  like it has eight pages worth of unique content, which it does not.
+
+  Keep the <lastmod> honest. If you have not changed content since the last
+  deploy, do not bump it to today.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://santhosh_sunkara_portifolio.com/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
