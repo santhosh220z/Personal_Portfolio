@@ -14,7 +14,7 @@ import {
   ScatterCluster,
   SigmoidCurve,
 } from './geometry/MLMotif';
-import profileImg from '../assets/profile3.png';
+import profileImg from '../assets/profile3.webp';
 
 /**
  * Copy-to-clipboard with a state the user can actually perceive.
