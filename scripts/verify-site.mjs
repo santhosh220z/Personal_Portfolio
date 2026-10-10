@@ -212,6 +212,30 @@ try {
   record('Syne Variable loaded', fonts.syne === true);
   record('Geist Mono Variable loaded', fonts.mono === true);
 
+  // --- heading outline ----------------------------------------------------
+  // Not decoration. Screen-reader users navigate by heading level, so an h2
+  // that jumps to h4 — or a section with two h2s competing at the same size —
+  // is a structural defect, not a style choice. About used to render an h2 and
+  // an h3 at identical type size; demoting the section label there moved the
+  // statement up to h2 and this asserts it stuck.
+  const outline = await evalJs(`(() => {
+    const heads = [...document.querySelectorAll('h1,h2,h3,h4,h5,h6')]
+      .filter(h => h.offsetParent !== null || h.getBoundingClientRect().height > 0);
+    const levels = heads.map(h => Number(h.tagName[1]));
+    const skips = [];
+    for (let i = 1; i < levels.length; i++) {
+      if (levels[i] - levels[i - 1] > 1) {
+        skips.push(\`h\${levels[i - 1]} -> h\${levels[i]} (\${heads[i].textContent.trim().slice(0, 30)})\`);
+      }
+    }
+    return { count: levels.length, h1s: levels.filter(l => l === 1).length, skips,
+             first: heads[0]?.tagName ?? null };
+  })()`);
+
+  record('exactly one <h1>', outline.h1s === 1, `${outline.h1s} found, first heading is <${outline.first}>`);
+  record('heading levels never skip a level', outline.skips.length === 0,
+    outline.skips.length ? outline.skips.join('; ') : `${outline.count} headings, no skips`);
+
   // --- LAZY CHUNK DEFERRAL (the real assertion) ---------------------------
   const t0 = requests.length ? requests[0].t : 0;
   const at = (needle) => {
