@@ -26,11 +26,23 @@
  *      the actual request timeline relative to the hero image.
  */
 const BASE = process.argv[2] ?? 'http://localhost:4319';
-const CHROME = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 const { spawn } = await import('node:child_process');
 const { mkdtempSync, rmSync } = await import('node:fs');
 const { tmpdir } = await import('node:os');
 const { join } = await import('node:path');
+const { findChrome, HEADLESS_ARGS } = await import('./chrome.mjs');
+
+const CHROME = findChrome();
+if (!CHROME) {
+  // Fail with an actionable message rather than the bare ENOENT that a hardcoded
+  // path produced. This is what the CI workflow hit on its first run.
+  console.error(
+    'No Chrome, Chromium or Edge binary found.\n' +
+    'Looked in the usual locations for macOS, Linux and Windows.\n' +
+    'Set CHROME_PATH to override, e.g. CHROME_PATH=/usr/bin/chromium npm run verify:site',
+  );
+  process.exit(1);
+}
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const results = [];
@@ -42,10 +54,10 @@ const record = (name, ok, detail = '') => {
 const profile = mkdtempSync(join(tmpdir(), 'cdp-'));
 const port = 9222 + Math.floor(Math.random() * 400);
 const chrome = spawn(CHROME, [
-  '--headless=new', '--disable-gpu', '--no-sandbox', '--hide-scrollbars',
-  '--window-size=1280,900', `--remote-debugging-port=${port}`,
-  `--user-data-dir=${profile}`, 'about:blank',
-], { stdio: 'ignore' });
+    ...HEADLESS_ARGS,
+    '--window-size=1280,900', `--remote-debugging-port=${port}`,
+    `--user-data-dir=${profile}`, 'about:blank',
+  ], { stdio: 'ignore' });
 
 let ws, nextId = 1;
 const pending = new Map();
@@ -346,7 +358,7 @@ async function checkReducedMotion() {
   const profile2 = mkdtempSync(join(tmpdir(), 'cdp-rm-'));
   const port2 = 9600 + Math.floor(Math.random() * 300);
   const ch2 = spawn(CHROME, [
-    '--headless=new', '--disable-gpu', '--no-sandbox', '--hide-scrollbars',
+    ...HEADLESS_ARGS,
     '--window-size=1280,900', `--remote-debugging-port=${port2}`,
     `--user-data-dir=${profile2}`, 'about:blank',
   ], { stdio: 'ignore' });

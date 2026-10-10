@@ -28,20 +28,14 @@
  * screenshots into the OS temp dir and sharp copies the result into public/.
  */
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdtempSync, writeFileSync, readFileSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
+import { findChrome, HEADLESS_ARGS } from './chrome.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-
-const CHROME_CANDIDATES = [
-  'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-  'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
-  'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
-  'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe',
-];
 
 // From src/index.css [data-theme='dark']. Dark is the primary art direction, so
 // the card is dark-only: a light card would misrepresent the site on every share.
@@ -125,10 +119,13 @@ const html = `<!doctype html>
   <div class="foot"><span>santhosh_sunkara_portifolio.com</span><span><b>github</b> /santhosh220z</span></div>
 </body></html>`;
 
-const chrome = CHROME_CANDIDATES.find((p) => existsSync(p));
+const chrome = findChrome();
 
 if (!chrome) {
-  console.error('No Chrome or Edge found. Install one, or hand-draw public/og.png.');
+  console.error(
+    'No Chrome, Chromium or Edge found. Install one, set CHROME_PATH, or\n' +
+    'hand-draw public/og.png — it is a committed asset, not a build input.',
+  );
   process.exit(1);
 }
 
@@ -140,10 +137,7 @@ writeFileSync(htmlPath, html);
 execFileSync(
   chrome,
   [
-    '--headless=new',
-    '--disable-gpu',
-    '--no-sandbox',
-    '--hide-scrollbars',
+    ...HEADLESS_ARGS,
     `--screenshot=${shotPath}`,
     '--window-size=1200,630',
     // Let the webfonts decode before the shot, or the card captures a fallback.
