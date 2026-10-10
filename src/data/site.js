@@ -1,6 +1,36 @@
 // Site-level constants. Anything the nav, the command palette, and the meta
 // tags all need to agree on lives here so they cannot drift apart.
 
+/**
+ * The canonical origin.
+ *
+ * Matches the `CNAME` at the repo root (GitHub Pages). Kept as a constant
+ * because three different things need it — the canonical link, the Open Graph
+ * URL, and the JSON-LD `url`/`sameAs` — and a hand-typed absolute URL in three
+ * places is three chances to ship a link preview pointing somewhere else.
+ */
+export const ORIGIN = 'https://santhosh_sunkara_portifolio.com';
+
+/**
+ * Share-card and search copy.
+ *
+ * Kept beside the identity block rather than in index.html so the rendered
+ * <title>/description and the JSON-LD are generated from one source. index.html
+ * reads these back at build time via the metaHtml plugin in vite.config.js —
+ * which is the only way the "cannot drift apart" claim at the top of this file
+ * is actually true.
+ */
+export const META = {
+  title: 'Santhosh Sunkara — Applied ML Engineer',
+  description:
+    'Applied ML engineer building vision and language systems that survive production: a fire-detection service that confirms before it alerts, a PPO agent that grades its own runs, and sign-language input turned into speech.',
+  /** Absolute path to the 1200x630 share card. Must start with a slash. */
+  image: '/og.png',
+  /** 'website' for a single-page portfolio; 'profile' is not a valid OG type. */
+  type: 'website',
+  locale: 'en_US',
+};
+
 export const SITE = {
   name: 'Santhosh Sunkara',
   brandmark: 'SS',
