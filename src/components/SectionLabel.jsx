@@ -10,6 +10,13 @@ import ReactiveTitle from './kinetic/ReactiveTitle';
  * old design used one on every section, which produced the templated
  * small-caps-above-every-headline rhythm that reads as machine-made. Rule of
  * thumb: at most one in three sections.
+ *
+ * `title` is optional. About used to pass one ("Background") and then render a
+ * second block of display type immediately below it — an <h2> and an <h3> at the
+ * same size, competing. It now passes no title and lets its own statement be
+ * the section headline, which is why that block is an <h2> and not an <h3>:
+ * with no h2 in the section, promoting it keeps the document outline
+ * h1 → h2 rather than skipping a level.
  */
 const SectionLabel = ({ index, eyebrow, title, lede, id }) => {
   const reduceMotion = useReducedMotion();
@@ -30,9 +37,9 @@ const SectionLabel = ({ index, eyebrow, title, lede, id }) => {
         </motion.div>
       ) : null}
 
-      <ReactiveTitle id={id}>
-        {title}
-      </ReactiveTitle>
+      {title ? (
+        <ReactiveTitle id={id}>{title}</ReactiveTitle>
+      ) : null}
 
       {lede ? (
         <motion.p
