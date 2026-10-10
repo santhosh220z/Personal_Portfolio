@@ -274,6 +274,34 @@
     }
   }
 
+  /* Pulls the hero portrait up out of the copy row so it reads as sitting
+     *against* the headline rather than queued beneath it.
+
+     This class was referenced from Hero.jsx for several commits with no
+     definition anywhere — not in this file, not in the built stylesheet — so the
+     lift it describes never happened, and a 14-line comment sat above it
+     describing positioning that did not exist. The cause was the commit that
+     retuned the subject's scale and origin and left the class behind.
+
+     The amount is negative because the portrait is the *last* thing in its grid
+     row: to pull it up beside the headline it has to move by roughly a third of
+     its own height. `min()` keeps the lift proportional to the portrait rather
+     than fixed, so it holds between 64rem and a 4K display.
+
+     -7rem was measured as "half its own height plus the row gap", which is too
+     far: the portrait's shoulders rose into the descender line of THAT SHIPS
+     and the two masses collided in the middle of the composition. A third of
+     the height puts the face level with the headline's second line, which is
+     where the eye expects a portrait to be, and leaves the gap below it clear.
+
+     Not applied below lg: there the portrait is in normal flow under the copy
+     and there is nothing to overlap. */
+  @media (min-width: 64rem) {
+    .hero-subject-lift {
+      margin-block-start: min(-5.5rem, -7vh);
+    }
+  }
+
   body {
     font-family: var(--font-body);
     background-color: var(--canvas);
@@ -711,6 +739,38 @@
   .btn-pill-solid:hover {
     background-color: var(--accent-hover);
     border-color: var(--accent-hover);
+  }
+
+  /* A low-emphasis action that sits in the same row as the pill CTAs without
+     wearing a container. Copying an email address is a convenience; giving it
+     the same pill as "View work" made three equal-weight targets where the eye
+     should find one.
+
+     Carries the full state set the pills do — default, hover, focus-visible
+     (from the global :focus-visible rule) and the same inset press feedback —
+     so it reads as a button and not a link that happens to be focusable.
+     Colour transitions only; nothing here animates layout. */
+  .hero-text-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.75rem;
+    padding-inline: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+    background: none;
+    border: 0;
+    cursor: pointer;
+    transition: color 0.18s ease;
+  }
+  .hero-text-action:hover {
+    color: var(--fg-1);
+  }
+  .hero-text-action:active {
+    transform: translateY(1px);
   }
   .icon-btn:hover {
     color: var(--accent);
