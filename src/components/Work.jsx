@@ -1,15 +1,29 @@
-import React, { useState } from 'react';
+import React, { Suspense, lazy, useState } from 'react';
 import { Github } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { makeReveal, revealViewport } from '../lib/motion';
-import { usePrefersReducedMotion } from '../lib/hooks';
+import { usePrefersReducedMotion, useMountOnDemand } from '../lib/hooks';
 import { PROJECTS, SUPPORTING } from '../data/projects';
 import { SITE } from '../data/site';
 import SectionLabel from './SectionLabel';
 import SectionGeometry from './SectionGeometry';
 import ProjectTicker from './ProjectTicker';
 import ProjectStrip from './ProjectStrip';
-import BlueprintDrawer from './BlueprintDrawer';
+
+/**
+ * The blueprint drawer is deferred off the critical path.
+ *
+ * It drags in the whole FlowDiagram/geometry vocabulary, and most visitors never
+ * open one.
+ *
+ * The render guard at the call site is load-bearing, not a micro-optimisation:
+ * `lazy()` fires its import when the component is *rendered*, not when it has
+ * something to show. Rendering it with `project={null}` unconditionally pulls
+ * the chunk during the first render pass anyway — measured at ~160ms on the
+ * built site, ahead of the hero portrait. Rendering it only once a project is
+ * actually selected is what defers it.
+ */
+const BlueprintDrawer = lazy(() => import('./BlueprintDrawer'));
 
 /**
  * Featured work.
@@ -21,6 +35,7 @@ import BlueprintDrawer from './BlueprintDrawer';
 const Work = () => {
   const [openProject, setOpenProject] = useState(null);
   const reduceMotion = usePrefersReducedMotion();
+  const drawerMounted = useMountOnDemand(Boolean(openProject));
   const { item } = makeReveal(reduceMotion);
 
   return (
@@ -76,7 +91,11 @@ const Work = () => {
         </a>
       </div>
 
-      <BlueprintDrawer project={openProject} onClose={() => setOpenProject(null)} />
+      {drawerMounted ? (
+        <Suspense fallback={null}>
+          <BlueprintDrawer project={openProject} onClose={() => setOpenProject(null)} />
+        </Suspense>
+      ) : null}
     </section>
   );
 };
