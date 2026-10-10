@@ -15,7 +15,13 @@ const About = () => {
     <section id="about" className="section-block border-t border-rule">
       <SectionGeometry variant="about" />
       <div className="shell">
-        <SectionLabel index="03" eyebrow="Profile" title="Background" />
+        {/* No `title` here. This section used to pass one — "Background" — and
+            then render the B.Tech statement immediately beneath it at the same
+            type size, which put an <h2> and an <h3> in competition and made
+            "Background" the loudest word in a section about a degree. The
+            statement is now the section headline and sits one heading level up,
+            because with no h2 of its own an h3 would skip a level. */}
+        <SectionLabel index="03" eyebrow="Profile" />
 
         <div className="grid gap-12 md:gap-16 lg:grid-cols-[1.15fr_0.85fr]">
           {/* Statement */}
@@ -25,7 +31,7 @@ const About = () => {
             whileInView="visible"
             viewport={revealViewport}
           >
-            <h3 className="text-[length:var(--text-headline)] uppercase">
+            <h2 className="text-[length:var(--text-headline)] uppercase">
               {ABOUT.headline.map((line, index) => (
                 <span
                   key={line}
@@ -34,7 +40,7 @@ const About = () => {
                   {line}
                 </span>
               ))}
-            </h3>
+            </h2>
 
             <div className="mt-8 max-w-[58ch] space-y-5">
               {ABOUT.bio.map((paragraph) => (
@@ -51,12 +57,18 @@ const About = () => {
             initial="hidden"
             whileInView="visible"
             viewport={revealViewport}
-            className="flex flex-col gap-8"
+            className="flex flex-col gap-8 lg:justify-between"
           >
             <div className="grid grid-cols-3 gap-px overflow-hidden rounded-lg border border-rule bg-[var(--rule)]">
               {ABOUT.facts.map((fact) => (
                 <motion.div key={fact.label} variants={item} className="bg-canvas p-4">
-                  <div className="font-display text-[clamp(1.5rem,3vw,2.25rem)] leading-none font-extrabold text-accent">
+                  {/* `text-fg-1`, not the accent. Three figures set at 2.25rem in
+                      vermilion were the loudest thing in the section — louder than
+                      the statement they were meant to support, so the eye landed on
+                      a CGPA before it landed on the degree that earned it. The
+                      accent stays on the section index and the labels, which is
+                      where it does emphasis without shouting. */}
+                  <div className="font-display text-[clamp(1.5rem,3vw,2.25rem)] leading-none font-extrabold text-fg-1">
                     {fact.value}
                   </div>
                   <div className="meta mt-2">{fact.label}</div>
