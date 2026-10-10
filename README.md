@@ -12,8 +12,8 @@
 A kinetic, high-contrast portfolio: outlined display type that fills on hover, a
 cursor-following project preview, and off-canvas technical blueprints.
 
-**Stack** — Vite 8 · React 19 · Tailwind CSS 4 · GSAP 3 (ScrollTrigger, Flip,
-Observer) · Framer Motion 12 · Syne + Geist Mono
+**Stack** — Vite 8 · React 19 · Tailwind CSS 4 · GSAP 3 (ScrollTrigger) · Framer
+Motion 12 · Syne + Geist Mono
 
 ```bash
 npm install
@@ -23,30 +23,85 @@ npm run lint
 npm run preview
 ```
 
+**Before opening a PR:**
+
+```bash
+npm run verify    # lint + 31 unit/data tests + build
+npm run verify:site http://localhost:4173   # 36 checks against the built site
+```
+
+`verify:site` drives the **built** output in headless Chrome over the DevTools
+Protocol — no Playwright or Puppeteer dependency, just Node's built-in
+`WebSocket` talking CDP. It needs a static server already running, so
+`npm run preview` (or `npx serve dist`) in another terminal first. Both commands
+are what CI runs.
+
+Asset regeneration — none of these run during `npm run build`, so none are needed
+to deploy:
+
+```bash
+npm run encode:hero   # src/assets/profile3.png -> profile3.webp (via sharp)
+npm run og            # public/og.png, the 1200x630 share card (via headless Chrome)
+```
+
+## Testing
+
+`npm test` runs 31 assertions across two files, and they are aimed at the things
+that break silently rather than the things that crash:
+
+- **`src/data/data.test.js`** (26) — this site is entirely data-driven; the
+  components contain no user-facing strings, so `src/data/*` is the whole content
+  surface. A dropped field renders as `undefined` and a renamed section id makes
+  a nav link quietly go nowhere. Neither shows up in a build. These assert every
+  project carries the fields the drawer reads, every metric declares whether it
+  is real, and every `NAV_LINKS` / `COMMAND_INDEX` anchor resolves to a section
+  that is actually rendered.
+- **`src/lib/hooks.test.jsx`** (5) — `useMountOnDemand`, which exists solely to
+  make `React.lazy` actually defer. Its failure mode is invisible in a
+  screenshot, so it is pinned directly.
+
+**What jsdom cannot test.** The reduced-motion invariant ("nothing may leave an
+element at opacity 0", quoted in `ScrubHeadline.jsx`) needs a layout engine and a
+real IntersectionObserver, so it lives in `verify:site` instead, under an
+emulated `prefers-reduced-motion: reduce`. Same for fonts, chunk deferral, focus
+trapping, and Escape handling — synthetic `KeyboardEvent`s do not reach the
+dialogs' capture-phase listeners, so the script dispatches genuine keypresses
+over CDP.
+
 ## Design tokens
 
 Every colour is a semantic token in `src/index.css`; components never hardcode a
-hex value. **Dark is the primary art direction** — the acid accent and the
-outlined display type were both tuned against charcoal first, so an OS set to
-light still lands on the intended theme until the visitor toggles it. The toggle
-in the status bar persists to `localStorage`; the pre-paint script in
-`index.html` mirrors `resolveMode()` in `src/lib/theme.js` to avoid a flash.
+hex value. **Dark is the primary art direction** — the accent and the outlined
+display type were both tuned against charcoal first, so an OS set to light still
+lands on the intended theme until the visitor toggles it. The toggle in the status
+bar persists to `localStorage`; the pre-paint script in `index.html` mirrors
+`resolveMode()` in `src/lib/theme.js` to avoid a flash.
 
-| Token     | Dark                | Light               | Role                       |
-| --------- | ------------------- | ------------------- | -------------------------- |
-| `--canvas`| `#0B0B0C`           | `#FAFAF7`           | page ground               |
-| `--fg-1`  | `#F4F4F5` · 17.4:1  | `#101012`           | headlines, body           |
-| `--fg-2`  | `#A1A1AA` · 7.7:1   | `#4B4B55`           | secondary copy            |
-| `--fg-3`  | `#71717A` · 4.1:1   | `#6E6E78`           | **large text / decorative only** |
-| `--accent`| `#E2F952` · 14.3:1  | `#4F5D00`           | badges, rules, scribbles  |
-| `--rule`  | `rgba(255,255,255,.08)` | `rgba(16,16,18,.10)` | decorative hairlines  |
+Ratios below are measured against each theme's own canvas, not asserted from
+memory — re-run `python ~/.agents/skills/antislop-human/contrast-check.py <fg>
+<bg>` after any token change.
 
-`--fg-3` sits at 4.1:1, which clears the 3:1 bar for large text and UI
+| Token      | Dark                   | Light                | Role                       |
+| ---------- | ---------------------- | -------------------- | -------------------------- |
+| `--canvas` | `#0B0B0C`              | `#FAFAF7`            | page ground               |
+| `--fg-1`   | `#F4F4F5` · 17.90:1    | `#101012` · 18.18:1  | headlines, body           |
+| `--fg-2`   | `#A1A1AA` · 7.68:1     | `#4B4B55` · 8.24:1   | secondary copy            |
+| `--fg-3`   | `#71717A` · 4.07:1     | `#6E6E78` · 4.82:1   | **large text / decorative only** |
+| `--accent` | `#E34A3A` · 4.97:1     | `#7D2920` · 9.09:1   | badges, rules, status      |
+| `--rule`   | `rgba(255,255,255,.08)` | `rgba(16,16,18,.10)` | decorative hairlines  |
+
+Dark `--fg-3` sits at 4.07:1, which clears the 3:1 bar for large text and UI
 boundaries but **not** the 4.5:1 bar for body copy — so it is reserved for
 oversized type and decoration. Use `--fg-2` for anything that has to be read.
+Light `--fg-3` (4.82:1) does clear 4.5:1, but the token is restricted anyway so the
+same component is safe in either theme.
 
-Light mode runs a darkened accent rather than the lime, which would be ~1.1:1 on
-paper. Same hue family, lightness crushed.
+The accent is **vermilion**, not the acid lime an earlier revision used. The lime
+survives only inside a `ROLLBACK` comment block in `src/index.css`; restoring it
+means commenting the live `--accent` lines out and the lime back in, and updating
+`ACCENT` in `scripts/generate-og.mjs` so the share card follows. Light mode runs a
+darkened vermilion rather than a tint of the dark one, which would fall to roughly
+1.1:1 on paper.
 
 ## Keyboard
 
@@ -56,11 +111,14 @@ paper. Same hue family, lightness crushed.
 
 ## Accessibility & motion
 
-- `prefers-reduced-motion: reduce` stops the marquee, the availability pulse, all
-  scroll parallax, the custom cursor, and the portrait tilt — but still shows all
-  content, and hover previews remain readable as a static, clamped card.
-- The custom cursor mounts only for `(hover: hover) and (pointer: fine)`; touch
-  and reduced-motion keep the platform cursor.
+- `prefers-reduced-motion: reduce` stops the marquee, the availability pulse, and
+  all scroll parallax — but still shows all content, and hover previews remain
+  readable as a static, clamped card. Verified in a real browser: under reduced
+  motion no element is left at opacity 0 after a full scroll, and zero elements
+  carry a running CSS animation or a non-zero transition.
+- Pointer-tracking heading drift mounts only for `(hover: hover) and (pointer:
+  fine)`; touch and reduced-motion keep the platform cursor. The platform cursor
+  is always in use — there is no custom cursor element.
 - Dialogs trap focus, close on `Esc`, restore focus to the opener, and lock page
   scroll with scrollbar-width compensation.
 
@@ -68,17 +126,37 @@ paper. Same hue family, lightness crushed.
 
 - Projects, blueprint copy, and outcome metrics: `src/data/projects.js`
 - Resume copy (bio, roles, skills, education, badges): `src/data/resume.js`
-- Nav, status bar, and the palette's command index: `src/data/site.js`
+- Name, contact, résumé path, nav, status bar, and the palette's command index:
+  `src/data/site.js`
 
-**Before publishing:** metrics flagged `placeholder: true` in `projects.js` are
-illustrative and render with a `SAMPLE` tag in the blueprint drawer. Replace them
-with measured figures. The gesture-recognition numbers (92% validation accuracy,
-50+ users) are real.
+**Do not hand-edit `<title>`, the meta description, or the Open Graph tags in
+`index.html`.** They are placeholders that a build-time plugin overwrites from
+`SITE` and `META` in `src/data/site.js`, plus JSON-LD built from those same
+constants and `SKILL_GROUPS`. Editing `index.html` directly is silently undone
+on the next build — which is the point: there is one source, so the title a
+visitor reads and the one a link preview shows cannot drift apart. To change the
+share-card copy, edit `META` and re-run `npm run og` if the card itself moves.
 
-The three `TODO` comments in the Hackathon Mentor entry in `resume.js` mark the
-only facts about that mentoring that were not supplied — dates, stack, and
-outcome. They are deliberately left visible rather than filled with plausible
-guesses.
+**No metric in `projects.js` is a placeholder.** An earlier revision carried
+plausible-looking benchmarks (0.94 F1, 92% accuracy, 1.4s median) flagged
+`placeholder: true`. An audit found no trace of them in the linked repositories,
+and they were deleted rather than kept behind a `SAMPLE` tag — a visitor who
+does not read the fine print cannot distinguish a fabricated number from a
+measured one. What ships now is architecture facts read out of each repo: a
+dataset name, a hyperparameter, a count of camera sources.
+
+The `placeholder` flag is still honoured by `BlueprintDrawer` and is currently
+always `false`. It is kept deliberately: it is the only thing standing between a
+future edit and a fabricated result rendering as fact, and
+`src/data/data.test.js` fails if a `placeholder: true` ever reappears.
+
+The gesture-recognition numbers in `resume.js` (50+ users) come from the Edunet
+internship writeup and are real.
+
+**Still incomplete:** three `TODO` comments in the Hackathon Mentor entry in
+`resume.js` mark the only facts about that mentoring that were never supplied —
+dates, stack, and outcome. They are deliberately left visible rather than filled
+with plausible guesses.
 
 `CERTIFICATIONS` in `resume.js` holds all 18 Google Cloud badges; only the six
 flagged `featured` render, via `FEATURED_CERTIFICATIONS`. Adjust that set by
