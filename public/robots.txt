@@ -1,0 +1,7 @@
+# Everything here is meant to be indexed. This file exists so the intent is
+# explicit rather than implied by an absent file, and so a future staging
+# deploy can be excluded without touching application code.
+User-agent: *
+Allow: /
+
+Sitemap: https://santhosh_sunkara_portifolio.com/sitemap.xml
