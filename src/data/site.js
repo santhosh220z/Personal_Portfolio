@@ -58,7 +58,6 @@ export const SITE = {
  */
 export const NAV_LINKS = [
   { label: 'Work', href: '#work', id: 'work', group: 'Sections' },
-  { label: 'Architecture', href: '#architecture', id: 'architecture', group: 'Sections' },
   { label: 'About', href: '#about', id: 'about', group: 'Sections' },
   { label: 'Experience', href: '#experience', id: 'experience', group: 'Sections' },
   { label: 'Education', href: '#education', id: 'education', group: 'Sections' },
@@ -71,6 +70,7 @@ export const NAV_LINKS = [
  */
 export const COMMAND_INDEX = [
   ...NAV_LINKS,
+  { label: 'Architecture', href: '#architecture', id: 'architecture', group: 'Sections' },
   { label: 'GitHub', href: SITE.github, group: 'Elsewhere', external: true },
   { label: 'LinkedIn', href: SITE.linkedin, group: 'Elsewhere', external: true },
   { label: 'Email', href: `mailto:${SITE.email}`, group: 'Elsewhere', external: true },
