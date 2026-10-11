@@ -6,6 +6,7 @@ import { GSAP_EASE_SOFT, GSAP_EASE_EXPO } from '../lib/motion';
 import { SITE } from '../data/site';
 import SubjectAsset from './SubjectAsset';
 import ScrubHeadline from './kinetic/ScrubHeadline';
+import Magnetic from './kinetic/Magnetic';
 import profileImg from '../assets/profile3.webp';
 
 
@@ -165,30 +166,36 @@ const Hero = () => {
               </p>
 
               <div data-hero-reveal="actions" className="mt-8 flex flex-wrap items-center gap-3">
-                <a href="#work" className="btn-pill btn-pill-solid">
-                  View work
-                  <ArrowUpRight size={15} aria-hidden="true" />
-                </a>
+                <Magnetic>
+                  <a href="#work" className="btn-pill btn-pill-solid">
+                    View work
+                    <ArrowUpRight size={15} aria-hidden="true" />
+                  </a>
+                </Magnetic>
 
                 {/* `hidden sm:inline-flex` — keeps CTA row clean on narrow screens */}
-                <a
-                  href={SITE.resume}
-                  download
-                  aria-label="Download résumé (PDF)"
-                  className="btn-pill hidden sm:inline-flex"
-                >
-                  Résumé
-                  <Download size={15} aria-hidden="true" />
-                </a>
+                <Magnetic className="hidden sm:inline-flex">
+                  <a
+                    href={SITE.resume}
+                    download
+                    aria-label="Download résumé (PDF)"
+                    className="btn-pill"
+                  >
+                    Résumé
+                    <Download size={15} aria-hidden="true" />
+                  </a>
+                </Magnetic>
 
-                <button type="button" onClick={copy} aria-live="polite" className="hero-text-action">
-                  {copied ? (
-                    <Check size={14} className="text-accent" aria-hidden="true" />
-                  ) : (
-                    <Copy size={14} aria-hidden="true" />
-                  )}
-                  {copied ? 'Copied' : failed ? 'Press ⌘C' : 'Copy email'}
-                </button>
+                <Magnetic>
+                  <button type="button" onClick={copy} aria-live="polite" className="hero-text-action">
+                    {copied ? (
+                      <Check size={14} className="text-accent" aria-hidden="true" />
+                    ) : (
+                      <Copy size={14} aria-hidden="true" />
+                    )}
+                    {copied ? 'Copied' : failed ? 'Press ⌘C' : 'Copy email'}
+                  </button>
+                </Magnetic>
               </div>
 
               <p
