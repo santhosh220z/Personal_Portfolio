@@ -1,11 +1,65 @@
-﻿import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Award, Languages } from 'lucide-react';
-import { makeReveal, revealViewport } from '../lib/motion';
+import { gsap } from '../lib/gsap';
+import { GSAP_EASE, makeReveal, revealViewport } from '../lib/motion';
 import { usePrefersReducedMotion } from '../lib/hooks';
 import { ABOUT } from '../data/resume';
 import SectionLabel from './SectionLabel';
 import SectionGeometry from './SectionGeometry';
+
+/**
+ * Animated number roll-up using GSAP ScrollTrigger.
+ * Incrementally interpolates from 0 to target on scroll entrance.
+ */
+const StatCounter = ({ value, reduceMotion }) => {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (reduceMotion) return undefined;
+
+    const el = ref.current;
+    if (!el) return undefined;
+
+    const match = String(value).match(/^([^\d]*)(\d+(?:\.\d+)?)([^\d]*)$/);
+    if (!match) return undefined;
+
+    const prefix = match[1] || '';
+    const num = parseFloat(match[2]);
+    const suffix = match[3] || '';
+    const decimals = match[2].includes('.') ? match[2].split('.')[1].length : 0;
+
+    const proxy = { val: 0 };
+
+    const ctx = gsap.context(() => {
+      gsap.to(proxy, {
+        val: num,
+        duration: 1.4,
+        ease: GSAP_EASE,
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 90%',
+          once: true,
+        },
+        onUpdate: () => {
+          if (el) {
+            el.textContent = `${prefix}${proxy.val.toFixed(decimals)}${suffix}`;
+          }
+        },
+      });
+    }, el);
+
+    return () => ctx.revert();
+  }, [value, reduceMotion]);
+
+  const match = String(value).match(/^([^\d]*)(\d+(?:\.\d+)?)([^\d]*)$/);
+  const initialDisplay =
+    reduceMotion || !match
+      ? value
+      : `${match[1] || ''}${(0).toFixed(match[2].includes('.') ? match[2].split('.')[1].length : 0)}${match[3] || ''}`;
+
+  return <span ref={ref}>{initialDisplay}</span>;
+};
 
 const About = () => {
   const reduceMotion = usePrefersReducedMotion();
@@ -69,7 +123,7 @@ const About = () => {
                       accent stays on the section index and the labels, which is
                       where it does emphasis without shouting. */}
                   <div className="font-display text-[clamp(1.5rem,3vw,2.25rem)] leading-none font-extrabold text-fg-1">
-                    {fact.value}
+                    <StatCounter value={fact.value} reduceMotion={reduceMotion} />
                   </div>
                   <div className="meta mt-2">{fact.label}</div>
                 </motion.div>
