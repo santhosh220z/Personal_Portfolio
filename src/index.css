@@ -1,4 +1,4 @@
-﻿/* Latin + Latin Extended only.
+/* Latin + Latin Extended only.
    The `@import "@fontsource-variable/<family>"` entry points pull in every
    subset the package ships — cyrillic, greek, vietnamese and symbols2 as well —
    and this package version exposes no per-subset CSS file to narrow that.
@@ -197,7 +197,7 @@
      is no longer bounded by the shell alone — it has to fit the width the
      portrait leaves behind. The `@layer base` override further down owns that.
      10.5vw overlaps the portrait from 1024 up, by up to 131px at 1024. */
-  --text-hero: clamp(2.5rem, 10.5vw, 9.5rem);
+  --text-hero: clamp(2.4rem, 10vw, 4.8rem);
   --text-display: clamp(2.5rem, 7vw, 6rem);
   --text-headline: clamp(1.75rem, 3.4vw, 3rem);
   --text-title: clamp(1.25rem, 1.8vw, 1.625rem);
@@ -267,9 +267,9 @@
   @media (min-width: 64rem) {
     :root {
       --text-hero: clamp(
-        2.5rem,
-        min(10.5vw, (min(100vw, 90rem) - 29.5rem) / 6.745),
-        9.5rem
+        3.8rem,
+        calc(7.2vw - 0.4rem),
+        6.6rem
       );
     }
   }
@@ -298,7 +298,7 @@
      and there is nothing to overlap. */
   @media (min-width: 64rem) {
     .hero-subject-lift {
-      margin-block-start: min(-5.5rem, -7vh);
+      margin-block-start: 0;
     }
   }
 
