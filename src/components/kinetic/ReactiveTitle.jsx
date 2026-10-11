@@ -98,16 +98,39 @@ const ReactiveTitle = ({ id, className = '', children }) => {
     typeof child === 'string' ? child.split(/\s+/).filter(Boolean) : [child],
   );
 
-  return (
-    <motion.div
-      variants={{
-        hidden: { opacity: 0, y: reduceMotion ? 0 : 14 },
-        visible: {
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: reduceMotion ? 0 : 0.05,
+      },
+    },
+  };
+
+  const wordVariants = {
+    hidden: reduceMotion
+      ? { opacity: 0 }
+      : {
+          opacity: 0,
+          y: 10,
+          clipPath: 'inset(0 100% 0 0)',
+        },
+    visible: reduceMotion
+      ? { opacity: 1, transition: { duration: 0 } }
+      : {
           opacity: 1,
           y: 0,
-          transition: { duration: reduceMotion ? 0 : 0.5, ease: [0.22, 0.61, 0.36, 1] },
+          clipPath: 'inset(0 0% 0 0)',
+          transition: {
+            duration: 0.55,
+            ease: [0.22, 0.61, 0.36, 1],
+          },
         },
-      }}
+  };
+
+  return (
+    <motion.div
+      variants={containerVariants}
       initial="hidden"
       whileInView="visible"
       viewport={revealViewport}
@@ -121,18 +144,20 @@ const ReactiveTitle = ({ id, className = '', children }) => {
       >
         {words.map((word, index) => (
           <React.Fragment key={`${index}-${typeof word === 'string' ? word : 'node'}`}>
-            <span
-              ref={(node) => {
-                wordRefs.current[index] = node;
-              }}
-              className={`inline-block ${
-                react
-                  ? 'transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]'
-                  : ''
-              }`}
-            >
-              {word}
-            </span>
+            <motion.span variants={wordVariants} className="inline-block">
+              <span
+                ref={(node) => {
+                  wordRefs.current[index] = node;
+                }}
+                className={`inline-block ${
+                  react
+                    ? 'transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]'
+                    : ''
+                }`}
+              >
+                {word}
+              </span>
+            </motion.span>
             {index < words.length - 1 ? ' ' : null}
           </React.Fragment>
         ))}
