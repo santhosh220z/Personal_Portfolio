@@ -617,12 +617,44 @@
     padding: 0.45rem 0.75rem;
     border: 1px solid var(--rule);
     border-radius: var(--radius-xs);
+    transition: color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .tag:hover {
+      color: var(--fg-1);
+      border-color: var(--accent-line);
+      box-shadow: 0 0 12px -2px var(--accent-line);
+      background-color: var(--surface-sunken);
+    }
   }
 
   .tag-accent {
     color: var(--accent);
     border-color: var(--accent-line);
     background-color: var(--accent-soft);
+  }
+
+  .card-lift {
+    position: relative;
+    transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
+                box-shadow 0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
+                border-color 0.28s ease,
+                background-color 0.28s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .card-lift:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px -8px rgb(var(--shade) / 0.4), 0 0 0 1px var(--accent-line);
+      z-index: 10;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-lift:hover {
+      transform: none;
+    }
   }
 
   .rule-h {
