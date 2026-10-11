@@ -94,10 +94,16 @@ export function useLockBodyScroll(locked) {
 
     body.style.overflow = 'hidden';
     if (scrollbar > 0) body.style.paddingRight = `${scrollbar}px`;
+    if (typeof window !== 'undefined' && window.__lenis) {
+      window.__lenis.stop();
+    }
 
     return () => {
       body.style.overflow = previousOverflow;
       body.style.paddingRight = previousPadding;
+      if (typeof window !== 'undefined' && window.__lenis) {
+        window.__lenis.start();
+      }
     };
   }, [locked]);
 }
