@@ -1,10 +1,11 @@
-﻿import React from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react';
 import { makeReveal, revealViewport } from '../lib/motion';
 import { usePrefersReducedMotion } from '../lib/hooks';
 import { SITE } from '../data/site';
 import SectionLabel from './SectionLabel';
+import Magnetic from './kinetic/Magnetic';
 
 const CHANNELS = [
   {
@@ -87,9 +88,11 @@ const Contact = () => {
                 rel={channel.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className="flex h-full items-center gap-4 bg-canvas p-5 transition-colors hover:bg-surface-sunken md:p-6"
               >
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-rule text-accent">
-                  <channel.Icon size={18} aria-hidden="true" />
-                </span>
+                <Magnetic maxDistance={50} maxDisplacement={5}>
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-rule text-accent">
+                    <channel.Icon size={18} aria-hidden="true" />
+                  </span>
+                </Magnetic>
                 <span className="min-w-0">
                   <span className="meta block">{channel.label}</span>
                   <span className="mt-1.5 block truncate text-sm text-fg-1">{channel.value}</span>
