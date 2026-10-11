@@ -24,10 +24,14 @@ const Education = () => {
           initial="hidden"
           whileInView="visible"
           viewport={revealViewport}
-          className="grid gap-px overflow-hidden rounded-lg border border-rule bg-[var(--rule)] lg:grid-cols-3"
+          className="grid gap-px rounded-lg border border-rule bg-[var(--rule)] lg:grid-cols-3"
         >
           {EDUCATION.map((entry) => (
-            <motion.article key={entry.institution} variants={item} className="bg-canvas p-5 md:p-7">
+            <motion.article
+              key={entry.institution}
+              variants={item}
+              className="card-lift bg-canvas p-5 first:rounded-t-lg lg:first:rounded-l-lg lg:first:rounded-tr-none last:rounded-b-lg lg:last:rounded-r-lg lg:last:rounded-bl-none md:p-7"
+            >
               <span className="meta">{entry.period}</span>
 
               <h3 className="mt-4 text-[length:var(--text-title)]">{entry.degree}</h3>
@@ -85,10 +89,14 @@ const Certifications = () => {
           initial="hidden"
           whileInView="visible"
           viewport={revealViewport}
-          className="grid list-none gap-px overflow-hidden rounded-lg border border-rule bg-[var(--rule)] p-0 sm:grid-cols-2 lg:grid-cols-3"
+          className="grid list-none gap-px rounded-lg border border-rule bg-[var(--rule)] p-0 sm:grid-cols-2 lg:grid-cols-3"
         >
           {FEATURED_CERTIFICATIONS.map((cert) => (
-            <motion.li key={cert.href} variants={item} className="group bg-canvas">
+            <motion.li
+              key={cert.href}
+              variants={item}
+              className="group card-lift bg-canvas first:rounded-t-lg sm:first:rounded-tl-lg lg:first:rounded-tl-lg last:rounded-b-lg sm:last:rounded-br-lg lg:last:rounded-br-lg"
+            >
               <a
                 href={cert.href}
                 target="_blank"
