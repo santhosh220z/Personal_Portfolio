@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Command, Download, Moon, Sun } from 'lucide-react';
+import { Download } from 'lucide-react';
 import { gsap, ScrollTrigger } from '../lib/gsap';
 import { useLocalTime } from '../lib/hooks';
 import { NAV_LINKS, SITE } from '../data/site';
@@ -23,7 +23,7 @@ const Availability = () => (
   </span>
 );
 
-const Nav = ({ onOpenCommand }) => {
+const Nav = () => {
   const barRef = useRef(null);
   const time = useLocalTime(SITE.timeZone);
 
@@ -81,12 +81,12 @@ const Nav = ({ onOpenCommand }) => {
 
           {/* Anchors */}
           <nav aria-label="Sections" className="hidden md:block">
-            <ul className="flex items-center gap-1 list-none p-0">
+            <ul className="flex items-center gap-0.5 list-none p-0 lg:gap-1">
               {NAV_LINKS.map((link) => (
                 <li key={link.id}>
                   <a
                     href={link.href}
-                    className="meta inline-flex h-11 items-center px-3 transition-colors hover:text-fg-1 focus-visible:text-fg-1"
+                    className="meta inline-flex h-11 items-center px-2 text-[11px] transition-colors hover:text-fg-1 focus-visible:text-fg-1 lg:px-2.5 lg:text-[12px] xl:px-3"
                   >
                     {link.label}
                   </a>
@@ -107,16 +107,6 @@ const Nav = ({ onOpenCommand }) => {
                 <span className="ml-1.5 text-fg-2">{SITE.timezoneLabel}</span>
               </time>
             </div>
-
-            <button
-              type="button"
-              onClick={onOpenCommand}
-              aria-label="Open command palette"
-              className="hidden h-11 items-center gap-2 rounded-full border border-rule px-3 transition-colors hover:border-fg-1 sm:inline-flex"
-            >
-              <Command size={14} className="text-fg-2" aria-hidden="true" />
-              <span className="meta">K</span>
-            </button>
 
             {/* Résumé download. A labelled control is a lot of width to spend in a
                 56px bar that already carries four anchors, the clock, the ⌘K
