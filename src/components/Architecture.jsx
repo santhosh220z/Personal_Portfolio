@@ -31,7 +31,7 @@ const Architecture = () => {
         />
 
         {/* Pipeline */}
-        <div className="mb-20 grid gap-px overflow-hidden rounded-lg border border-rule bg-[var(--rule)] sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mb-20 grid gap-px rounded-lg border border-rule bg-[var(--rule)] sm:grid-cols-2 lg:grid-cols-4">
           {PIPELINE.map((stage, index) => (
             <motion.article
               key={stage.id}
@@ -39,7 +39,7 @@ const Architecture = () => {
               initial="hidden"
               whileInView="visible"
               viewport={revealViewport}
-              className="group relative bg-canvas p-6 md:p-8"
+              className="group card-lift relative bg-canvas p-6 first:rounded-t-lg sm:first:rounded-tl-lg lg:first:rounded-l-lg lg:first:rounded-r-none last:rounded-b-lg sm:last:rounded-br-lg lg:last:rounded-r-lg lg:last:rounded-l-none md:p-8"
             >
               <div className="flex items-baseline justify-between gap-3">
                 <span className="meta meta-accent">{String(index + 1).padStart(2, '0')}</span>
