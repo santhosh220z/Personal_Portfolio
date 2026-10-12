@@ -12,6 +12,7 @@
     "verify": "npm run lint && npm run test && npm run build",
     "verify:site": "node scripts/verify-site.mjs",
     "preview": "vite preview",
+    "shoot": "node scripts/shoot-hero.mjs",
     "encode:hero": "node scripts/encode-hero.mjs",
     "og": "node scripts/generate-og.mjs"
   },
