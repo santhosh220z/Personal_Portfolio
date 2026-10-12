@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Download } from 'lucide-react';
+import { Download, Search } from 'lucide-react';
 import { gsap, ScrollTrigger } from '../lib/gsap';
 import { useLocalTime } from '../lib/hooks';
 import { NAV_LINKS, SITE } from '../data/site';
@@ -23,7 +23,12 @@ const Availability = () => (
   </span>
 );
 
-const Nav = () => {
+/**
+ * `onOpenPalette` is optional so Nav stays usable on its own, but it is the only
+ * discoverable route to the command palette: `⌘K` and `/` both work without it
+ * and neither is findable by a visitor who does not already know them.
+ */
+const Nav = ({ onOpenPalette }) => {
   const barRef = useRef(null);
   const time = useLocalTime(SITE.timeZone);
 
@@ -109,8 +114,8 @@ const Nav = () => {
             </div>
 
             {/* Résumé download. A labelled control is a lot of width to spend in a
-                56px bar that already carries four anchors, the clock, the ⌘K
-                hint and the theme toggle — so this is gated to lg, the same
+                56px bar that already carries six anchors, the clock, the search
+                trigger and the theme toggle — so this is gated to lg, the same
                 breakpoint the local clock uses. Below lg the hero CTA and the
                 footer row both reach the PDF. */}
             <a
@@ -122,6 +127,24 @@ const Nav = () => {
               <Download size={14} className="text-fg-2" aria-hidden="true" />
               <span className="meta">Résumé</span>
             </a>
+
+            {onOpenPalette ? (
+              /* Gated to lg for the same reason as the clock and the résumé: the
+                 bar is 56px tall and already carries six anchors plus four
+                 utilities. Below lg the mobile anchor rail below is the nav, and
+                 a cramped cluster of controls is worse than one fewer affordance
+                 — `⌘K` and `/` still work at every width. */
+              <button
+                type="button"
+                onClick={onOpenPalette}
+                aria-label="Open command palette"
+                aria-keyshortcuts="Control+K Meta+K"
+                className="hidden h-11 items-center gap-2 rounded-full border border-rule px-3 text-fg-2 transition-colors hover:border-fg-1 hover:text-fg-1 lg:inline-flex"
+              >
+                <Search size={14} aria-hidden="true" />
+                <span className="meta">Search</span>
+              </button>
+            ) : null}
 
             <ThemeToggle />
           </div>
