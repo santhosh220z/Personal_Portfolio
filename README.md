@@ -26,8 +26,8 @@ npm run preview
 **Before opening a PR:**
 
 ```bash
-npm run verify    # lint + 31 unit/data tests + build
-npm run verify:site http://localhost:4173   # 36 checks against the built site
+npm run verify    # lint + 44 unit/data tests + build
+npm run verify:site http://localhost:4173   # 38 checks against the built site
 ```
 
 `verify:site` drives the **built** output in headless Chrome over the DevTools
@@ -44,9 +44,30 @@ npm run encode:hero   # src/assets/profile3.png -> profile3.webp (via sharp)
 npm run og            # public/og.png, the 1200x630 share card (via headless Chrome)
 ```
 
+## Looking at a layout change
+
+`verify:site` tells you a section is present and nothing is stuck invisible. It
+cannot tell you whether the result looks right, so for that there is a screenshot
+pass over five viewports:
+
+```bash
+npm run preview        # in one terminal
+npm run shoot          # in another — writes to %TEMP%/hero-shots
+```
+
+One Chrome process drives all five widths (1920 / 1440 / 1280 / 834 / 390),
+resizing between shots rather than paying a cold start each time. Two extra flags:
+
+```bash
+npm run shoot -- --full       # whole document at desktop width, not just the fold
+npm run shoot -- --at work    # one element by id, to inspect a single section
+```
+
+Defaults to `http://localhost:4173`; pass a different URL to point it elsewhere.
+
 ## Testing
 
-`npm test` runs 31 assertions across two files, and they are aimed at the things
+`npm test` runs 44 assertions across three files, and they are aimed at the things
 that break silently rather than the things that crash:
 
 - **`src/data/data.test.js`** (26) — this site is entirely data-driven; the
@@ -59,6 +80,17 @@ that break silently rather than the things that crash:
 - **`src/lib/hooks.test.jsx`** (5) — `useMountOnDemand`, which exists solely to
   make `React.lazy` actually defer. Its failure mode is invisible in a
   screenshot, so it is pinned directly.
+- **`src/lib/useCommandPalette.test.jsx`** (13) — the `⌘K` / `/` shortcut
+  listener. A palette that never opens is a feature that simply does not exist,
+  which is the state this hook was found in: complete, tested nowhere, and
+  mounted by nothing. The assertions that matter are the negative ones — a slash
+  typed into an input or a contenteditable region must not summon the overlay on
+  top of the field being typed in.
+
+  The contenteditable case stubs `isContentEditable`, which jsdom does not
+  implement at all (it is absent from `HTMLElement.prototype`, verified against
+  30.1.2). The attribute is set for real and only the reflected property is
+  faked, so the test exercises the guard rather than bypassing it.
 
 **What jsdom cannot test.** The reduced-motion invariant ("nothing may leave an
 element at opacity 0", quoted in `ScrubHeadline.jsx`) needs a layout engine and a
@@ -96,16 +128,17 @@ oversized type and decoration. Use `--fg-2` for anything that has to be read.
 Light `--fg-3` (4.82:1) does clear 4.5:1, but the token is restricted anyway so the
 same component is safe in either theme.
 
-The accent is **vermilion**, not the acid lime an earlier revision used. The lime
-survives only inside a `ROLLBACK` comment block in `src/index.css`; restoring it
-means commenting the live `--accent` lines out and the lime back in, and updating
-`ACCENT` in `scripts/generate-og.mjs` so the share card follows. Light mode runs a
-darkened vermilion rather than a tint of the dark one, which would fall to roughly
-1.1:1 on paper.
+The accent is **vermilion**. Light mode runs a darkened vermilion rather than a tint
+of the dark one, which would fall to roughly 1.1:1 on paper. Every one of the 22
+consumers reads the token, so changing the accent means editing the two `--accent`
+blocks in `src/index.css` and `ACCENT` in `scripts/generate-og.mjs` so the share
+card follows.
 
 ## Keyboard
 
-- `Cmd/Ctrl + K` or `/` — command palette (fuzzy subsequence search)
+- `Cmd/Ctrl + K` or `/` — command palette (fuzzy subsequence search). The bar
+  also carries a visible **Search** trigger at `lg` and up, because neither
+  shortcut is discoverable on its own; both work at every width.
 - `Esc` — closes the blueprint drawer or palette
 - `↑ ↓` `↵` — navigate and open within the palette
 
