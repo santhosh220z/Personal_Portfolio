@@ -6,7 +6,7 @@
 export const STORAGE_KEY = 'theme';
 
 /**
- * Dark is the default, NOT the OS preference. The acid accent and the outlined
+ * Dark is the default, NOT the OS preference. The accent and the outlined
  * display type were tuned against charcoal first, so an OS set to light should
  * still land on the intended art direction until the visitor says otherwise.
  * This is the one place that decision lives — index.html mirrors it.
