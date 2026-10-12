@@ -6,7 +6,6 @@ import { usePrefersReducedMotion, useMountOnDemand } from '../lib/hooks';
 import { PROJECTS, SUPPORTING } from '../data/projects';
 import { SITE } from '../data/site';
 import SectionLabel from './SectionLabel';
-import SectionGeometry from './SectionGeometry';
 import ProjectTicker from './ProjectTicker';
 import ProjectStrip from './ProjectStrip';
 
@@ -40,13 +39,7 @@ const Work = () => {
 
   return (
     <section id="work" className="section-block border-t border-rule">
-      <SectionGeometry variant="work" />
-
-      {/* `relative` on every content child: the geometry layer is absolutely
-          positioned, and an absolutely positioned box paints after in-flow
-          content at the same stacking level, so without this the shapes would
-          sit on top of the project list rather than behind it. */}
-      <div className="shell relative">
+      <div className="shell">
         <SectionLabel
           index="01"
           eyebrow="Projects done"
@@ -62,7 +55,7 @@ const Work = () => {
         initial="hidden"
         whileInView="visible"
         viewport={revealViewport}
-        className="shell relative"
+        className="shell"
       >
         <ProjectTicker projects={PROJECTS} onOpen={setOpenProject} />
       </motion.div>
@@ -75,11 +68,11 @@ const Work = () => {
           No `shell` on this wrapper: ProjectStrip's own root already carries it,
           and two of them would double the page gutter. Only the vertical rhythm
           is contributed from here. */}
-      <div className="relative mt-14">
+      <div className="mt-14">
         <ProjectStrip projects={SUPPORTING} />
       </div>
 
-      <div className="shell relative mt-10">
+      <div className="shell mt-10">
         <a
           href={SITE.github}
           target="_blank"
