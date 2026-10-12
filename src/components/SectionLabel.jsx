@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { revealViewport } from '../lib/motion';
+import { revealViewport, EASE_OUT } from '../lib/motion';
 import ReactiveTitle from './kinetic/ReactiveTitle';
 
 /**
@@ -45,7 +45,7 @@ const SectionLabel = ({ index, eyebrow, title, lede, id }) => {
         <motion.p
           variants={{
             hidden: { opacity: 0, y: reduceMotion ? 0 : 14 },
-            visible: { opacity: 1, y: 0, transition: { duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.08, ease: [0.22, 0.61, 0.36, 1] } },
+            visible: { opacity: 1, y: 0, transition: { duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.08, ease: EASE_OUT } },
           }}
           initial="hidden"
           whileInView="visible"
