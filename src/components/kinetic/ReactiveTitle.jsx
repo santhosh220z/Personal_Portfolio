@@ -1,6 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { revealViewport } from '../../lib/motion';
+import { revealViewport, EASE_OUT } from '../../lib/motion';
 import { useFinePointer } from '../../lib/hooks';
 
 /**
@@ -123,7 +123,7 @@ const ReactiveTitle = ({ id, className = '', children }) => {
           clipPath: 'inset(0 0% 0 0)',
           transition: {
             duration: 0.55,
-            ease: [0.22, 0.61, 0.36, 1],
+            ease: EASE_OUT,
           },
         },
   };
