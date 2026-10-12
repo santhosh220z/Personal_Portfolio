@@ -6,7 +6,6 @@ import { GSAP_EASE, makeReveal, revealViewport } from '../lib/motion';
 import { usePrefersReducedMotion } from '../lib/hooks';
 import { ABOUT } from '../data/resume';
 import SectionLabel from './SectionLabel';
-import SectionGeometry from './SectionGeometry';
 
 /**
  * Animated number roll-up using GSAP ScrollTrigger.
@@ -67,7 +66,6 @@ const About = () => {
 
   return (
     <section id="about" className="section-block border-t border-rule">
-      <SectionGeometry variant="about" />
       <div className="shell">
         {/* No `title` here. This section used to pass one — "Background" — and
             then render the B.Tech statement immediately beneath it at the same
