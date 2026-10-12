@@ -56,7 +56,7 @@
    as Tailwind utilities so `text-fg-1` / `bg-canvas` follow the active mode
    automatically. Do not hardcode hex in components — add a token here.
 
-   DARK IS THE PRIMARY ART DIRECTION. The acid accent was chosen against
+   DARK IS THE PRIMARY ART DIRECTION. The accent was chosen against
    charcoal; light mode is a tuned inversion, not a mirror (see the note on
    --accent in the light block).
 
@@ -70,10 +70,10 @@
    large text and UI boundaries but NOT the 4.5:1 bar for body copy, so it is
    reserved for oversized type and decoration. See --fg-2 for reading text.
 
-   The accent clears AA as small text in both themes but with far less headroom
-   than the acid lime it replaced (17.6:1 dark). It still passes at 11px, it is
-   just quieter — expect the meta kickers to read softer. Both accent variants
-   are kept inline above as labelled rollback blocks. ============================ */
+   The accent clears AA as small text in both themes, but it is a mid-lightness
+   red rather than a high-lightness yellow-green, so it has far less headroom
+   than the vermilion replaces usually get. It still passes at 11px; it is just
+   quieter — expect the meta kickers to read softer. ============================ */
 
 :root,
 [data-theme='light'] {
@@ -94,9 +94,7 @@
   --rule: rgba(16, 16, 18, 0.1);
   --rule-strong: #5c5c66;
 
-  /* Light mode crushes the accent's lightness so it survives on paper. The
-     vermilion needs less of a crush than the acid lime did, because red holds
-     contrast at higher lightness than yellow-green does. */
+  /* Light mode crushes the accent's lightness so it survives on paper. */
   --accent: #7d2920;
   --accent-hover: #9e5e58;
   --accent-on: #ffffff;
@@ -107,15 +105,6 @@
      free to be any colour, but this dot means "available for roles", and a red
      status light reads as an error. Kept green in every accent variant. */
   --status-available: #1f7a4d;
-
-  /* ROLLBACK — previous acid-lime light accent. To restore: comment out the
-     four --accent lines above and uncomment these. Nothing else references the
-     hex values; all 22 consumers read the tokens. */
-  /* --accent: #4f5d00;
-  --accent-hover: #3d4900;
-  --accent-on: #ffffff;
-  --accent-soft: #eef3d6;
-  --accent-line: #c2cf7e; */
 
   --shade: 28 22 48;
 
@@ -141,7 +130,7 @@
   --rule-strong: #8b8b95;
 
   /* Vermilion. 75% saturation, comfortably inside the 80% ceiling the design
-     skill sets, against 93% for the acid lime it replaces. */
+     skill sets. */
   --accent: #e34a3a;
   --accent-hover: #e96e61;
   /* Ink on vermilion, not white: white on this fill is only 3.97:1, so near-black
@@ -151,14 +140,6 @@
   --accent-line: #591f1a;
 
   --status-available: #4ade80;
-
-  /* ROLLBACK — previous acid-lime dark accent. To restore: comment out the
-     --accent lines above and uncomment these. */
-  /* --accent: #e2f952;
-  --accent-hover: #eefd78;
-  --accent-on: #0b0b0c;
-  --accent-soft: #1e2312;
-  --accent-line: #3f4a1a; */
 
   --shade: 0 0 0;
 
@@ -756,7 +737,7 @@
   }
 
 /* Scrollbar: tinted to the theme so the page does not gain a bright default
-   strip the moment the accent moves to lime. */
+   strip against the canvas. */
 * {
   scrollbar-color: var(--scroll-track) transparent;
   scrollbar-width: thin;
