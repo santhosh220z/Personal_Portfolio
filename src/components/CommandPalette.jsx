@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { CornerDownLeft, Search } from 'lucide-react';
 import { useDialogBehaviour, usePrefersReducedMotion } from '../lib/hooks';
 import { COMMAND_INDEX } from '../data/site';
+import { EASE_OUT } from '../lib/motion';
 
 /** Subsequence match, so "arch" finds "Architecture" and "lnk" finds "LinkedIn". */
 const fuzzyScore = (haystack, needle) => {
@@ -164,7 +165,7 @@ const CommandPalette = ({ open, onClose }) => {
             initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -12, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8, scale: 0.99 }}
-            transition={{ duration: reduceMotion ? 0 : 0.22, ease: [0.22, 0.61, 0.36, 1] }}
+            transition={{ duration: reduceMotion ? 0 : 0.22, ease: EASE_OUT }}
             onKeyDown={onKeyDown}
           >
             <div className="flex items-center gap-3 border-b border-rule px-4">
