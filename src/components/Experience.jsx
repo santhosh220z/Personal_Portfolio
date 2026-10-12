@@ -5,7 +5,6 @@ import { makeReveal, revealViewport } from '../lib/motion';
 import { usePrefersReducedMotion } from '../lib/hooks';
 import { EXPERIENCES } from '../data/resume';
 import SectionLabel from './SectionLabel';
-import SectionGeometry from './SectionGeometry';
 
 /**
  * Experience.
@@ -46,9 +45,6 @@ const Experience = () => {
 
   return (
     <section id="experience" className="section-block border-t border-rule">
-      <SectionGeometry variant="experience" />
-
-      {/* `relative` so the geometry layer stays behind this content. */}
       <div className="shell relative">
         <SectionLabel index="04" eyebrow="Track record" title="Where this has been applied" />
 
