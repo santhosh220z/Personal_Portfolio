@@ -5,7 +5,6 @@ import { makeReveal, revealViewport } from '../lib/motion';
 import { usePrefersReducedMotion } from '../lib/hooks';
 import { CERTIFICATIONS, EDUCATION, FEATURED_CERTIFICATIONS } from '../data/resume';
 import SectionLabel from './SectionLabel';
-import SectionGeometry from './SectionGeometry';
 
 const Education = () => {
   const reduceMotion = usePrefersReducedMotion();
@@ -13,9 +12,6 @@ const Education = () => {
 
   return (
     <section id="education" className="section-block border-t border-rule">
-      <SectionGeometry variant="education" />
-
-      {/* `relative` so the geometry layer stays behind this content. */}
       <div className="shell relative">
         <SectionLabel index="05" eyebrow="Training" title="Education" />
 
@@ -73,9 +69,6 @@ const Certifications = () => {
 
   return (
     <section id="certifications" className="section-block border-t border-rule">
-      <SectionGeometry variant="certifications" />
-
-      {/* `relative` so the geometry layer stays behind this content. */}
       <div className="shell relative">
         <SectionLabel
           index="06"
