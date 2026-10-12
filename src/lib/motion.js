@@ -5,7 +5,13 @@
 // delay. The GSAP easings are shared with ScrollTrigger timelines so a scrubbed
 // parallax and a tapped drawer open with the same feel.
 
-/** Shared with `makeReveal`. power2.out. */
+/**
+ * Shared with `makeReveal` and every hand-written framer variant.
+ *
+ * Exported precisely so components do not retype the four-number array: it was
+ * copy-pasted into ReactiveTitle, SectionLabel and CommandPalette, which meant a
+ * change here would have silently left three components on the old curve. power2.out.
+ */
 export const EASE_OUT = [0.22, 0.61, 0.36, 1];
 
 /** GSAP string form of the same curve, for timelines built outside React. */
