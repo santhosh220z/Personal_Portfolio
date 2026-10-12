@@ -126,6 +126,35 @@ try {
     });
     await sleep(1400);
 
+    // Centre-scrolling is not enough when the target is TALLER than the
+    // viewport: `--at work` centres a 2239px section in a 900px window, so its
+    // lower half never enters the viewport and every whileInView reveal down
+    // there is still at opacity 0 when the capture happens. The result is a
+    // screenshot with empty boxes where content should be — which reads as a
+    // layout bug and is not one. So step down through the element's own height
+    // before measuring, exactly as the --full pass below does for the document.
+    //
+    // Each scroll has to be its own CDP round-trip with a settle in between.
+    // Doing it as a synchronous `for` loop inside one Runtime.evaluate looks
+    // equivalent and is not: the browser never paints the intermediate
+    // positions, so IntersectionObserver only ever sees the final offset and
+    // the reveals still do not fire.
+    const span = await send('Runtime.evaluate', {
+      expression: `(() => { const el = document.getElementById(${JSON.stringify(AT)});
+        if (!el) return null; const r = el.getBoundingClientRect();
+        return JSON.stringify({ top: r.top + scrollY, height: r.height }); })()`,
+      returnByValue: true,
+    });
+    if (span.result.value) {
+      const { top, height } = JSON.parse(span.result.value);
+      for (let y = top; y < top + height; y += 600) {
+        await send('Runtime.evaluate', { expression: `window.scrollTo(0, ${y})` });
+        await sleep(120);
+      }
+      await send('Runtime.evaluate', { expression: `window.scrollTo(0, ${top})` });
+      await sleep(700);
+    }
+
     const box = await send('Runtime.evaluate', {
       expression: `(() => { const el = document.getElementById(${JSON.stringify(AT)});
         if (!el) return null; const r = el.getBoundingClientRect();
